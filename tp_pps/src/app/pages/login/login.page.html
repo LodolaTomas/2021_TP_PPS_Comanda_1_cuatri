@@ -10,7 +10,7 @@
       <ion-row>
         <ion-col class="ion-text-center" size-md="6" size-lg="5" size-xs="12">
           <form [formGroup]="miFormulario"
-          (ngSubmit)="Autenticar(miFormulario.value)">
+          (ngSubmit)="autenticar(miFormulario.value)">
             <div class="logo">
               <p></p>
             </div>
@@ -30,7 +30,7 @@
               [disabled]="false">
               Iniciar Sesión
             </ion-button>
-
+            <a [routerLink]="['/register']">Registrarse</a>
           </form>
         </ion-col>
       </ion-row>

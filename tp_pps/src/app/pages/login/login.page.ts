@@ -20,6 +20,6 @@ export class LoginPage implements OnInit {
   ngOnInit() {
   }
 
-  Autenticar(form){
+  autenticar(form){
   }
 }
