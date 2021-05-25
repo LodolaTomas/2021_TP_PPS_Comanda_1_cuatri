@@ -5,6 +5,8 @@ import { User } from '../shared/User.class';
 
 import { AlertController } from '@ionic/angular';
 
+import Swal, { SweetAlertIcon } from 'sweetalert2';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -25,15 +27,7 @@ export class AuthService {
       return await this.afAuth.signInWithEmailAndPassword(user.email, user.password);
     } catch (error) {
       /*** ALERTS ***/
-      const alert = await this.alertController.create({
-        header: 'Alert Login',
-        message: error,
-        buttons: ['OK']
-      });
-
-      await alert.present();
-      let result = await alert.onDidDismiss();
-      console.log(result);
+      this.alert('error', 'Error, usuario invalido');
     }
   }
 
@@ -54,4 +48,27 @@ export class AuthService {
       console.log(result);
     }
   }
+
+
+  alert(icon: SweetAlertIcon, text: string) {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'bottom',
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+    
+    Toast.fire({
+      icon: icon,
+      title: text
+    })
+  }
+
+  
 }
