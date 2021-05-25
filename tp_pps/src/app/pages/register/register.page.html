@@ -1,6 +1,7 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Alta de Usuario</ion-title>
+    <ion-title *ngIf="!isAnonimous">Alta de Cliente</ion-title>
+    <ion-title *ngIf="isAnonimous">Ingreso Anónimo</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -15,18 +16,23 @@
             <ion-card color="light" class="auth-card ion-margin">
             <ion-item>
               <ion-input  name="name" type="text" placeholder="Nombre" ngModel required></ion-input>
+              <ion-icon name="person"></ion-icon>
             </ion-item>
-            <ion-item>
+            <ion-item *ngIf="!isAnonimous">
               <ion-input  name="lastname" type="text" placeholder="Apellido" ngModel required></ion-input>
             </ion-item>
-            <ion-item>
-              <ion-input name="email" type="email" placeholder="tu@correo.com" ngModel required></ion-input>
+            <ion-item *ngIf="!isAnonimous">
+              <ion-input name="dni" type="number" placeholder="DNI" ngModel required></ion-input>
             </ion-item>
-            <ion-item>
+            <ion-item *ngIf="!isAnonimous">
               <ion-input name="password" type="password" placeholder="Clave" ngModel required></ion-input>
             </ion-item>
-            <ion-item>
+            <ion-item *ngIf="!isAnonimous">
               <ion-input name="confirm" type="password" placeholder="Repita Clave" ngModel required></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input [disabled]="true" name="foto" type="text" placeholder="Adjuntar Foto" ngModel required></ion-input>
+              <ion-button><ion-icon name="camera" (click)="takePicture()"></ion-icon></ion-button>
             </ion-item>
           </ion-card>
           </div>
@@ -37,4 +43,9 @@
       </ion-row>
     </ion-grid>
   </form>
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="qr-code-outline" (click)="openQR()"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
