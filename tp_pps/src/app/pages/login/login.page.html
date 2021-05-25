@@ -30,7 +30,7 @@
               [disabled]="false">
               Iniciar Sesión
             </ion-button>
-            <a [routerLink]="['/register']">Registrarse</a>
+            <a [routerLink]="['/register']" [state]="{ value:'cliente'}">Registrarse</a> o <a [routerLink]="['/register']" [state]="{ value:'anonimo'}">Ingresar como anónimo</a>
           </form>
         </ion-col>
       </ion-row>
