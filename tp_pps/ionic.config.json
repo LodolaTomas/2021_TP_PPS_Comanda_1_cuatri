@@ -1,7 +1,10 @@
 {
   "name": "tp_pps",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {
+      "enabled": false
+    },
+    "cordova": {}
   },
   "type": "angular"
 }
