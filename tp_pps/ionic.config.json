@@ -4,7 +4,11 @@
     "capacitor": {
       "enabled": false
     },
-    "cordova": {}
+    "cordova": {},
+    "serve":{
+      "url":"http://192.168.0.2:8100"
+    }
+
   },
   "type": "angular"
 }
