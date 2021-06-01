@@ -1,14 +1,7 @@
 {
   "name": "tp_pps",
   "integrations": {
-    "capacitor": {
-      "enabled": false
-    },
-    "cordova": {},
-    "serve":{
-      "url":"http://192.168.0.2:8100"
-    }
-
+    "capacitor": {}
   },
   "type": "angular"
 }
