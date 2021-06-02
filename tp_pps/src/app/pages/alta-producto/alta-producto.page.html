@@ -23,6 +23,9 @@
               <ion-input name="time" type="number" placeholder="Tiempo de Elaboración" ngModel required></ion-input>
             </ion-item>
             <ion-item>
+              <ion-input name="price" type="number" placeholder="Precio" ngModel required></ion-input>
+            </ion-item>
+            <ion-item>
               <ion-input [disabled]="true" name="foto" type="text" placeholder="Adjuntar Fotos" ngModel required></ion-input>
               <ion-button color="success"><ion-icon name="camera" (click)="takePicture()"></ion-icon></ion-button>
             </ion-item>
