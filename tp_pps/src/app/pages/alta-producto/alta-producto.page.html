@@ -27,16 +27,16 @@
             </ion-item>
             <ion-item>
               <ion-input [disabled]="true" name="foto" type="text" placeholder="Adjuntar Fotos" ngModel required></ion-input>
-              <ion-button color="success"><ion-icon name="camera" (click)="takePicture()"></ion-icon></ion-button>
+              <ion-button color="primary"><ion-icon name="camera" (click)="takePicture()"></ion-icon></ion-button>
             </ion-item>
             <ion-item>
               <ion-input [disabled]="true" name="foto" type="text" placeholder="Generar QR" ngModel required></ion-input>
-              <ion-button color="success"><ion-icon name="qr-code-outline"></ion-icon></ion-button>
+              <ion-button color="primary"><ion-icon name="qr-code-outline"></ion-icon></ion-button>
             </ion-item>
           </ion-card>
           </div>
           <div padding>
-            <ion-button  class="ion-margin-start ion-margin-end ion-margin-bottom" color="success" size="large" type="submit" [disabled]="form.invalid" expand="block">Confirmar</ion-button>
+            <ion-button  class="ion-margin-start ion-margin-end ion-margin-bottom" color="primary" size="large" type="submit" [disabled]="form.invalid" expand="block">Confirmar</ion-button>
           </div>
         </ion-col>
       </ion-row>
