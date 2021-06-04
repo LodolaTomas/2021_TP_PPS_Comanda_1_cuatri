@@ -5,5 +5,20 @@
 	"bundledWebRuntime": false,
 	"server":{
 		"url":"http://192.168.0.2:8100"
-	}
+	},
+	"plugins": {
+		"SplashScreen": {
+		  "launchShowDuration": 500,
+		  "launchAutoHide": true,
+		  "backgroundColor": "#6fc4e3c",
+		  "androidSplashResourceName": "splash",
+		  "androidScaleType": "CENTER_CROP",
+		  "showSpinner": true,
+		  "androidSpinnerStyle": "large",
+		  "iosSpinnerStyle": "small",
+		  "spinnerColor": "#999999",
+		  "splashFullScreen": true,
+		  "splashImmersive": true
+		}
+	  }
 }
