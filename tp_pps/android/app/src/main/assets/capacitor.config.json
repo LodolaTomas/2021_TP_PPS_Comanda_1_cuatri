@@ -2,5 +2,8 @@
 	"appId": "io.ionic.starter",
 	"appName": "tp_pps",
 	"webDir": "www",
-	"bundledWebRuntime": false
+	"bundledWebRuntime": false,
+	"serve": {
+		"url": "http://192.168.0.2:8100"
+	}
 }
