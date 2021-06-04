@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { AltaProductoPageRoutingModule } from './alta-producto-routing.module';
 
 import { AltaProductoPage } from './alta-producto.page';
+import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AltaProductoPageRoutingModule
+    AltaProductoPageRoutingModule,
+    NgxQRCodeModule
   ],
   declarations: [AltaProductoPage]
 })

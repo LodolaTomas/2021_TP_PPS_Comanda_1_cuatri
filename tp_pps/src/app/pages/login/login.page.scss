@@ -1,6 +1,24 @@
 form{
     margin-top: 15%;
 }
+
 ion-toolbar{
     text-align: center;
+}
+
+ion-content
+{
+    --background: #6FC4E3;
+}
+
+.icono
+{
+    height: 200px;
+
+}
+
+.titulo
+{
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 40px;
 }
