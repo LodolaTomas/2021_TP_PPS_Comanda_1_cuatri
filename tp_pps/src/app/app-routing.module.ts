@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { SplashComponent } from './pages/splash/splash.component';
 
 const routes: Routes = [
   {
@@ -8,13 +9,18 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'splash',
     pathMatch: 'full'
+  },
+  {
+    path:'splash',
+    component:SplashComponent
   },
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
-  },  {
+  },
+  {
     path: 'register',
     loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule)
   },
