@@ -7,6 +7,22 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  navigate : any;
 
+  constructor() {
+    this.sideMenu();
+  }
+
+
+  sideMenu()
+  {
+    this.navigate =
+    [
+      {
+        title : "Registrar Producto",
+        url   : "/alta-producto",
+        icon  : "pizza"
+      }
+    ]
+  }
 }

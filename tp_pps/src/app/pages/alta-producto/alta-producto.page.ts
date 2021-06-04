@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ModalController, NavParams  } from '@ionic/angular';
 import { File } from '@ionic-native/file/ngx';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-alta-producto',
@@ -12,12 +13,21 @@ export class AltaProductoPage implements OnInit {
   listaFotos: any;
   usuario: any;
   progress: boolean;
+  showQR:boolean=false;
+
+  title = 'app';
+  elementType = 'url';
+  value = 'Techiediaries';
 
   constructor(private camera: Camera,
               private modalController: ModalController,
-              private file: File) { }
+              private file: File,
+              private storage:StorageService) { }
 
   ngOnInit() {
+  }
+  showQRCode(){
+    this.showQR=true;
   }
   async takePicture(){
     const options: CameraOptions = {
@@ -32,7 +42,7 @@ export class AltaProductoPage implements OnInit {
       let cameraInfo = await this.camera.getPicture(options);
       
       const modal = await this.modalController.create({
-        component: "",
+        component: PictureNameModal,
         cssClass: 'my-custom-class'
       });
       
@@ -40,10 +50,7 @@ export class AltaProductoPage implements OnInit {
       const { data } = await modal.onWillDismiss();
 
       let blobInfo = await this.makeFileIntoBlob(cameraInfo);
-      let uploadInfo: any = await this.uploadToFirebase(blobInfo,data.nombre);
-      // let user = this.service.getCurrentUserId();
-      // let new_image = new Image(this.usuario, blobInfo['fileName'], 0);
-      // this.fservice.InsertUsuarioFoto({usuario:this.usuario ,url:uploadInfo, fecha_creacion: new Date(),likes:0, dislikes:0 },this.tematica);
+      let uploadInfo: any = await this.storage.uploadToFirebase(blobInfo, data.nombre," fotos_productos");
 
     } catch (e) {
       console.log(e);
@@ -82,68 +89,41 @@ export class AltaProductoPage implements OnInit {
         });
     });
   }
-  uploadToFirebase(_imageBlobInfo,nombre) {
-    this.progress = true;
-    const context = this;
-    const newDate = new Date();
-    _imageBlobInfo.fileName = nombre + "_" + newDate.getDate()+"-"+newDate.getMonth()+"-"+newDate.getFullYear();
-    // return new Promise((resolve, reject) => {
-    //   let fileRef = this.storage.ref("relevamiento_visual/" + _imageBlobInfo.fileName);
-    //   let uploadTask = fileRef.put(_imageBlobInfo.imgBlob);
-
-    //   uploadTask.task.on(
-    //     "state_changed",
-    //     (_snapshot: any) => {
-    //       this.progress = true;
-    //     },
-    //     _error => {
-    //       // this.alertSerive.create(_error.message);
-    //       alert(_error.message);
-    //       reject(_error);
-    //     },
-    //     () => {
-    //       resolve(uploadTask.snapshotChanges);
-    //     }
-    //   );
-    //   uploadTask.snapshotChanges()
-    //     .pipe(
-    //       finalize(() => {
-    //         fileRef.getDownloadURL().subscribe(url => {
-    //           this.listaFotos.push(url);
-    //           this.fservice.InsertUsuarioFoto({usuario:this.usuario ,url:url, fecha_creacion: new Date(),likes:0, dislikes:0, name: _imageBlobInfo.fileName })
-    //           .then((docRef)=> {
-    //             context.fservice.UpdateIdFoto(docRef.id,this.tematica);
-    //             this.progress = false
-    //           });
-    //         });
-    //       })
-    //     ).subscribe();
-    // });
-  }
+ 
 }
 @Component({
   selector: 'app-setPictureName',
   template: `
   <ion-header>
   <ion-toolbar>
-    <ion-title>Cambiar Nombre</ion-title>
+    <ion-title>Ingresar Nombre Foto</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
     <ion-item>
-      <ion-input  name="name" type="text" placeholder="Nombre" required></ion-input>
+    <ion-label position="floating">Nombre</ion-label>
+      <ion-input  [(ngModel)]="fileName" name="name" type="text" placeholder="Nombre" required></ion-input>
     </ion-item>
   <div padding>
-      <ion-button  class="ion-margin-start ion-margin-end ion-margin-bottom" color="primary" size="large" type="submit" expand="block">Confirmar</ion-button>
+      <ion-button expand="full" (click)="confirm()" class="ion-margin-start ion-margin-end ion-margin-bottom" color="primary" size="large" type="submit">Confirmar</ion-button>
   </div>
 </ion-content>
 `,
   styleUrls: ['./alta-producto.page.scss'],
 })
 class PictureNameModal {
+  
+  @Input()fileName:string;
 
- constructor(params: NavParams) {
-  //  console.log('UserId', params.get('userId'));
- }
-
+  constructor(params: NavParams,
+              private modalController:ModalController) {
+    //  console.log('UserId', params.get('userId'));
+  }
+ confirm(){
+  // using the injected ModalController this page
+ // can "dismiss" itself and optionally pass back data
+    this.modalController.dismiss({
+      'name': this.fileName
+    });
+}
 }
