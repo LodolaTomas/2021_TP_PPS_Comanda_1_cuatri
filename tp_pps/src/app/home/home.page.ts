@@ -22,7 +22,13 @@ export class HomePage {
         title : "Registrar Producto",
         url   : "/alta-producto",
         icon  : "pizza"
-      }
+      },
+      
+        {
+          title : "Alta de mesa",
+          url   : "/alta-mesa",
+          icon  : "pencil"
+        }
     ]
   }
 }
