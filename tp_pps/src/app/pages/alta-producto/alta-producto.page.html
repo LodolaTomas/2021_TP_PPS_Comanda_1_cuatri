@@ -26,12 +26,12 @@
               <ion-input name="price" type="number" placeholder="Precio" ngModel required></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input [disabled]="true" name="foto" type="text" placeholder="Adjuntar Fotos" ngModel required></ion-input>
-              <ion-button color="success"><ion-icon name="camera" (click)="takePicture()"></ion-icon></ion-button>
+              <ion-input [disabled]="true" name="foto" type="text" placeholder="Adjuntar Fotos" ngModel></ion-input>
+              <ion-button color="primary"><ion-icon name="camera" (click)="takePicture()"></ion-icon></ion-button>
             </ion-item>
             <ion-item>
-              <ion-input [disabled]="true" name="foto" type="text" placeholder="Generar QR" ngModel required></ion-input>
-              <ion-button color="success"><ion-icon name="qr-code-outline"></ion-icon></ion-button>
+              <ion-input [disabled]="true" name="foto" type="text" placeholder="Generar QR" ngModel ></ion-input>
+              <ion-button color="primary" (click)="showQRCode()"><ion-icon name="qr-code-outline" ></ion-icon></ion-button>
             </ion-item>
           </ion-card>
           </div>
@@ -42,4 +42,12 @@
       </ion-row>
     </ion-grid>
   </form>
+  <div style="text-align:center" *ngIf="showQR">
+      <ngx-qrcode 
+        [elementType]="elementType" 
+        [value]="value"
+        cssClass="qrClass"
+        errorCorrectionLevel="L">
+    </ngx-qrcode>
+  </div>
 </ion-content>
