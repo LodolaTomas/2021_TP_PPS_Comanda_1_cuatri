@@ -27,9 +27,10 @@ PPS - 1 cuat. - grupo Utn Devs
 First  	     | Second 
 ------------ | -------------
 <img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/screenSplash.jpg?raw=true" height="350px"> | <img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/screenLogin.jpg?raw=true" height="350px"> 
-
+------------ | -------------
 <img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/screenAnonimo.jpg?raw=true" height="350px"> |<img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/screenAltaProd.jpg?raw=true.jpg?raw=true" height="350px">
-
+------------ | -------------
 <img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/screenMenuHome.jpg?raw=true.jpg?raw=true" height="350px"> | <img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/screenAltaProducto.jpg?raw=true" height="350px"> 
-
+------------ | -------------
 <td><img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/screenAltaMesa.jpg?raw=true" height="350px">  
+------------ | -------------
