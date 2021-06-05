@@ -23,7 +23,7 @@ PPS - 1 cuat. - grupo Utn Devs
 Link al video Sprint 1 (Solo UI) -> https://drive.google.com/file/d/1Y48HUTCOh9MkjnClKAX6YNGOq7-udL9d/view?usp=drivesdk
 
 
- <img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/iconScreen.jpg?raw=true" height="350px"> 
+ <img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/iconScreen.jpg?raw=true" height="100px"> 
 
 
 1  	         | 2 
