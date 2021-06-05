@@ -52,5 +52,5 @@ PPS - 1 cuat. - grupo Utn Devs
 
 First Header | Second Header
 ------------ | -------------
-Content from cell 1 | Content from cell 2
+<img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/screenSplash.jpg?raw=true" height="350px"> | <img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/screenSplash.jpg?raw=true" height="350px">
 Content in the first column | Content in the second column
