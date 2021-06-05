@@ -16,15 +16,15 @@ PPS - 1 cuat. - grupo Utn Devs
 
 ## Sprint 1
 
-### En este sprint realizamos el diseño del icono, del splash y la interfaz, de Login, Login anonimo, registro de cliente, alta de producto y alta de mesa
+### En este sprint realizamos el diseño del icono, del splash y la interfaz, de Login, Login anonimo, registro de cliente, alta de producto y alta de mesa  (solo interfaz de usuario) 
 
-Link al video Sprint 1 -> https://drive.google.com/file/d/1Y48HUTCOh9MkjnClKAX6YNGOq7-udL9d/view?usp=drivesdk" 
-
-
+Link al video Sprint 1 (Solo UI) -> https://drive.google.com/file/d/1Y48HUTCOh9MkjnClKAX6YNGOq7-udL9d/view?usp=drivesdk
 
 
 
-First  	     | Second 
+
+
+1  	     | 2 
 ------------ | -------------
 <img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/screenSplash.jpg?raw=true" height="350px"> | <img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/screenLogin.jpg?raw=true" height="350px"> 
  ------------ | ------------
