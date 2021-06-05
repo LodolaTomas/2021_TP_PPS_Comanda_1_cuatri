@@ -5,6 +5,8 @@ PPS - 1 cuat. - grupo Utn Devs
 
 <img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/iconUnPocoMasChico.png?raw=true" height="280px">
 
+#### Restaurante: Coma y punto
+
 ## Sprints
 
 <img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1.png?raw=true">
