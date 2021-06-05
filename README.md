@@ -11,6 +11,7 @@ PPS - 1 cuat. - grupo Utn Devs
 
 <img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint2.png?raw=true">
 
+<img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint2Comp.png?raw=true">
 
 
 ## Sprint 1
