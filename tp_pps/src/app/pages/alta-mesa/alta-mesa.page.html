@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <form  #form="ngForm" (ngSubmit)="(form)">
+  <form #form="ngForm" (ngSubmit)="(form)">
     <ion-grid>
       <ion-row color="primary">
         <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
@@ -13,35 +13,61 @@
           </div>
           <div class="ion-text-center" size-md="6" size-lg="5" size-xs="12">
             <ion-card color="light" class="auth-card ion-margin">
-            <ion-item>
-              <ion-input  name="name" type="text" placeholder="Cantidad de comensales" disabled ngModel required></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-grid>
-              <ion-row >
-                <ion-col>
-                  <ion-button expand="block" class="addRemove">-</ion-button>
-              </ion-col>
+              <ion-item>
+                <ion-input class="cantidadInput" name="name" type="text" placeholder="Cantidad de comensales"
+                  value="{{cantidadComensales}}" disabled ngModel required></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-grid>
+                  <ion-row>
+                    <ion-col>
+                      <ion-button expand="block" (click)="retirarComensal()" class="addRemove">-</ion-button>
+                    </ion-col>
 
-            <ion-col>
-              <ion-button expand="block" class="addRemove">+</ion-button>
-              </ion-col>
-              </ion-row>
-            </ion-grid>
-            </ion-item>
+                    <ion-col>
+                      <ion-button expand="block" (click)="agregarComensal()" class="addRemove">+</ion-button>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-item>
 
-            <ion-item>
-              <ion-input [disabled]="true" name="foto" type="text" placeholder="Adjuntar Fotos" ngModel></ion-input>
-              <ion-button color="primary"><ion-icon name="camera" ></ion-icon></ion-button>
-            </ion-item>
-            <ion-item>
-              <ion-input [disabled]="true" name="foto" type="text" placeholder="Generar QR" ngModel ></ion-input>
-              <ion-button color="primary" ><ion-icon name="qr-code-outline" ></ion-icon></ion-button>
-            </ion-item>
-          </ion-card>
+
+              <ion-item>
+                <ion-input class="cantidadInput" name="name" type="text" placeholder="Tipo de mesa"
+                  value="{{cantidadComensales}}" disabled ngModel required></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-grid>
+                  <ion-row>
+                    <ion-col>
+                      <ion-button expand="block"  >VIP</ion-button>
+                    </ion-col>
+
+                    <ion-col>
+                      <ion-button expand="block"  >Discapcitados</ion-button>
+                    </ion-col>
+
+
+                    <ion-col>
+                      <ion-button expand="block"  >Niños</ion-button>
+                    </ion-col>
+
+                  </ion-row>
+                </ion-grid>
+              </ion-item>
+
+              <ion-item>
+                <ion-input [disabled]="true" name="foto" type="text" placeholder="Adjuntar Foto" ngModel></ion-input>
+                <ion-button color="primary">
+                  <ion-icon name="camera"></ion-icon>
+                </ion-button>
+              </ion-item>
+
+            </ion-card>
           </div>
           <div padding>
-            <ion-button  class="ion-margin-start ion-margin-end ion-margin-bottom" color="success" size="large" type="submit" [disabled]="form.invalid" expand="block">Confirmar</ion-button>
+            <ion-button class="ion-margin-start ion-margin-end ion-margin-bottom" color="success" size="large"
+              type="submit" [disabled]="form.invalid" expand="block">Confirmar</ion-button>
           </div>
         </ion-col>
       </ion-row>
