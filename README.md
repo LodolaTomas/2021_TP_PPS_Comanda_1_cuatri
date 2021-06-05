@@ -21,36 +21,15 @@ PPS - 1 cuat. - grupo Utn Devs
 <a href=" https://drive.google.com/file/d/1Y48HUTCOh9MkjnClKAX6YNGOq7-udL9d/view?usp=drivesdk" >Link al video Sprint 1</a>
 
 
-<table>
-
-  <tr>
-
-    <td ><img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/screenSplash.jpg?raw=true" height="350px"> </td>
-	  
-	  <td><img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/screenLogin.jpg?raw=true" height="350px">  </td>
-	  
-	  <td> <img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/screenAnonimo.jpg?raw=true" height="350px"> </td>
-	  
-	    <tr>
-			<td> <img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/screenAltaProd.jpg?raw=true.jpg?raw=true" height="350px"> </td>
-			
-			<td> <img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/screenMenuHome.jpg?raw=true.jpg?raw=true" height="350px"> 
-			 </td>
-			
-			<td> 		
-			<img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/screenAltaProducto.jpg?raw=true" height="350px"> </td>
-									
-			<td><img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/screenAltaMesa.jpg?raw=true" height="350px">  </td>
-
- 		 </tr>
-	  
-  </tr>
-	
-	
-</table>
 
 
-First Header | Second Header
+
+First  	     | Second 
 ------------ | -------------
-<img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/screenSplash.jpg?raw=true" height="350px"> | <img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/screenSplash.jpg?raw=true" height="350px">
-Content in the first column | Content in the second column
+<img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/screenSplash.jpg?raw=true" height="350px"> | <img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/screenLogin.jpg?raw=true" height="350px"> 
+
+<img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/screenAnonimo.jpg?raw=true" height="350px"> |<img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/screenAltaProd.jpg?raw=true.jpg?raw=true" height="350px">
+
+<img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/screenMenuHome.jpg?raw=true.jpg?raw=true" height="350px"> | <img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/screenAltaProducto.jpg?raw=true" height="350px"> 
+
+<td><img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/screenAltaMesa.jpg?raw=true" height="350px">  
