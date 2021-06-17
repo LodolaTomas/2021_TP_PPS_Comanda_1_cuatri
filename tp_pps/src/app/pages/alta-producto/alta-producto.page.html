@@ -26,12 +26,12 @@
               <ion-input name="price" type="number" placeholder="Precio" ngModel required></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input [disabled]="true" name="foto" type="text" placeholder="Adjuntar Fotos" ngModel></ion-input>
-              <ion-button color="primary"><ion-icon name="camera" (click)="takePicture()"></ion-icon></ion-button>
-            </ion-item>
+              <ion-input name="foto" type="text" placeholder="Adjuntar Fotos" ngModel></ion-input>
+              <ion-button color="primary" (click)="takePicture()"><ion-icon name="camera" ></ion-icon></ion-button>
+            </ion-item> 
             <ion-item>
-              <ion-input [disabled]="true" name="foto" type="text" placeholder="Generar QR" ngModel ></ion-input>
-              <ion-button color="primary" (click)="showQRCode()"><ion-icon name="qr-code-outline" ></ion-icon></ion-button>
+              <ion-input name="foto" type="text" placeholder="Generar QR" ngModel ></ion-input>
+              <ion-button color="primary" (click)="generateQRCode()"><ion-icon name="qr-code-outline" ></ion-icon></ion-button>
             </ion-item>
           </ion-card>
           </div>

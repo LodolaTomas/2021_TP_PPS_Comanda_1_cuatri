@@ -12,7 +12,7 @@ export class CloudFirestoreService {
               private storage:AngularFireStorage) {}
 
       Insert(collectionName:string,data:any) {
-          return this.cloudFireStore.collection(collectionName).add(data);
+          return this.cloudFireStore.collection(collectionName).add({...data});
       }
 
       GetAll(collectionName:string){

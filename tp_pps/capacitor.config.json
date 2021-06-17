@@ -3,9 +3,6 @@
 	"appName": "tp_pps",
 	"webDir": "www",
 	"bundledWebRuntime": false,
-	"server":{
-		"url":"http://192.168.0.2:8100"
-	},
 	"plugins": {
 		"SplashScreen": {
 		  "launchShowDuration": 500,

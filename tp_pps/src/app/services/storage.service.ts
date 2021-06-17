@@ -11,39 +11,43 @@ export class StorageService {
   constructor(private storage: AngularFireStorage,
               private firebaseService:CloudFirestoreService) { }
 
-  uploadToFirebase(imageBlobInfo:any, fileName:string, dbName:string) {
+  uploadToFirebase(imageBlobInfo:any, dbName:string, user:string) {
     const context = this;
     const newDate = new Date();
-    imageBlobInfo.fileName = fileName + "_" + newDate.getDate()+"-"+newDate.getMonth()+"-"+newDate.getFullYear();
-    return new Promise((resolve, reject) => {
-      let fileRef = this.storage.ref("relevamiento_visual/" + imageBlobInfo.fileName);
-      let uploadTask = fileRef.put(imageBlobInfo.imgBlob);
-
-      uploadTask.task.on(
+    // fileName ="foto";
+    var fileName = "foto" + "_" + newDate.getDate()+"-"+newDate.getMonth()+"-"+newDate.getFullYear() + "_" + newDate.getHours() +newDate.getMinutes() +newDate.getSeconds() + newDate.getMilliseconds()+".jpg";
+    // return new Promise((resolve, reject) => {
+      let fileRef = this.storage.ref(fileName);
+      // const task = this.storage.upload(fileName,imageBlobInfo);
+      
+      let task = fileRef.put(imageBlobInfo);
+      
+      task.task.on(
         "state_changed",
         (_snapshot: any) => {
         },
         _error => {
           alert(_error.message);
-          reject(_error);
         },
         () => {
-          resolve(uploadTask.snapshotChanges);
+          // resolve(uploadTask.snapshotChanges);
         }
       );
-      uploadTask.snapshotChanges()
+
+      task.snapshotChanges()
         .pipe(
           finalize(() => {
             fileRef.getDownloadURL().subscribe(url => {
-              var data =  {user:"prueba" , url:url, created_date: new Date(), name: imageBlobInfo.fileName, id:"" };
-              this.firebaseService.Insert(dbName,data)
-              .then((docRef)=> {
-                data.id = docRef.id;
-                context.firebaseService.Update(docRef.id,dbName,data);
-              });
+              // var data =  {user:user, url:url, created_date: new Date(), name: imageBlobInfo.fileName, id:"" };
+              return url;
+              // this.firebaseService.Insert(dbName,data)
+              // .then((docRef)=> {
+              //   data.id = docRef.id;
+              //   context.firebaseService.Update(docRef.id,dbName,data);
+              // });
             });
           })
         ).subscribe();
-    });
+    // });
   }
 }

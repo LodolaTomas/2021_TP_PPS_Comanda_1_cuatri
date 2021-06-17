@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Ingresar Nombre Foto</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-item>
+    <ion-label position="floating">Nombre</ion-label>
+      <ion-input  [(ngModel)]="fileName" name="name" type="text" placeholder="Nombre" required></ion-input>
+    </ion-item>
+  <div padding>
+      <ion-button expand="full" (click)="confirm()" class="ion-margin-start ion-margin-end ion-margin-bottom" color="primary" size="large" type="submit">Confirmar</ion-button>
+  </div>
+</ion-content>
