@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { Component } from '@angular/core';
 
@@ -10,7 +11,7 @@ export class HomePage {
 
   navigate : any;
 
-  constructor(private authS:AuthService) {
+  constructor(private authS:AuthService, private router:Router) {
     this.sideMenu();
   }
 
@@ -36,6 +37,6 @@ export class HomePage {
   logout()
   {
     this.authS.LogOutCurrentUser()
-    location.assign('/login')
+    this.router.navigateByUrl('login')
   }
 }
