@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package utn.devs.cyp.V1;
 
 import com.getcapacitor.BridgeActivity;
 

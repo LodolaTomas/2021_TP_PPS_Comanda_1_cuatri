@@ -19,3 +19,19 @@ ion-content
     text-align: center;
     font-size: 25px;
 }
+
+.tipoMesa
+{
+    margin: auto;
+    height: 35px;
+    width: 250px;
+    font-size: large;
+}
+
+
+ion-input {
+    --placeholder-color: rgb(0, 0, 0);     /* placeholder text color */
+    color: var(--ion-color-dark); /* input text color to primary */
+    text-shadow: none;
+}
+

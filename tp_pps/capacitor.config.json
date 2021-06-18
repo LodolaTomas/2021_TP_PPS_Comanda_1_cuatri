@@ -1,24 +1,26 @@
 {
-	"appId": "io.ionic.starter",
-	"appName": "tp_pps",
-	"webDir": "www",
-	"bundledWebRuntime": false,
-	"server":{
-		"url":"http://192.168.0.2:8100"
-	},
-	"plugins": {
-		"SplashScreen": {
-		  "launchShowDuration": 500,
-		  "launchAutoHide": true,
-		  "backgroundColor": "#6fc4e3c",
-		  "androidSplashResourceName": "splash",
-		  "androidScaleType": "CENTER_CROP",
-		  "showSpinner": true,
-		  "androidSpinnerStyle": "large",
-		  "iosSpinnerStyle": "small",
-		  "spinnerColor": "#999999",
-		  "splashFullScreen": true,
-		  "splashImmersive": true
-		}
-	  }
+  "appId": "utn.devs.cyp.V1",
+  "appName": "Coma y punto",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "server": {
+    "url": "http://192.168.2.175:8100",
+    "originalUrl": "http://192.168.2.175:8100",
+    "cleartext": true
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 500,
+      "launchAutoHide": true,
+      "backgroundColor": "#6fc4e3c",
+      "androidSplashResourceName": "splash",
+      "androidScaleType": "CENTER_CROP",
+      "showSpinner": false,
+      "androidSpinnerStyle": "large",
+      "iosSpinnerStyle": "small",
+      "spinnerColor": "#999999",
+      "splashFullScreen": true,
+      "splashImmersive": true
+    }
+  }
 }
