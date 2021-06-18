@@ -83,28 +83,20 @@ export class AltaMesaPage implements OnInit {
         break;
     }
   }
-
-  async subirFoto() {
-
-    this.imgSVC.sacarFoto("mesas")
-    this.foto 
-    console.log(this.foto)
+  onUpload1($event) {
+    console.log($event.target.files[0])
+    this.foto = $event.target.files[0];
   }
 
-  agregarMesa() {
+  async agregarMesa() {
+
     this.mesa.cantidadComensales = this.cantidadComensales;
     this.mesa.tipo = this.tipoMesa;
-
+    this.foto= await this.imgSVC.uploadPhoto('/mesas/',this.foto)
     this.mesa.foto = this.foto;
-
-
     this.mesaSVC.agregarMesa(this.mesa)
     this.alert('success', 'Mesa agreagada al restaurante')
-
   }
-
-
-
 
 
   alert(icon: SweetAlertIcon, text: string) {

@@ -60,8 +60,8 @@
               </ion-item>
 
               <ion-item>
-                <ion-input [disabled]="true" name="foto" type="text" placeholder="Adjuntar Foto" ></ion-input>
-                <ion-button color="primary "  (click)="subirFoto()">
+                <ion-input [disabled]="false" name="foto" type="file" placeholder="Adjuntar Foto" (change)="onUpload1($event)" ></ion-input>
+                <ion-button color="primary ">
                   <ion-icon name="camera" size="large"></ion-icon>
                 </ion-button>
               </ion-item>
