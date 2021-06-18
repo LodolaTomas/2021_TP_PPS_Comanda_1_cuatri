@@ -16,4 +16,22 @@ export class MesaService {
       this.rutaDeLaColeccionMesas
     );
    }
+
+   agregarMesa(mesa: Mesa) {
+
+    let idDate = new Date();
+    let id = idDate.getTime().toString();
+
+    this.db
+      .collection('mesas')
+      .doc(id)
+      .set({
+        id: id,
+        cantidadComensales: mesa.cantidadComensales,
+        tipo: mesa.tipo,
+        foto: mesa.foto,
+        //datosExtra: Object.assign({}, historia.datosExtra),
+      });
+  }
+
 }
