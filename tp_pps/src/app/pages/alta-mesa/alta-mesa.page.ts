@@ -1,5 +1,11 @@
+import { ImagesService } from './../../services/images.service';
+import { Mesa } from './../../clases/mesa';
+import { MesaService } from './../../services/mesa.service';
 import { Component, OnInit } from '@angular/core';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
+import * as firebase from 'firebase';
+import { AngularFireStorage } from '@angular/fire/storage';
+
 
 @Component({
   selector: 'app-alta-mesa',
@@ -10,23 +16,27 @@ export class AltaMesaPage implements OnInit {
 
   public cantidadComensales: number;
 
-  public tipoMesa:string;
+  public tipoMesa: string;
+
+  public mesa: Mesa
 
   public buttonColor1: string = "primary";
   public buttonColor2: string = "primary";
   public buttonColor3: string = "primary";
   public buttonColor4: string = "warning";
 
+  public foto: any;
+  public fotoCargada: any;
 
 
-  
 
-  constructor() {
+  constructor(private mesaSVC: MesaService, private storage: AngularFireStorage, private imgSVC: ImagesService) {
     this.cantidadComensales = 0;
     this.tipoMesa = "normal"
+    this.mesa = new Mesa()
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   agregarComensal() {
     this.cantidadComensales += 1;
@@ -74,12 +84,29 @@ export class AltaMesaPage implements OnInit {
     }
   }
 
-  agregarMesa(){
+  async subirFoto() {
+
+    this.imgSVC.sacarFoto("mesas")
+    this.foto 
+    console.log(this.foto)
+  }
+
+  agregarMesa() {
+    this.mesa.cantidadComensales = this.cantidadComensales;
+    this.mesa.tipo = this.tipoMesa;
+
+    this.mesa.foto = this.foto;
+
+
+    this.mesaSVC.agregarMesa(this.mesa)
     this.alert('success', 'Mesa agreagada al restaurante')
+
   }
 
 
-  
+
+
+
   alert(icon: SweetAlertIcon, text: string) {
     const Toast = Swal.mixin({
       toast: true,
@@ -87,13 +114,13 @@ export class AltaMesaPage implements OnInit {
       showConfirmButton: false,
       timer: 2000,
       timerProgressBar: true,
-      
+
       didOpen: (toast) => {
         toast.addEventListener('mouseenter', Swal.stopTimer)
         toast.addEventListener('mouseleave', Swal.resumeTimer)
       }
     })
-    
+
     Toast.fire({
       icon: icon,
       title: text
