@@ -90,12 +90,13 @@ export class AltaMesaPage implements OnInit {
     this.foto 
     console.log(this.foto)
   }
+  
 
   agregarMesa() {
     this.mesa.cantidadComensales = this.cantidadComensales;
     this.mesa.tipo = this.tipoMesa;
 
-    this.mesa.foto = this.foto;
+    this.mesa.foto = "";
 
 
     this.mesaSVC.agregarMesa(this.mesa)
