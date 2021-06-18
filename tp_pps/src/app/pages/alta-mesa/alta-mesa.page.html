@@ -3,7 +3,6 @@
     <ion-title>Alta de mesa</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
   <form #form="ngForm" (ngSubmit)="(form)">
     <ion-grid>
@@ -60,9 +59,9 @@
               </ion-item>
 
               <ion-item>
-                <ion-input [disabled]="true" name="foto" placeholder="Adjuntar Foto" ></ion-input>
-                <ion-button type="file" color="primary ">
-                  <ion-icon   name="camera" size="large"></ion-icon>
+                <ion-input [disabled]="false" name="foto" type="file" placeholder="Adjuntar Foto" (change)="onUpload1($event)" ></ion-input>
+                <ion-button color="primary ">
+                  <ion-icon name="camera" size="large"></ion-icon>
                 </ion-button>
               </ion-item>
 
