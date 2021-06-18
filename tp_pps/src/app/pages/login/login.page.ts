@@ -17,6 +17,14 @@ export class LoginPage implements OnInit {
 
   public ingresando: boolean;
 
+  users =[
+    {"email":"admin@yopmail.com","clave":"123456"},
+    {"email":"metre@yopmail.com","clave":"123456"},
+    {"email":"cliente@yopmail.com","clave":"123456"},
+    {"email":"cocinero@yopmail.com","clave":"123456"},
+    {"email":"empleado@yopmail.com","clave":"123456"}
+  ];
+
   constructor(private formBuilder: FormBuilder, private router: Router, private authSvc: AuthService) {
     this.miFormulario = formBuilder.group({
       email: new FormControl(""),
@@ -26,6 +34,8 @@ export class LoginPage implements OnInit {
     this.user.email = '';
     this.user.password = '';
     this.ingresando = false;
+
+
   }
 
   ngOnInit() {
@@ -49,6 +59,15 @@ export class LoginPage implements OnInit {
   public submit() {
     //console.log(this.registrationForm.value);
   }
+
+  public LoginFast(id:number){
+
+    this.miFormulario.controls['email'].setValue(this.users[id].email);
+    this.miFormulario.controls['clave'].setValue(this.users[id].clave);
+
+  }
+
+
 
 
 

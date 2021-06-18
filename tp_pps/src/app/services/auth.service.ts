@@ -49,6 +49,14 @@ export class AuthService {
     }
   }
 
+  GetCurrentUser() {
+    return this.afAuth.currentUser;
+  }
+
+  LogOutCurrentUser() {
+    this.afAuth.signOut();
+  }
+
 
   alert(icon: SweetAlertIcon, text: string) {
     const Toast = Swal.mixin({

@@ -29,6 +29,11 @@ export class AltaProductoPage implements OnInit {
   showQRCode(){
     this.showQR=true;
   }
+
+  register(form:any)
+  {
+
+  }
   async takePicture(){
     const options: CameraOptions = {
       quality: 80,
