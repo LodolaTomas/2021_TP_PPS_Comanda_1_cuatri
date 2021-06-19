@@ -1,9 +1,9 @@
+import { CloudFirestoreService } from './../../services/cloud-firestore.service';
 import { ImagesService } from './../../services/images.service';
 import { Mesa } from './../../clases/mesa';
 import { MesaService } from './../../services/mesa.service';
 import { Component, OnInit } from '@angular/core';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
-import { AngularFireStorage } from '@angular/fire/storage';
 
 
 @Component({
@@ -19,6 +19,8 @@ export class AltaMesaPage implements OnInit {
 
   public mesa: Mesa
 
+  public cargando:boolean;
+
   public buttonColor1: string = "primary";
   public buttonColor2: string = "primary";
   public buttonColor3: string = "primary";
@@ -29,10 +31,11 @@ export class AltaMesaPage implements OnInit {
 
 
 
-  constructor(private mesaSVC: MesaService, private imgSVC: ImagesService) {
+  constructor(private mesaSVC: MesaService, private imgSVC: ImagesService, private firestore:CloudFirestoreService) {
     this.cantidadComensales = 0;
     this.tipoMesa = "normal"
     this.mesa = new Mesa()
+    this.cargando= false
   }
 
   ngOnInit() { }
@@ -90,14 +93,37 @@ export class AltaMesaPage implements OnInit {
 
   async agregarMesa() {
 
+    this.cargando = true;
+    let idCustom;
+    let idDate = new Date()
+
+    idCustom = idDate.getTime().toString()
     this.mesa.cantidadComensales = this.cantidadComensales;
     this.mesa.tipo = this.tipoMesa;
     this.foto= await this.imgSVC.uploadPhoto('/mesas/',this.foto)
     this.mesa.foto = this.foto;
-    this.mesaSVC.agregarMesa(this.mesa)
+    this.mesa.id = idCustom
+    this.firestore.InsertCustomID('mesas', idCustom, Object.assign({}, this.mesa) )
+   // this.mesaSVC.agregarMesa(this.mesa)
     this.alert('success', 'Mesa agreagada al restaurante')
+    this.limpiarForm();
+    this.cargando = false;
+
+
   }
 
+
+  limpiarForm()
+  {
+    this.cantidadComensales = 1
+    this.tipoMesa = "normal"
+    this.buttonColor1 = "primary";
+    this.buttonColor2 = "primary";
+    this.buttonColor3 = "primary";
+    this.buttonColor4 = "warning";
+    this.foto = ''
+
+  }
 
   alert(icon: SweetAlertIcon, text: string) {
     const Toast = Swal.mixin({
