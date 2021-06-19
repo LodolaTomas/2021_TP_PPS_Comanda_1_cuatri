@@ -1,7 +1,12 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Alta de mesa</ion-title>
+
+    <ion-buttons slot="start">
+      <ion-button color="dark" routerLink="/supervisor"><ion-icon slot="icon-only" name="arrow-back"></ion-icon></ion-button>
+    </ion-buttons>
   </ion-toolbar>
+
 </ion-header>
 <ion-content>
   <form #form="ngForm" (ngSubmit)="(form)">
@@ -60,9 +65,7 @@
 
               <ion-item>
                 <ion-input [disabled]="false" name="foto" type="file" placeholder="Adjuntar Foto" (change)="onUpload1($event)" ></ion-input>
-                <ion-button color="primary ">
-                  <ion-icon name="camera" size="large"></ion-icon>
-                </ion-button>
+    
               </ion-item>
 
             </ion-card>
