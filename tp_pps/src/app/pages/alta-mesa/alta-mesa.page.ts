@@ -3,7 +3,6 @@ import { Mesa } from './../../clases/mesa';
 import { MesaService } from './../../services/mesa.service';
 import { Component, OnInit } from '@angular/core';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
-import * as firebase from 'firebase';
 import { AngularFireStorage } from '@angular/fire/storage';
 
 
@@ -30,7 +29,7 @@ export class AltaMesaPage implements OnInit {
 
 
 
-  constructor(private mesaSVC: MesaService, private storage: AngularFireStorage, private imgSVC: ImagesService) {
+  constructor(private mesaSVC: MesaService, private imgSVC: ImagesService) {
     this.cantidadComensales = 0;
     this.tipoMesa = "normal"
     this.mesa = new Mesa()
