@@ -15,17 +15,17 @@ export class RegisterPage implements OnInit {
 
   constructor(private router:Router, private barcodeScanner:BarcodeScanner) { 
     const state = this.router.getCurrentNavigation().extras.state;
-    if(state!=null){
+    if (state != null) {
       this.isAnonimous = state.value == 'anonimo';
     }
   }
 
   ngOnInit() {
   }
-  register(form){
+  register(form) {
 
   }
-  takePicture(){
+  takePicture() {
 
   }
   openQR(){
@@ -37,4 +37,8 @@ export class RegisterPage implements OnInit {
       alert(err);
     });
   }
+
+
+
+
 }
