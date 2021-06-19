@@ -22,7 +22,7 @@ export class LoginPage implements OnInit {
     {"email":"metre@yopmail.com","clave":"123456"},
     {"email":"cliente@yopmail.com","clave":"123456"},
     {"email":"cocinero@yopmail.com","clave":"123456"},
-    {"email":"empleado@yopmail.com","clave":"123456"}
+    {"email":"supervisor@yopmail.com","clave":"123456"}
   ];
 
   constructor(private formBuilder: FormBuilder, private router: Router, private authSvc: AuthService) {
@@ -52,7 +52,15 @@ export class LoginPage implements OnInit {
     if (user) {
       this.authSvc.currentUser = this.user;
       console.log(this.authSvc.currentUser);
-      this.router.navigateByUrl('/home');
+      
+      if(this.user.email == 'supervisor@yopmail.com')
+      {
+        this.router.navigateByUrl('/supervisor');
+      }
+      else{
+        this.router.navigateByUrl('/home');
+      }
+
     }
   }
 
