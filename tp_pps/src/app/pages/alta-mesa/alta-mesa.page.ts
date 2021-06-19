@@ -87,6 +87,7 @@ export class AltaMesaPage implements OnInit {
     console.log($event.target.files[0])
     this.foto = $event.target.files[0];
   }
+  
 
   async agregarMesa() {
 
