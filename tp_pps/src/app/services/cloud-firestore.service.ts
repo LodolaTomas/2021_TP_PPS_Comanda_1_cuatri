@@ -23,8 +23,8 @@ export class CloudFirestoreService {
           return this.cloudFireStore.collection(collectionName).snapshotChanges().pipe(
             map( actions=> 
               actions.map(a=>{
-                const data = a.payload.doc.data();
-                const id = a.payload.doc.id;
+                const data:any = a.payload.doc.data();
+                data.id = a.payload.doc.id;
                 return data;
               }))
           );
