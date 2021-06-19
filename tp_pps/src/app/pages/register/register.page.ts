@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
-
+import { Camera, CameraResultType } from '@capacitor/camera';
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
@@ -23,10 +23,24 @@ export class RegisterPage implements OnInit {
   ngOnInit() {
   }
   register(form) {
-
+    console.log(form.value)
   }
   takePicture() {
-
+    const takePicture = async () => {
+      const image = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: true,
+        resultType: CameraResultType.Uri
+      });
+    
+      // image.webPath will contain a path that can be set as an image src.
+      // You can access the original file using image.path, which can be
+      // passed to the Filesystem API to read the raw data of the image,
+      // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
+      var imageUrl = image.webPath;
+    
+      console.log(imageUrl)
+    };
   }
   openQR(){
     this.barcodeScanner.scan().then(res => {
