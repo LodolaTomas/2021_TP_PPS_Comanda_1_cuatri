@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { SupervisorComponent } from './supervisor.component';
+import { SupervisorPage } from './supervisor.page';
 
-describe('SupervisorComponent', () => {
-  let component: SupervisorComponent;
-  let fixture: ComponentFixture<SupervisorComponent>;
+describe('SupervisorPage', () => {
+  let component: SupervisorPage;
+  let fixture: ComponentFixture<SupervisorPage>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SupervisorComponent ],
+      declarations: [ SupervisorPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SupervisorComponent);
+    fixture = TestBed.createComponent(SupervisorPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
