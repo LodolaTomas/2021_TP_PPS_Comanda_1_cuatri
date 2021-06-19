@@ -12,7 +12,6 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from './../environments/environment';
 
-import { Camera } from '@ionic-native/camera/ngx';
 
 import { File } from '@ionic-native/file/ngx';
 
@@ -23,7 +22,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, AngularFireAuthModule, AngularFireModule.initializeApp(environment.firebaseConfig)],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, Camera, File,  BarcodeScanner,
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, File,  BarcodeScanner,
     { 
       provide: RouteReuseStrategy, 
       useClass: IonicRouteStrategy 
@@ -31,4 +30,3 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
   bootstrap: [AppComponent],
 })
 export class AppModule {}
-

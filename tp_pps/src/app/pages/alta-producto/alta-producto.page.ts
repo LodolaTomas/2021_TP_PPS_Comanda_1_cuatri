@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { ModalController, NavParams  } from '@ionic/angular';
 import { File } from '@ionic-native/file/ngx';
 import { StorageService } from 'src/app/services/storage.service';
@@ -19,7 +18,7 @@ export class AltaProductoPage implements OnInit {
   elementType = 'url';
   value = 'Techiediaries';
 
-  constructor(private camera: Camera,
+  constructor(
               private modalController: ModalController,
               private file: File,
               private storage:StorageService) { }
@@ -34,34 +33,7 @@ export class AltaProductoPage implements OnInit {
   {
 
   }
-  async takePicture(){
-    const options: CameraOptions = {
-      quality: 80,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
-    };
 
-    try {
-
-      let cameraInfo = await this.camera.getPicture(options);
-      
-      const modal = await this.modalController.create({
-        component: PictureNameModal,
-        cssClass: 'my-custom-class'
-      });
-      
-      await modal.present();
-      const { data } = await modal.onWillDismiss();
-
-      let blobInfo = await this.makeFileIntoBlob(cameraInfo);
-      let uploadInfo: any = await this.storage.uploadToFirebase(blobInfo, data.nombre," fotos_productos");
-
-    } catch (e) {
-      console.log(e);
-      alert(e);
-    }
-  }
   makeFileIntoBlob(_imagePath) {
     return new Promise((resolve, reject) => {
       let fileName = "";
