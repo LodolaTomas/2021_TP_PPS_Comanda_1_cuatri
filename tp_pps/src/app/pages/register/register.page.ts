@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { Camera, CameraResultType } from '@capacitor/camera';
+import { ImagesService } from 'src/app/services/images.service';
+import { Capacitor } from '@capacitor/core';
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
@@ -12,8 +14,9 @@ export class RegisterPage implements OnInit {
   isAnonimous:boolean = false;
   scannedBarCode: any;
   data: any;
-
-  constructor(private router:Router, private barcodeScanner:BarcodeScanner) { 
+  imageElement:any;
+  flag=false
+  constructor(private router:Router, private barcodeScanner:BarcodeScanner,private imgSrv:ImagesService) { 
     const state = this.router.getCurrentNavigation().extras.state;
     if (state != null) {
       this.isAnonimous = state.value == 'anonimo';
@@ -25,22 +28,25 @@ export class RegisterPage implements OnInit {
   register(form) {
     console.log(form.value)
   }
-  takePicture() {
-    const takePicture = async () => {
+
+  async takePicture() {
+    //capacitor 3.1 npm install @capacitor/camera
       const image = await Camera.getPhoto({
         quality: 90,
-        allowEditing: true,
-        resultType: CameraResultType.Uri
+        allowEditing: false,
+        resultType: CameraResultType.DataUrl,
+        promptLabelHeader: 'Foto',
+        promptLabelPhoto: 'Buscar de la Galería',
+        promptLabelPicture: 'Tomar una Foto',
+        promptLabelCancel: 'Cancelar',
+        width:200,
+        height:200,
+        saveToGallery:true,
+
       });
-    
-      // image.webPath will contain a path that can be set as an image src.
-      // You can access the original file using image.path, which can be
-      // passed to the Filesystem API to read the raw data of the image,
-      // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
-      var imageUrl = image.webPath;
-    
-      console.log(imageUrl)
-    };
+      let imagen2=image
+      this.imageElement = imagen2;//muestro la foto para que previsualize el cliente
+      this.imgSrv.uploadPhoto('/cliente/',imagen2)
   }
   openQR(){
     this.barcodeScanner.scan().then(res => {
