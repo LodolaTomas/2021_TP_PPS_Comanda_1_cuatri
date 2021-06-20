@@ -1,0 +1,50 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Bienvenido
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="danger" (click)="logout()"><ion-icon slot="icon-only" name="exit"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Blank</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-menu side="start" menuId="first" contentId="content1">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Navigate</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content style="--background: white;">
+      <ion-list *ngFor="let pages of navigate">
+        <ion-menu-toggle auto-hide="true">
+          <ion-item [routerLink]="pages.url" routerDirection="forward">
+            <ion-icon [name]="pages.icon" slot="start" *ngIf="pages.icon=='qr-code' && displayQREspera" (click)="openQR()"></ion-icon>
+            <ion-icon [name]="pages.icon" slot="start" *ngIf="pages.icon!='qr-code'"></ion-icon>
+            {{pages.title}}
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+
+  <div class="container mt-3 ion-text-center">
+    <br>
+    <img src="../../assets/icon.png" height="200px" alt="">
+    <h4>Deslice hacia la derecha para ver las opciones ⇨ </h4>
+  </div>
+
+
+  <ion-router-outlet id="content1"></ion-router-outlet>
+</ion-content>
