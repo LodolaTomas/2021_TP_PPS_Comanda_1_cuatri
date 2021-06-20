@@ -49,7 +49,11 @@ const routes: Routes = [
   {
     path: 'adm-usuarios',
     loadChildren: () => import('./pages/supervisor/adm-usuarios/adm-usuarios.module').then( m => m.AdmUsuariosPageModule)
+  },  {
+    path: 'home-clientes',
+    loadChildren: () => import('./pages/home-clientes/home-clientes.module').then( m => m.HomeClientesPageModule)
   }
+
 
 
 
