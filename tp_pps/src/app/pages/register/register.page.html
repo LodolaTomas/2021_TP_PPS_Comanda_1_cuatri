@@ -31,8 +31,10 @@
               <ion-input name="confirm" type="password" placeholder="Repita Clave" ngModel required></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input [disabled]="true" name="foto" type="text" placeholder="Adjuntar Foto" ngModel required></ion-input>
-              <ion-button><ion-icon name="camera" (click)="takePicture()"></ion-icon></ion-button>
+              <ion-button (click)="takePicture()"><ion-icon name="camera" ></ion-icon></ion-button>
+              <div *ngIf="imageElement!=undefined">
+              <ion-img [src]="imageElement"></ion-img>
+            </div>
             </ion-item>
           </ion-card>
           </div>
