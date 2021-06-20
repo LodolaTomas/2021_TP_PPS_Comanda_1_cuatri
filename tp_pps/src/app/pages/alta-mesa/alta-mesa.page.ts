@@ -88,6 +88,7 @@ export class AltaMesaPage implements OnInit {
   onUpload1($event) {
     console.log($event.target.files[0])
     this.foto = $event.target.files[0];
+    console.log(this.foto)
   }
   
 
