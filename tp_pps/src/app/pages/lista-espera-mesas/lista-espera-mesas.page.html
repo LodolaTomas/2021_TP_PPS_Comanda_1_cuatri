@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Clientes En Espera</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let user of userList">
+      <ion-label (click)="presentModal(user)">{{user.nombre}} - {{user.fecha ? user.fecha.toDate().toLocaleDateString() : '-'}} {{user.fecha ? user.fecha.toDate().toLocaleTimeString()  : '-'}}
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <div style="margin:auto; width:50%">
+    <ion-spinner name="bubbles" *ngIf="ingresando"></ion-spinner>
+  </div>
+</ion-content>
