@@ -49,15 +49,20 @@ const routes: Routes = [
   {
     path: 'adm-usuarios',
     loadChildren: () => import('./pages/supervisor/adm-usuarios/adm-usuarios.module').then( m => m.AdmUsuariosPageModule)
-  },  {
+  },
+  {
     path: 'home-clientes',
     loadChildren: () => import('./pages/home-clientes/home-clientes.module').then( m => m.HomeClientesPageModule)
+  },
+  {
+    path: 'lista-espera-mesas',
+    loadChildren: () => import('./pages/lista-espera-mesas/lista-espera-mesas.module').then( m => m.ListaEsperaMesasPageModule)
   }
-
-
-
-
-
+  ,
+  {
+    path: 'modal',
+    loadChildren: () => import('./pages/modal/modal.module').then( m => m.ModalPageModule)
+  }
 ];
 
 @NgModule({
