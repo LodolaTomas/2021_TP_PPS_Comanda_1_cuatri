@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -9,7 +11,7 @@ export class HomePage {
 
   navigate : any;
 
-  constructor() {
+  constructor(private authS:AuthService, private router:Router) {
     this.sideMenu();
   }
 
@@ -30,5 +32,11 @@ export class HomePage {
           icon  : "pencil"
         }
     ]
+  }
+
+  logout()
+  {
+    this.authS.LogOutCurrentUser()
+    this.router.navigateByUrl('login')
   }
 }

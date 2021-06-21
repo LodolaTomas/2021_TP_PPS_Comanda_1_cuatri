@@ -1,0 +1,94 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Administar Usuarios</ion-title>
+    <ion-buttons slot="start">
+      <ion-button color="dark" (click)="back()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-row>
+    <ion-button color="dark" (click)="verPendientesBTN()">Pendientes</ion-button>
+    <ion-button color="dark" (click)="verAceptadosBTN()">Aceptados</ion-button>
+    <ion-button color="dark" (click)="verRechazadosBTN()">Rechazados</ion-button>
+  </ion-row>
+
+  <div *ngIf="verAceptados">
+  <div *ngFor="let user of usuarios" >
+    <ion-card *ngIf="user.estado == 'aceptado'">
+      <ion-card-content>
+        <ion-row>
+          <ion-col>
+            <img src="https://www.uic.mx/posgrados/files/2018/05/default-user.png" height="80px" class="mt-3 ml-2" />
+          </ion-col>
+          <ion-col>
+            <h2 class="mt-5">{{user.nombre}}</h2>
+            <h2 class="mt-1">{{user.estado}}</h2>
+          </ion-col>
+          <ion-col>
+            <ion-button color="success" expand="block mt-3" (click)="Aceptar(user)">Aceptar</ion-button>
+            <ion-button color="danger" expand="block mt-3" (click)="Rechazar(user)">Rechazar</ion-button>
+          </ion-col>
+
+        </ion-row>
+
+      </ion-card-content>
+    </ion-card>
+  </div>
+</div>
+
+  <div *ngIf="verPendientes">
+  <div *ngFor="let user of usuarios" >
+    <ion-card *ngIf="user.estado == 'pendiente'">
+      <ion-card-content>
+        <ion-row>
+          <ion-col>
+            <img src="https://www.uic.mx/posgrados/files/2018/05/default-user.png" height="80px" class="mt-3 ml-2" />
+          </ion-col>
+          <ion-col>
+            <h2 class="mt-5">{{user.nombre}}</h2>
+            <h2 class="mt-1">{{user.estado}}</h2>
+          </ion-col>
+          <ion-col>
+            <ion-button color="success" expand="block mt-3" (click)="Aceptar(user)">Aceptar</ion-button>
+            <ion-button color="danger" expand="block mt-3" (click)="Rechazar(user)">Rechazar</ion-button>
+          </ion-col>
+
+        </ion-row>
+
+      </ion-card-content>
+    </ion-card>
+  </div>
+</div>
+
+<div *ngIf="verRechazados">
+  <div *ngFor="let user of usuarios" >
+    <ion-card *ngIf="user.estado == 'rechazado'">
+      <ion-card-content>
+        <ion-row>
+          <ion-col>
+            <img src="https://www.uic.mx/posgrados/files/2018/05/default-user.png" height="80px" class="mt-3 ml-2" />
+          </ion-col>
+          <ion-col>
+            <h2 class="mt-5">{{user.nombre}}</h2>
+            <h2 class="mt-1">{{user.estado}}</h2>
+          </ion-col>
+          <ion-col>
+            <ion-button color="success" expand="block mt-3" (click)="Aceptar(user)">Aceptar</ion-button>
+            <ion-button color="danger" expand="block mt-3" (click)="Rechazar(user)">Rechazar</ion-button>
+          </ion-col>
+
+        </ion-row>
+
+      </ion-card-content>
+    </ion-card>
+  </div>
+</div>
+
+
+
+</ion-content>

@@ -42,6 +42,19 @@ const routes: Routes = [
     path: 'alta-producto',
     loadChildren: () => import('./pages/alta-producto/alta-producto.module').then( m => m.AltaProductoPageModule)
   },
+  {
+    path: 'supervisor',
+    loadChildren: () => import('./pages/supervisor/supervisor.module').then( m => m.SupervisorPageModule)
+  },
+  {
+    path: 'adm-usuarios',
+    loadChildren: () => import('./pages/supervisor/adm-usuarios/adm-usuarios.module').then( m => m.AdmUsuariosPageModule)
+  },  {
+    path: 'home-clientes',
+    loadChildren: () => import('./pages/home-clientes/home-clientes.module').then( m => m.HomeClientesPageModule)
+  }
+
+
 
 
 
