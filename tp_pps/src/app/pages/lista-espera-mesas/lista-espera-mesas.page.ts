@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { CloudFirestoreService } from 'src/app/services/cloud-firestore.service';
+import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { ModalPage } from '../modal/modal.page';
 
 @Component({
@@ -15,7 +16,8 @@ export class ListaEsperaMesasPage implements OnInit {
   public ingresando: boolean;
 
   constructor(private fbService:CloudFirestoreService,
-              private modalController: ModalController) {
+              private modalController: ModalController,
+              public alertController: AlertController) {
     this.getAllUsers();
     var date = new Date();
     date.toLocaleTimeString()
@@ -49,10 +51,57 @@ export class ListaEsperaMesasPage implements OnInit {
      await modal.present();
 
      const { data } = await modal.onWillDismiss();
-     this.ingresando=true;
-     user.status ="ingresado";
-     this.fbService.Update(user.idUsuario,"lista_espera_local",user).then(()=> this.ingresando=false);
-     alert("Cliente Asignado a la Mesa" + data.mesa  +"!");
-     this.getAllUsers();
+     if(data){
+       this.ingresando=true;
+       this.actualizarListadoDeEspera(user);
+       this.actualizarEstadoMesa(data.mesa);
+       this.asigarMesaAlUsuario(user,data.mesa);
+       this.alert('success',"Cliente Asignado a la Mesa" + data.mesa  +"!");
+       this.getAllUsers();
+     }
+  }
+  async actualizarEstadoMesa(numeroMesa:number){
+      const mesaFb = await this.fbService.GetByParameter("mesas","numero",numeroMesa).get().toPromise();
+      let mesa = mesaFb.docs[0].data();
+      mesa.ocupada=true;//actualiza el campo ocupada
+      this.fbService.Update(mesa.id,"mesas",mesa).then(()=> this.ingresando=false);
+  }
+  async asigarMesaAlUsuario(user:any,numeroMesa:number){
+    const userFb = await this.fbService.GetByParameter("usuarios","id",user.idUsuario).get().toPromise();
+    userFb.docs[0].data().mesa = numeroMesa;
+}
+async actualizarListadoDeEspera(user:any){
+  user.status ="ingresado";
+  this.fbService.Update(user.idUsuario,"lista_espera_local",user).then(()=> this.ingresando=false);
+}
+  async presentAlert(message:string, title:string, isError:boolean){
+        /*** ALERTS ***/
+        const alert = await this.alertController.create({
+          header: title,
+          message: message,
+          buttons: ['OK']
+        });
+  
+        await alert.present();
+        let result = await alert.onDidDismiss();
+  }
+  alert(icon: SweetAlertIcon, text: string) {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'bottom',
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+    
+    Toast.fire({
+      icon: icon,
+      title: text
+    })
   }
 }
