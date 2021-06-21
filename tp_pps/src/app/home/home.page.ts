@@ -30,6 +30,11 @@ export class HomePage {
           title : "Alta de mesa",
           url   : "/alta-mesa",
           icon  : "pencil"
+        },
+        {
+          title : "Lista de Espera",
+          url   : "/lista-espera-mesas",
+          icon  : "list-outline"
         }
     ]
   }

@@ -67,8 +67,8 @@ export class HomeClientesPage implements OnInit {
     this.scanner.scan({ formats: "PDF_417" }).then(res => {
       this.scannedBarCode = res;
       console.log(res);
-      let scannedCode = res.text
-      const userWaitList = { id:this.cliente.id, status:"esperando" };
+      let scannedCode = res.text;
+      const userWaitList = { id:this.cliente.id, status:"esperando", date:new Date() };
       this.fbService.Insert("lista_espera_local",userWaitList)
                     .then((val)=>{
                       alert("Agregado a la lista de espera!");
