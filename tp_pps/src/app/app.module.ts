@@ -16,6 +16,7 @@ import { environment } from './../environments/environment';
 import { File } from '@ionic-native/file/ngx';
 
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { PrimerLetraMayusPipe } from './pipes/primer-letra-mayus.pipe';
 
 
 @NgModule({

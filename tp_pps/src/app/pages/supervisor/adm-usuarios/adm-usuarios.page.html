@@ -25,9 +25,8 @@
 
   <div *ngIf="verAceptados">
     <div *ngFor="let user of usuarios; let i = index ">
-      <div *ngIf="i<1">
-        <h2 *ngIf="user.estado != 'aceptado'">No hay resultados</h2>
-      </div>
+
+
       <ion-card *ngIf="user.estado == 'aceptado'">
         <ion-card-content>
           <ion-row>
@@ -39,11 +38,11 @@
             </ion-col>
             <ion-col>
               <h2 class="mt-5">{{user.name}}</h2>
-              <h2 class="mt-1">{{user.estado}}</h2>
+              <h2 class="mt-1">{{user.estado | primerLetraMayus}}</h2>
             </ion-col>
             <ion-col>
-              <ion-button color="success" expand="block mt-3" (click)="Aceptar(user)">Aceptar</ion-button>
-              <ion-button color="danger" expand="block mt-3" (click)="Rechazar(user)">Rechazar</ion-button>
+              <ion-button color="success" expand="block mt-3" *ngIf="user.estado != 'aceptado'" (click)="Aceptar(user)">Aceptar</ion-button>
+              <ion-button color="danger" expand="block mt-3" *ngIf="user.estado != 'rechazado'" (click)="Rechazar(user)">Rechazar</ion-button>
             </ion-col>
 
           </ion-row>
@@ -56,9 +55,9 @@
   <div *ngIf="verPendientes">
     <div *ngFor="let user of usuarios; let i = index ">
 
-      <div  *ngIf="i<1">
-        <h2 *ngIf="user.estado != 'pendiente'">No hay resultados</h2>
-      </div>
+
+
+
       <ion-card *ngIf="user.estado == 'pendiente'">
         <ion-card-content>
           <ion-row>
@@ -70,11 +69,11 @@
             </ion-col>
             <ion-col>
               <h2 class="mt-5">{{user.name}}</h2>
-              <h2 class="mt-1">{{user.estado}}</h2>
+              <h2 class="mt-1">{{user.estado | primerLetraMayus}}</h2>
             </ion-col>
             <ion-col>
-              <ion-button color="success" expand="block mt-3" (click)="Aceptar(user)">Aceptar</ion-button>
-              <ion-button color="danger" expand="block mt-3" (click)="Rechazar(user)">Rechazar</ion-button>
+              <ion-button color="success" expand="block mt-3" *ngIf="user.estado != 'aceptado'" (click)="Aceptar(user)">Aceptar</ion-button>
+              <ion-button color="danger" expand="block mt-3" *ngIf="user.estado != 'rechazado'" (click)="Rechazar(user)">Rechazar</ion-button>
             </ion-col>
 
           </ion-row>
@@ -84,12 +83,9 @@
     </div>
   </div>
 
+
   <div *ngIf="verTodos">
     <div *ngFor="let user of usuarios; let i = index ">
-
-      <div  *ngIf="i==1">
-        <h2 *ngIf="!user">No hay resultados</h2>
-      </div>
       <ion-card>
         <ion-card-content>
           <ion-row>
@@ -102,11 +98,11 @@
             </ion-col>
             <ion-col>
               <h2 class="mt-5">{{user.name}}</h2>
-              <h2 class="mt-1">{{user.estado}}</h2>
+              <h2 class="mt-1">{{user.estado | primerLetraMayus}}</h2>
             </ion-col>
             <ion-col>
-              <ion-button color="success" expand="block mt-3" (click)="Aceptar(user)">Aceptar</ion-button>
-              <ion-button color="danger" expand="block mt-3" (click)="Rechazar(user)">Rechazar</ion-button>
+              <ion-button color="success" expand="block mt-3" *ngIf="user.estado != 'aceptado'" (click)="Aceptar(user)">Aceptar</ion-button>
+              <ion-button color="danger" expand="block mt-3" *ngIf="user.estado != 'rechazado'" (click)="Rechazar(user)">Rechazar</ion-button>
             </ion-col>
 
           </ion-row>
@@ -116,6 +112,10 @@
     </div>
   </div>
 
+  <div *ngIf="!usuarios">
+
+    <ion-spinner name="circles" color="dark"></ion-spinner>
+  </div>
 
 
 </ion-content>

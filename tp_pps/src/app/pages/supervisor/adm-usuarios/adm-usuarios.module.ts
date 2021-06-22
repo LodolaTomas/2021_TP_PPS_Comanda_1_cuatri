@@ -1,3 +1,4 @@
+import { PrimerLetraMayusPipe } from './../../../pipes/primer-letra-mayus.pipe';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -15,6 +16,6 @@ import { AdmUsuariosPage } from './adm-usuarios.page';
     IonicModule,
     AdmUsuariosPageRoutingModule
   ],
-  declarations: [AdmUsuariosPage]
+  declarations: [AdmUsuariosPage, PrimerLetraMayusPipe]
 })
 export class AdmUsuariosPageModule {}
