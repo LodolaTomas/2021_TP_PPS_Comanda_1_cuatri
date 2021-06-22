@@ -32,9 +32,7 @@
             </ion-item>
             <ion-item>
               <ion-button (click)="takePicture()"><ion-icon name="camera" ></ion-icon></ion-button>
-              <div *ngIf="imageElement!=undefined">
-              <ion-img [src]="imageElement"></ion-img>
-            </div>
+   
             </ion-item>
           </ion-card>
           </div>
@@ -44,6 +42,11 @@
         </ion-col>
       </ion-row>
     </ion-grid>
+
+    <form class="contact-form" (submit)="sendEmail($event)">
+      <input type="submit" value="Enviar">
+    </form>
+
   </form>
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">
     <ion-fab-button>

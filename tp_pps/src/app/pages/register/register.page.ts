@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import emailjs, { EmailJSResponseStatus } from 'emailjs-com';
+
 
 @Component({
   selector: 'app-register',
@@ -31,6 +33,20 @@ export class RegisterPage implements OnInit {
   takePicture() {
 
   }
+
+  
+  public sendEmail(e: Event) {
+    e.preventDefault();
+    emailjs.sendForm('service_cyp', 'template_1anvcdt', e.target as HTMLFormElement, 'user_shSWtSMKYJppZ79GjRSIF')
+      .then((result: EmailJSResponseStatus) => {
+        console.log(result.text);
+      }, (error) => { 
+        console.log(error.text);
+      });
+  }
+
+
+
   openQR() {
     console.log("QR!")
     this.scanner.scan({ formats: "PDF_417" }).then(res => {
