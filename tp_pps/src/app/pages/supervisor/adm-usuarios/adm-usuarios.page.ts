@@ -1,3 +1,4 @@
+import { EmailService } from './../../../services/email.service';
 
 import { CloudFirestoreService } from './../../../services/cloud-firestore.service';
 import { Component, OnInit } from '@angular/core';
@@ -24,9 +25,9 @@ export class AdmUsuariosPage implements OnInit {
 
   
 
-  constructor(private authS: AuthService, private router: Router, private firestore: CloudFirestoreService) {
+  constructor(private authS: AuthService, private router: Router, private firestore: CloudFirestoreService, private emailSVC:EmailService) {
 
-this.usuarios = ''
+  this.usuarios = ''
 
     firestore.GetAll("usuarios")
     .subscribe((data) => {
@@ -112,7 +113,7 @@ this.usuarios = ''
   {
     let auxUser = user;
     user.estado = 'aceptado';
-
+    this.emailSVC.sendEmail(user, "Su cuenta ha sido aceptada, ya puede ingresar a la app")
     this.firestore.Update(user.id, "usuarios", auxUser)
 
   }
@@ -120,7 +121,7 @@ this.usuarios = ''
   Rechazar(user){
     let auxUser = user;
     user.estado = 'rechazado';
-
+    this.emailSVC.sendEmail(user, "Su cuenta ha sido rechazada, si cree que es un error puede contactar al administrador")
     this.firestore.Update(user.id, "usuarios", auxUser)
   }
 
