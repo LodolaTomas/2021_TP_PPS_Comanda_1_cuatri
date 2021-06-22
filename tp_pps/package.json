@@ -21,13 +21,20 @@
     "@angular/platform-browser": "~11.2.0",
     "@angular/platform-browser-dynamic": "~11.2.0",
     "@angular/router": "~11.2.0",
+<<<<<<< HEAD
     "@capacitor/android": "3.0.0",
     "@capacitor/app": "1.0.0",
+=======
+    "@capacitor/android": "3.0.1",
+    "@capacitor/app": "1.0.0",
+    "@capacitor/camera": "^1.0.1",
+>>>>>>> main
     "@capacitor/core": "3.0.0",
     "@capacitor/haptics": "1.0.0",
     "@capacitor/keyboard": "1.0.0",
     "@capacitor/splash-screen": "^1.0.0",
     "@ionic-native/barcode-scanner": "^5.33.1",
+<<<<<<< HEAD
     "@ionic-native/camera": "^5.33.1",
     "@ionic-native/core": "^5.33.1",
     "@ionic-native/file": "^5.33.1",
@@ -38,6 +45,16 @@
     "cordova-plugin-file": "^6.0.2",
     "emailjs-com": "^3.1.0",
     "firebase": "^8.6.2",
+=======
+    "@ionic-native/core": "^5.33.1",
+    "@ionic-native/file": "^5.33.1",
+    "@ionic/angular": "^5.5.2",
+    "capacitor-resources": "^2.0.5",
+    "cordova-plugin-file": "^6.0.2",
+    "firebase": "^8.6.8",
+    "jetifier": "^2.0.0",
+    "phonegap-plugin-barcodescanner": "^8.1.0",
+>>>>>>> main
     "rxjs": "~6.6.0",
     "sweetalert2": "^11.0.16",
     "tslib": "^2.0.0",

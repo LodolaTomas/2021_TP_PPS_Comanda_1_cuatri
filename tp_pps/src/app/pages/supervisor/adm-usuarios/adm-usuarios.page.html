@@ -12,9 +12,15 @@
 <ion-content>
 
   <ion-row>
-    <ion-button color="dark" (click)="verPendientesBTN()">Pendientes</ion-button>
-    <ion-button color="dark" (click)="verAceptadosBTN()">Aceptados</ion-button>
-    <ion-button color="dark" (click)="verTodosBTN()">Todos</ion-button>
+    <ion-col>
+      <ion-button color="dark"  expand="block" (click)="verPendientesBTN()">Pendientes</ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button color="dark"  expand="block"(click)="verAceptadosBTN()">Aceptados</ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button color="dark" expand="block" (click)="verTodosBTN()">Todos</ion-button>
+    </ion-col>
   </ion-row>
 
   <div *ngIf="verAceptados">

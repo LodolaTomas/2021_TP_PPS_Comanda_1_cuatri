@@ -26,10 +26,13 @@ export class ImagesService {
   }
 
   uploadPhoto(path: string, file: any) {
-    let hora = new Date().getTime();//obtengo hora actual
-    let ubicacion = path + hora;//le digo la ubicacion de la foto en el firebaseStorage
     return new Promise((resolve) => {
-      this.storage.upload(ubicacion, file).then(() => {
+      let hora = new Date().getTime();//obtengo hora actual
+      let ubicacion = path + hora;//le digo la ubicacion de la foto en el firebaseStorage
+      let ref = firebase.default.storage().ref(ubicacion);
+      ref.putString(file, 'data_url', {
+        contentType: 'image/jpeg'
+      }).then(() => {
         let storages = firebase.default.storage();
         let storageRef = storages.ref();
         let spaceRef = storageRef.child(ubicacion);
