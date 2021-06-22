@@ -2,6 +2,9 @@
   <ion-toolbar>
     <ion-title *ngIf="!isAnonimous">Alta de Cliente</ion-title>
     <ion-title *ngIf="isAnonimous">Ingreso Anónimo</ion-title>
+    <ion-buttons slot="start">
+      <ion-button color="dark" routerLink="/login"><ion-icon slot="icon-only" name="arrow-back"></ion-icon></ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -15,26 +18,26 @@
           <div class="ion-text-center" size-md="6" size-lg="5" size-xs="12">
             <ion-card color="light" class="auth-card ion-margin">
             <ion-item>
-              <ion-input  name="name" type="text" placeholder="Nombre" ngModel required></ion-input>
+              <ion-input  name="name" id="name" type="text" placeholder="Nombre" ngModel required></ion-input>
               <ion-icon name="person"></ion-icon>
             </ion-item>
             <ion-item *ngIf="!isAnonimous">
-              <ion-input  name="lastname" type="text" placeholder="Apellido" ngModel required></ion-input>
+              <ion-input  name="lastname" id="lastname" type="text" placeholder="Apellido" ngModel required></ion-input>
             </ion-item>
             <ion-item *ngIf="!isAnonimous">
-              <ion-input name="dni" type="number" placeholder="DNI" ngModel required></ion-input>
+              <ion-input name="dni" type="number" id="DNI" placeholder="DNI" ngModel required></ion-input>
             </ion-item>
             <ion-item *ngIf="!isAnonimous">
-              <ion-input name="password" type="password" placeholder="Clave" ngModel required></ion-input>
+              <ion-input name="password" type="password" id="password" placeholder="Clave" ngModel required></ion-input>
             </ion-item>
             <ion-item *ngIf="!isAnonimous">
-              <ion-input name="confirm" type="password" placeholder="Repita Clave" ngModel required></ion-input>
+              <ion-input name="confirm" type="password" id="confirm" placeholder="Repita Clave" ngModel required></ion-input>
             </ion-item>
             <ion-item>
-              <ion-button (click)="takePicture()"><ion-icon name="camera" ></ion-icon></ion-button>
               <div *ngIf="imageElement!=undefined">
-              <ion-img [src]="imageElement"></ion-img>
-            </div>
+              <img [src]="imageElement" class="m-1" style="border-radius: 100%; width: 120px;height: 120px;">
+              </div>
+                <ion-button (click)="takePicture()"><ion-icon name="camera"></ion-icon></ion-button>
             </ion-item>
           </ion-card>
           </div>
@@ -46,8 +49,8 @@
     </ion-grid>
   </form>
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">
-    <ion-fab-button>
-      <ion-icon name="qr-code-outline" (click)="openQR()"></ion-icon>
+    <ion-fab-button (click)="openQR()">
+      <ion-icon name="qr-code-outline" ></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </ion-content>
