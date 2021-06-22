@@ -1,3 +1,4 @@
+
 import { CloudFirestoreService } from './../../../services/cloud-firestore.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -13,9 +14,9 @@ export class AdmUsuariosPage implements OnInit {
 
   public usuarios: any = []
 
-  public verPendientes:boolean = true;
+  public verPendientes:boolean = false;
   public verAceptados:boolean = false;
-  public verRechazados:boolean = false;
+  public verTodos:boolean = true;
 
   constructor(private authS: AuthService, private router: Router, private firestore: CloudFirestoreService) {
 
@@ -36,20 +37,20 @@ export class AdmUsuariosPage implements OnInit {
     else{
       this.verAceptados =true;
       this.verPendientes =false;
-      this.verRechazados =false;
+      this.verTodos =false;
     }
 
   }
 
-  verRechazadosBTN(){
-    if(this.verRechazados)
+  verTodosBTN(){
+    if(this.verTodos)
     {
-      this.verRechazados =false;
+      this.verTodos =false;
     }
     else{
       this.verAceptados =false;
       this.verPendientes =false;
-      this.verRechazados =true;
+      this.verTodos =true;
     }
     
   }
@@ -62,7 +63,7 @@ export class AdmUsuariosPage implements OnInit {
     else{
       this.verAceptados =false;
       this.verPendientes =true;
-      this.verRechazados =false;
+      this.verTodos =false;
     }
     
   }
@@ -97,3 +98,6 @@ export class AdmUsuariosPage implements OnInit {
 
 
 }
+
+
+

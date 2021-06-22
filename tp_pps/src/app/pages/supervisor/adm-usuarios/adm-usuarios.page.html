@@ -14,7 +14,7 @@
   <ion-row>
     <ion-button color="dark" (click)="verPendientesBTN()">Pendientes</ion-button>
     <ion-button color="dark" (click)="verAceptadosBTN()">Aceptados</ion-button>
-    <ion-button color="dark" (click)="verRechazadosBTN()">Rechazados</ion-button>
+    <ion-button color="dark" (click)="verTodosBTN()">Todos</ion-button>
   </ion-row>
 
   <div *ngIf="verAceptados">
@@ -23,7 +23,8 @@
       <ion-card-content>
         <ion-row>
           <ion-col>
-            <img src="https://www.uic.mx/posgrados/files/2018/05/default-user.png" height="80px" class="mt-3 ml-2" />
+            <img  *ngIf="user.foto" src="{{user.foto}}" class="mt-3 ml-2" />
+            <img  *ngIf="!user.foto" src="https://www.uic.mx/posgrados/files/2018/05/default-user.png" height="80px" class="mt-3 ml-2" />
           </ion-col>
           <ion-col>
             <h2 class="mt-5">{{user.nombre}}</h2>
@@ -47,7 +48,8 @@
       <ion-card-content>
         <ion-row>
           <ion-col>
-            <img src="https://www.uic.mx/posgrados/files/2018/05/default-user.png" height="80px" class="mt-3 ml-2" />
+            <img  *ngIf="user.foto" src="{{user.foto}}" class="mt-3 ml-2" />
+            <img  *ngIf="!user.foto" src="https://www.uic.mx/posgrados/files/2018/05/default-user.png" height="80px" class="mt-3 ml-2" />
           </ion-col>
           <ion-col>
             <h2 class="mt-5">{{user.nombre}}</h2>
@@ -65,13 +67,14 @@
   </div>
 </div>
 
-<div *ngIf="verRechazados">
+<div *ngIf="verTodos">
   <div *ngFor="let user of usuarios" >
-    <ion-card *ngIf="user.estado == 'rechazado'">
+    <ion-card>
       <ion-card-content>
         <ion-row>
           <ion-col>
-            <img src="https://www.uic.mx/posgrados/files/2018/05/default-user.png" height="80px" class="mt-3 ml-2" />
+            <img  *ngIf="user.foto" src="{{user.foto}}" class="mt-3 ml-2" />
+            <img  *ngIf="!user.foto" src="https://www.uic.mx/posgrados/files/2018/05/default-user.png" height="80px" class="mt-3 ml-2" />
           </ion-col>
           <ion-col>
             <h2 class="mt-5">{{user.nombre}}</h2>
