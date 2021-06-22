@@ -6,8 +6,8 @@
 
 <ion-content>
   <ion-list>
-    <ion-item>
-      <ion-label (click)="dismiss()">Asignar a Mesa 14</ion-label>
+    <ion-item *ngFor="let mesa of listMesas">
+      <ion-label (click)="dismiss(mesa.numero)">Asignar a Mesa {{mesa.numero}}</ion-label>
     </ion-item>
   </ion-list>
 </ion-content>
