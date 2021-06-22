@@ -13,90 +13,108 @@
 
   <ion-row>
     <ion-col>
-      <ion-button color="dark"  expand="block" (click)="verPendientesBTN()">Pendientes</ion-button>
+      <ion-button [color]="buttonColor1" expand="block" (click)="verPendientesBTN()">Pendientes</ion-button>
     </ion-col>
     <ion-col>
-      <ion-button color="dark"  expand="block"(click)="verAceptadosBTN()">Aceptados</ion-button>
+      <ion-button [color]="buttonColor2" expand="block" (click)="verAceptadosBTN()">Aceptados</ion-button>
     </ion-col>
     <ion-col>
-      <ion-button color="dark" expand="block" (click)="verTodosBTN()">Todos</ion-button>
+      <ion-button [color]="buttonColor3" expand="block" (click)="verTodosBTN()">Todos</ion-button>
     </ion-col>
   </ion-row>
 
   <div *ngIf="verAceptados">
-  <div *ngFor="let user of usuarios" >
-    <ion-card *ngIf="user.estado == 'aceptado'">
-      <ion-card-content>
-        <ion-row>
-          <ion-col>
-            <img  *ngIf="user.foto" src="{{user.foto}}" class="mt-3 ml-2" />
-            <img  *ngIf="!user.foto" src="https://www.uic.mx/posgrados/files/2018/05/default-user.png" height="80px" class="mt-3 ml-2" />
-          </ion-col>
-          <ion-col>
-            <h2 class="mt-5">{{user.nombre}}</h2>
-            <h2 class="mt-1">{{user.estado}}</h2>
-          </ion-col>
-          <ion-col>
-            <ion-button color="success" expand="block mt-3" (click)="Aceptar(user)">Aceptar</ion-button>
-            <ion-button color="danger" expand="block mt-3" (click)="Rechazar(user)">Rechazar</ion-button>
-          </ion-col>
+    <div *ngFor="let user of usuarios; let i = index ">
+      <div *ngIf="i<1">
+        <h2 *ngIf="user.estado != 'aceptado'">No hay resultados</h2>
+      </div>
+      <ion-card *ngIf="user.estado == 'aceptado'">
+        <ion-card-content>
+          <ion-row>
+            <ion-col>
+              <img *ngIf="user.image" src="{{user.image}}" class="m-1"
+                style="border-radius: 95%; width: 120px;height: 120px;">
+              <img *ngIf="!user.image" src="https://www.uic.mx/posgrados/files/2018/05/default-user.png" height="80px"
+                class="mt-3 ml-2" />
+            </ion-col>
+            <ion-col>
+              <h2 class="mt-5">{{user.name}}</h2>
+              <h2 class="mt-1">{{user.estado}}</h2>
+            </ion-col>
+            <ion-col>
+              <ion-button color="success" expand="block mt-3" (click)="Aceptar(user)">Aceptar</ion-button>
+              <ion-button color="danger" expand="block mt-3" (click)="Rechazar(user)">Rechazar</ion-button>
+            </ion-col>
 
-        </ion-row>
+          </ion-row>
 
-      </ion-card-content>
-    </ion-card>
+        </ion-card-content>
+      </ion-card>
+    </div>
   </div>
-</div>
 
   <div *ngIf="verPendientes">
-  <div *ngFor="let user of usuarios" >
-    <ion-card *ngIf="user.estado == 'pendiente'">
-      <ion-card-content>
-        <ion-row>
-          <ion-col>
-            <img  *ngIf="user.foto" src="{{user.foto}}" class="mt-3 ml-2" />
-            <img  *ngIf="!user.foto" src="https://www.uic.mx/posgrados/files/2018/05/default-user.png" height="80px" class="mt-3 ml-2" />
-          </ion-col>
-          <ion-col>
-            <h2 class="mt-5">{{user.nombre}}</h2>
-            <h2 class="mt-1">{{user.estado}}</h2>
-          </ion-col>
-          <ion-col>
-            <ion-button color="success" expand="block mt-3" (click)="Aceptar(user)">Aceptar</ion-button>
-            <ion-button color="danger" expand="block mt-3" (click)="Rechazar(user)">Rechazar</ion-button>
-          </ion-col>
+    <div *ngFor="let user of usuarios; let i = index ">
 
-        </ion-row>
+      <div  *ngIf="i<1">
+        <h2 *ngIf="user.estado != 'pendiente'">No hay resultados</h2>
+      </div>
+      <ion-card *ngIf="user.estado == 'pendiente'">
+        <ion-card-content>
+          <ion-row>
+            <ion-col>
+              <img *ngIf="user.image" src="{{user.image}}" class="m-1"
+                style="border-radius: 95%; width: 120px;height: 120px;">
+              <img *ngIf="!user.image" src="https://www.uic.mx/posgrados/files/2018/05/default-user.png" height="80px"
+                class="mt-3 ml-2" />
+            </ion-col>
+            <ion-col>
+              <h2 class="mt-5">{{user.name}}</h2>
+              <h2 class="mt-1">{{user.estado}}</h2>
+            </ion-col>
+            <ion-col>
+              <ion-button color="success" expand="block mt-3" (click)="Aceptar(user)">Aceptar</ion-button>
+              <ion-button color="danger" expand="block mt-3" (click)="Rechazar(user)">Rechazar</ion-button>
+            </ion-col>
 
-      </ion-card-content>
-    </ion-card>
+          </ion-row>
+
+        </ion-card-content>
+      </ion-card>
+    </div>
   </div>
-</div>
 
-<div *ngIf="verTodos">
-  <div *ngFor="let user of usuarios" >
-    <ion-card>
-      <ion-card-content>
-        <ion-row>
-          <ion-col>
-            <img  *ngIf="user.foto" src="{{user.foto}}" class="mt-3 ml-2" />
-            <img  *ngIf="!user.foto" src="https://www.uic.mx/posgrados/files/2018/05/default-user.png" height="80px" class="mt-3 ml-2" />
-          </ion-col>
-          <ion-col>
-            <h2 class="mt-5">{{user.nombre}}</h2>
-            <h2 class="mt-1">{{user.estado}}</h2>
-          </ion-col>
-          <ion-col>
-            <ion-button color="success" expand="block mt-3" (click)="Aceptar(user)">Aceptar</ion-button>
-            <ion-button color="danger" expand="block mt-3" (click)="Rechazar(user)">Rechazar</ion-button>
-          </ion-col>
+  <div *ngIf="verTodos">
+    <div *ngFor="let user of usuarios; let i = index ">
 
-        </ion-row>
+      <div  *ngIf="i==1">
+        <h2 *ngIf="!user">No hay resultados</h2>
+      </div>
+      <ion-card>
+        <ion-card-content>
+          <ion-row>
+            <ion-col>
+              <img *ngIf="user.image" src="{{user.image}}" class="m-1"
+                style="border-radius: 95%; width: 120px;height: 120px;">
+              <img *ngIf="!user.image" src="https://www.uic.mx/posgrados/files/2018/05/default-user.png" height="80px"
+                class="mt-3 ml-2" />
 
-      </ion-card-content>
-    </ion-card>
+            </ion-col>
+            <ion-col>
+              <h2 class="mt-5">{{user.name}}</h2>
+              <h2 class="mt-1">{{user.estado}}</h2>
+            </ion-col>
+            <ion-col>
+              <ion-button color="success" expand="block mt-3" (click)="Aceptar(user)">Aceptar</ion-button>
+              <ion-button color="danger" expand="block mt-3" (click)="Rechazar(user)">Rechazar</ion-button>
+            </ion-col>
+
+          </ion-row>
+
+        </ion-card-content>
+      </ion-card>
+    </div>
   </div>
-</div>
 
 
 
