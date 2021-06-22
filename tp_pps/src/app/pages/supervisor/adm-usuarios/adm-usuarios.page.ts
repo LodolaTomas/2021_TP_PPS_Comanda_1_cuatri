@@ -26,7 +26,7 @@ export class AdmUsuariosPage implements OnInit {
 
   constructor(private authS: AuthService, private router: Router, private firestore: CloudFirestoreService) {
 
-
+this.usuarios = ''
 
     firestore.GetAll("usuarios")
     .subscribe((data) => {
@@ -63,7 +63,7 @@ export class AdmUsuariosPage implements OnInit {
   verAceptadosBTN(){
     if(this.verAceptados)
     {
-      this.verAceptados =false;
+    
     }
     else{
       this.seleccionarFiltro('aceptados')
@@ -77,7 +77,7 @@ export class AdmUsuariosPage implements OnInit {
   verTodosBTN(){
     if(this.verTodos)
     {
-      this.verTodos =false;
+    
     }
     else{
       this.seleccionarFiltro('todos')
@@ -91,7 +91,7 @@ export class AdmUsuariosPage implements OnInit {
   verPendientesBTN(){
     if(this.verPendientes)
     {
-      this.verPendientes =false;
+      
     }
     else{
       this.seleccionarFiltro('pendientes')
