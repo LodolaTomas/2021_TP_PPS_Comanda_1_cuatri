@@ -5,7 +5,7 @@ import { Camera, CameraResultType } from '@capacitor/camera';
 import { ImagesService } from 'src/app/services/images.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { CloudFirestoreService } from 'src/app/services/cloud-firestore.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
