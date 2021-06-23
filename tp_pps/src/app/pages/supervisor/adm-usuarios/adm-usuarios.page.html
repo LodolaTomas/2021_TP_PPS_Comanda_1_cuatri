@@ -86,6 +86,7 @@
 
   <div *ngIf="verTodos">
     <div *ngFor="let user of usuarios; let i = index ">
+
       <ion-card>
         <ion-card-content>
           <ion-row>
@@ -112,8 +113,8 @@
     </div>
   </div>
 
-  <div *ngIf="!usuarios">
-
+  <div *ngIf="!usuarios" align="center">
+    <br> <br>
     <ion-spinner name="circles" color="dark"></ion-spinner>
   </div>
 
