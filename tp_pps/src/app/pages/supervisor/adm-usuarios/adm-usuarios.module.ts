@@ -18,4 +18,4 @@ import { AdmUsuariosPage } from './adm-usuarios.page';
   ],
   declarations: [AdmUsuariosPage, PrimerLetraMayusPipe]
 })
-export class AdmUsuariosPageModule {}
+export class AdmUsuariosPageModule { }
