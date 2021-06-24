@@ -16,13 +16,13 @@ export class AdmUsuariosPage implements OnInit {
 
   public usuarios: any = []
 
-  public verPendientes:boolean = false;
+  public verPendientes:boolean = true;
   public verAceptados:boolean = false;
-  public verTodos:boolean = true;
+  public verTodos:boolean = false;
 
-  public buttonColor1: string = "dark";
+  public buttonColor1: string = "light";
   public buttonColor2: string = "dark";
-  public buttonColor3: string = "light";
+  public buttonColor3: string = "dark";
 
   
 
@@ -33,6 +33,14 @@ export class AdmUsuariosPage implements OnInit {
     firestore.GetAll("usuarios")
     .subscribe((data) => {
       this.usuarios = data;
+      data.forEach(uno => {
+        
+        if(uno.estado =='pendiente')
+        {
+          this.notificar(uno)
+        }
+
+      });
       console.log(data)
     });
 
@@ -40,11 +48,11 @@ export class AdmUsuariosPage implements OnInit {
 
   }
 
-  notificar()
+  notificar(user:any)
   {
     this.localNotifications.schedule({
       id: 1,
-      text: 'Single ILocalNotification',
+      text: 'Un usuario a verificar: ' + user.name,
       sound: 'file://android/app/src/main/res/raw/sound.mp3',
     });
 
@@ -52,7 +60,10 @@ export class AdmUsuariosPage implements OnInit {
   }
 
 
+  alertarPendientes()
+  {
 
+  }
 
 
 
