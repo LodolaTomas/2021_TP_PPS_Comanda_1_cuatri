@@ -1,3 +1,4 @@
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -22,7 +23,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule , IonicModule.forRoot(), AppRoutingModule, AngularFireAuthModule, AngularFireModule.initializeApp(environment.firebaseConfig)],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, File,  BarcodeScanner,
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, File,  BarcodeScanner, LocalNotifications,
     { 
       provide: RouteReuseStrategy, 
       useClass: IonicRouteStrategy 

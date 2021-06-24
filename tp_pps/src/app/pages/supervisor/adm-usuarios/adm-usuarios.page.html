@@ -23,6 +23,9 @@
     </ion-col>
   </ion-row>
 
+
+  <ion-button [color]="buttonColor3" expand="block" (click)="notificar()">Notificacion test</ion-button>
+
   <div *ngIf="verAceptados">
     <div *ngFor="let user of usuarios; let i = index ">
 
