@@ -32,6 +32,7 @@ export class CloudFirestoreService {
   GetByParameter(collection:string, parametro:string, value:any){
     return this.cloudFireStore.collection<any>(collection, ref => ref.where(parametro,'==', value));
   }
+  
   Update(id: string, collectionName: string, data: any) {
     return this.cloudFireStore.collection(collectionName).doc(id).update({ ...data });
   }

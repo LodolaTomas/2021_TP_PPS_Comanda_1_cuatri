@@ -11,16 +11,16 @@ export class EmailService {
   constructor() { }
 
   sendEmail(usuario: any, mensaje: string) {
-  
+
     let templateParams = {
       nombre_cliente: usuario.name,
       Mensaje: mensaje,
-      email_cliente: usuario.correo  
+      email_cliente: usuario.correo
     };
 
-    emailjs.send("service_cyp","template_email", templateParams)
-    .then(res => console.log("Correo enviado.", res.status, res.text))
-    .catch(error => console.log("Error al enviar.", error));
+    emailjs.send("service_cyp", "template_email", templateParams)
+      .then(res => console.log("Correo enviado.", res.status, res.text))
+      .catch(error => console.log("Error al enviar.", error));
   }
 
 }

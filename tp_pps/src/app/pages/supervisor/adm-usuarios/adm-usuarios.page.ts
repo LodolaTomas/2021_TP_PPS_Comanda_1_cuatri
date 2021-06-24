@@ -4,7 +4,8 @@ import { CloudFirestoreService } from './../../../services/cloud-firestore.servi
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-import { toPublicName } from '@angular/compiler/src/i18n/serializers/xmb';
+
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 
 @Component({
   selector: 'app-adm-usuarios',
@@ -25,7 +26,7 @@ export class AdmUsuariosPage implements OnInit {
 
   
 
-  constructor(private authS: AuthService, private router: Router, private firestore: CloudFirestoreService, private emailSVC:EmailService) {
+  constructor(private authS: AuthService, private router: Router, private firestore: CloudFirestoreService, private localNotifications: LocalNotifications,  private emailSVC:EmailService) {
 
   this.usuarios = ''
 
@@ -35,7 +36,23 @@ export class AdmUsuariosPage implements OnInit {
       console.log(data)
     });
 
+
+
   }
+
+  notificar()
+  {
+    this.localNotifications.schedule({
+      id: 1,
+      text: 'Single ILocalNotification',
+      sound: 'file://android/app/src/main/res/raw/sound.mp3',
+    });
+
+  
+  }
+
+
+
 
 
 
