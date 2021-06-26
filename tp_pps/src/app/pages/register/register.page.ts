@@ -53,7 +53,7 @@ export class RegisterPage implements OnInit {
       if (form.value.dni == undefined) {
         data = { 'name': form.value.name, 'image': url };
       } else {
-        data = { 'name': form.value.name, 'lastname': form.value.lastname, 'DNI': form.value.dni, 'password': form.value.password, 'correo':form.value.email,'perfil': 'cliente', 'estado': 'pendiente', 'image': url };
+        data = { 'name': form.value.name, 'lastname': form.value.lastname, 'DNI': form.value.dni, 'password': form.value.password, 'email':form.value.email,'perfil': 'cliente', 'estado': 'pendiente', 'image': url };
       }
       this.cloudSrv.Insert('/usuarios/', data)
       console.log(data)

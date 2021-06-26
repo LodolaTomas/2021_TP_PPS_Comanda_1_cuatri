@@ -58,7 +58,7 @@ export class AdmUsuariosPage implements OnInit {
 
 
 
-    const fbCollection = await this.firestore.GetByParameter("usuarios", "correo", "supervisor@yopmail.com").get().toPromise();
+    const fbCollection = await this.firestore.GetByParameter("usuarios", "email", "supervisor@yopmail.com").get().toPromise();
 
     const element = fbCollection.docs[0].data();
 

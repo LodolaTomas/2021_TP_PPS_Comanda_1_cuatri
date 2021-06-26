@@ -101,7 +101,7 @@ export class AltaMesaPage implements OnInit {
     idCustom = idDate.getTime().toString()
     this.mesa.cantidadComensales = this.cantidadComensales;
     this.mesa.tipo = this.tipoMesa;
-    this.foto= await this.imgSVC.uploadPhoto('/mesas/',this.foto)
+    this.foto= await this.imgSVC.uploadPhotoMesa('/mesas/',this.foto)
     this.mesa.foto = this.foto;
     this.mesa.id = idCustom
     this.firestore.InsertCustomID('mesas', idCustom, Object.assign({}, this.mesa) )
