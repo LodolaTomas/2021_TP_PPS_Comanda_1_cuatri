@@ -69,14 +69,15 @@ export class LoginPage implements OnInit {
       if (user) {
         this.authSvc.currentUser = this.user;
 
-        if (this.user.email == 'admin@yopmail.com') {
-          this.cargando = false;
-          this.router.navigateByUrl('/home');
-        }
+
 
         if (this.user.email == 'supervisor@yopmail.com') {
           this.cargando = false;
           this.router.navigateByUrl('/supervisor');
+        }
+        else if (this.user.email == 'admin@yopmail.com') {
+          this.cargando = false;
+          this.router.navigateByUrl('/home');
         }
         else {
           this.cargando = false;

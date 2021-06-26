@@ -31,12 +31,12 @@ export class ListaEsperaMesasPage implements OnInit {
       const usersWaitingFb = await this.fbService.GetByParameter("lista_espera_local","status","esperando").get().toPromise();
       usersWaitingFb.docs.forEach(d=> this.clientListWaiting.push(d.data()));
       for (const client of this.clientListWaiting) {
-        const usersFb = await this.fbService.GetByParameter("usuarios","id",client.idUsuario).get().toPromise();
+        const usersFb = await this.fbService.GetByParameter("usuarios","id",client.id).get().toPromise();
         usersFb.docs.forEach(d=> {
-          var newUser ={ nombre:"",fecha:null, idUsuario:""};
+          var newUser ={ nombre:"",fecha:null, id:""};
           newUser.fecha = client.fecha;
           newUser.nombre = d.data().nombre;
-          newUser.idUsuario= client.idUsuario; 
+          newUser.id= client.id; 
           console.log(newUser);
           this.userList.push(newUser);
         } );
@@ -67,12 +67,14 @@ export class ListaEsperaMesasPage implements OnInit {
       this.fbService.Update(mesa.id,"mesas",mesa).then(()=> this.ingresando=false);
   }
   async asigarMesaAlUsuario(user:any,numeroMesa:number){
-    const userFb = await this.fbService.GetByParameter("usuarios","id",user.idUsuario).get().toPromise();
+    const userFb = await this.fbService.GetByParameter("usuarios","id",user.id).get().toPromise();
     userFb.docs[0].data().mesa = numeroMesa;
 }
 async actualizarListadoDeEspera(user:any){
+  console.log(user)
   user.status ="ingresado";
-  this.fbService.Update(user.idUsuario,"lista_espera_local",user).then(()=> this.ingresando=false);
+
+  this.fbService.Update('XXBdrt7n9mChYBJXNeJj',"lista_espera_local",user).then(()=> this.ingresando=false);
 }
   async presentAlert(message:string, title:string, isError:boolean){
         /*** ALERTS ***/
