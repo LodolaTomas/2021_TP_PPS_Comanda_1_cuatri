@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { CloudFirestoreService } from 'src/app/services/cloud-firestore.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 
 @Component({
   selector: 'app-home-clientes',
@@ -24,7 +25,8 @@ export class HomeClientesPage implements OnInit {
   constructor(private authS:AuthService, 
               private router:Router, 
               private scanner: BarcodeScanner,
-              private fbService:CloudFirestoreService) {
+              private fbService:CloudFirestoreService,
+              private localNotifications: LocalNotifications) {
       this.sideMenu();
       this.getUser();
   }
@@ -76,9 +78,19 @@ export class HomeClientesPage implements OnInit {
                     });
       this.displayQREspera=false;
       this.input = this.scannedBarCode["text"];
+      this.notificar({name:'Pepe Anonimo'});
     }).catch(err => {
       alert(err);
     });
+
+  }
+  notificar(user: any) {
+    this.localNotifications.schedule({
+      id: 1,
+      text: 'Un cliente en la lista de espera!: ' + user.name,
+      sound: 'file://android/app/src/main/res/raw/sound.mp3',
+    });
+
 
   }
 
