@@ -28,6 +28,10 @@
                 </ion-input>
               </ion-item>
               <ion-item *ngIf="!isAnonimous">
+                <ion-input name="email" id="email" type="text" placeholder="Email" ngModel required>
+                </ion-input>
+              </ion-item>
+              <ion-item *ngIf="!isAnonimous">
                 <ion-input name="dni" type="number" id="DNI" placeholder="DNI" ngModel required></ion-input>
               </ion-item>
               <ion-item *ngIf="!isAnonimous">
