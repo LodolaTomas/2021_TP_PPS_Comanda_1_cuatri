@@ -5,6 +5,7 @@ import { Camera, CameraResultType } from '@capacitor/camera';
 import { ImagesService } from 'src/app/services/images.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { CloudFirestoreService } from 'src/app/services/cloud-firestore.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +19,7 @@ export class RegisterPage implements OnInit {
   imageElement: any = undefined;
   flag = false;
   public cargando: boolean;
-  constructor(private router: Router, private barcodeScanner: BarcodeScanner, private imgSrv: ImagesService, private cloudSrv: CloudFirestoreService) {
+  constructor(private router: Router, private barcodeScanner: BarcodeScanner, private imgSrv: ImagesService, private cloudSrv: CloudFirestoreService,private auth:AuthService) {
     this.cargando = false
     const state = this.router.getCurrentNavigation().extras.state;
     if (state != null) {
@@ -47,12 +48,12 @@ export class RegisterPage implements OnInit {
       if (form.value.dni == undefined) {
         data = { 'name': form.value.name, 'image': url };
       } else {
-        data = { 'name': form.value.name, 'lastname': form.value.lastname, 'DNI': form.value.dni, 'password': form.value.password, 'perfil': 'cliente', 'estado': 'pendiente', 'image': url };
+        data = { 'name': form.value.name, 'lastname': form.value.lastname, 'DNI': form.value.dni, 'password': form.value.password, 'email':form.value.email,'perfil': 'cliente', 'estado': 'pendiente', 'image': url };
       }
       this.cloudSrv.Insert('/usuarios/', data)
       console.log(data)
       form.reset();
-      this.alert('success', 'Registro exitoso')
+      this.auth.onRegister(data).then(()=>this.alert('success', 'Registro exitoso'))
       this.cargando = false;
     }
 
@@ -61,7 +62,6 @@ export class RegisterPage implements OnInit {
 
 
   async takePicture() {
-    //capacitor 3.1 npm install @capacitor/camera
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: false,
