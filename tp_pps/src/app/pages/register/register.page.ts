@@ -31,35 +31,41 @@ export class RegisterPage implements OnInit {
   }
 
   async register(form) {
-
+    let flag=true;
+    let data: any;
     this.cargando = true;
-    if(this.isAnonimous){
+    if (form.value.dni == undefined) {
+      flag=false
+      let url = await this.imgSrv.uploadPhoto('/usuarios/', this.imageElement);
+      data = { 'name': form.value.name, 'image': url };
+    } else {
+      let url = await this.imgSrv.uploadPhoto('/usuarios/', this.imageElement);
+      data = { 'name': form.value.name, 'lastname': form.value.lastname, 'DNI': form.value.dni, 'password': form.value.password, 'email':form.value.email,'perfil': 'cliente', 'estado': 'pendiente', 'image': url };
+    }
 
+    if(this.isAnonimous){
+      flag=false
+      this.cloudSrv.Insert('usuarios', data)
       this.router.navigateByUrl('/home-clientes');
 
     }else if (form.value.password !== form.value.confirm) {
       document.getElementById('password').setAttribute('value', '')
       document.getElementById('confirm').setAttribute('value', '')
-      Swal.fire({
-        icon: 'error',
-        title: 'La contraseña no coinciden'
-      })
+      this.alert('error','La contraseña no coinciden')
+      flag=false
+      this.cargando = false;
     } else if (this.imageElement == undefined) {
       this.alert('error', 'Deber tomar o subir una foto');
-
-    } else {
-      let url = await this.imgSrv.uploadPhoto('/usuarios/', this.imageElement);
-      let data: any;
-      if (form.value.dni == undefined) {
-        data = { 'name': form.value.name, 'image': url };
-      } else {
-        data = { 'name': form.value.name, 'lastname': form.value.lastname, 'DNI': form.value.dni, 'password': form.value.password, 'email':form.value.email,'perfil': 'cliente', 'estado': 'pendiente', 'image': url };
-      }
-      this.cloudSrv.Insert('/usuarios/', data)
-      console.log(data)
-      form.reset();
-      this.auth.onRegister(data).then(()=>this.alert('success', 'Registro exitoso'))
+      flag=false
       this.cargando = false;
+    }
+    
+    if(flag==true){
+      this.cloudSrv.Insert('usuarios', data).then(()=>{
+        this.auth.onRegister(data).then(()=>this.alert('success', 'Registro exitoso')).catch(e=>console.log(e))
+        form.reset();
+        this.cargando = false;
+      }).catch(e=>console.log(e))
     }
 
   }
