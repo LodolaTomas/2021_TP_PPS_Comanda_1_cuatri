@@ -45,8 +45,10 @@ export class RegisterPage implements OnInit {
 
     if(this.isAnonimous){
       flag=false
-      this.cloudSrv.Insert('usuarios', data)
-      this.router.navigateByUrl('/home-clientes');
+      this.cloudSrv.Insert('usuarios', data).then(()=>{
+        this.cargando = false;
+        this.router.navigateByUrl('/home-clientes');
+      })
 
     }else if (form.value.password !== form.value.confirm) {
       document.getElementById('password').setAttribute('value', '')
