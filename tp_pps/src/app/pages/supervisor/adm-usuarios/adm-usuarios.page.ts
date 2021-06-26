@@ -1,3 +1,4 @@
+import { TestBed } from '@angular/core/testing';
 import { EmailService } from './../../../services/email.service';
 
 import { CloudFirestoreService } from './../../../services/cloud-firestore.service';
@@ -47,6 +48,17 @@ export class AdmUsuariosPage implements OnInit {
 
 
   }
+
+
+Test()
+{
+  this.localNotifications.schedule({
+    id: 1,
+    text: 'Test',
+    sound: 'file://android/app/src/main/res/raw/sound.mp3',
+  });
+
+}
 
   notificar(user:any)
   {
