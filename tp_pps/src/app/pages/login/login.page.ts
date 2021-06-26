@@ -19,6 +19,8 @@ export class LoginPage implements OnInit {
 
   public ingresando: boolean;
 
+  public cargando: boolean = false;
+
   users = [
     { "email": "admin@yopmail.com", "clave": "123456" },
     { "email": "metre@yopmail.com", "clave": "123456" },
@@ -48,6 +50,7 @@ export class LoginPage implements OnInit {
 
 
   async onLogin() {
+    this.cargando = true;
     this.user.email = this.miFormulario.value.email;
     this.user.password = this.miFormulario.value.clave;
 
@@ -56,18 +59,22 @@ export class LoginPage implements OnInit {
     // console.log(fbCollection.docs[0].data());
 
     if (element.estado == 'pendiente') {
+      this.cargando = false;
       this.alert('warning', 'Su cuenta esta pendiente')
     } else if (element.estado == 'rechazado') {
+      this.cargando = false;
       this.alert('error', 'Su cuenta ah sido rechazada')
     } else {
       let user = await this.authSvc.onLogin(this.user);
       if (user) {
         this.authSvc.currentUser = this.user;
         if (this.user.email == 'supervisor@yopmail.com') {
+          this.cargando = false;
           this.router.navigateByUrl('/supervisor');
         }
         else {
-          this.router.navigateByUrl('/home');
+          this.cargando = false;
+          this.router.navigateByUrl('/home-clientes');
         }
       }
     }

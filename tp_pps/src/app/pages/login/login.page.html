@@ -34,10 +34,16 @@
               </ion-item>
             </ion-card>
 
+        <div padding *ngIf="!cargando">
             <ion-button expand="block" class="ion-margin-start ion-margin-end ion-margin-bottom" color="success"   type="submit" (click)="onLogin()"
               [disabled]="miFormulario.invalid">
               Iniciar Sesión
             </ion-button>
+        </div>
+
+            <div padding *ngIf="cargando">
+              <ion-button expand="block" class="ion-margin-start ion-margin-end ion-margin-bottom" color="success"   disabled expand="block"> <ion-spinner name="circles" color="dark"></ion-spinner></ion-button>
+            </div>
  
             <a [routerLink]="['/register']" [state]="{ value:'cliente'}">Registrarse</a> o <a [routerLink]="['/register']" [state]="{ value:'anonimo'}">Ingresar como anónimo</a>
           </form>
