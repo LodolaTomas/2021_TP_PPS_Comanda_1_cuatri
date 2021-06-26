@@ -31,8 +31,13 @@ export class RegisterPage implements OnInit {
   }
 
   async register(form) {
+
     this.cargando = true;
-    if (form.value.password !== form.value.confirm) {
+    if(this.isAnonimous){
+
+      this.router.navigateByUrl('/home-clientes');
+
+    }else if (form.value.password !== form.value.confirm) {
       document.getElementById('password').setAttribute('value', '')
       document.getElementById('confirm').setAttribute('value', '')
       Swal.fire({
