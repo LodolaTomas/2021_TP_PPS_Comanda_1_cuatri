@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { CloudFirestoreService } from 'src/app/services/cloud-firestore.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
+import { setTimeout } from 'timers';
 
 @Component({
   selector: 'app-login',
@@ -50,7 +51,7 @@ export class LoginPage implements OnInit {
   async onLogin() {
     this.user.email = this.miFormulario.value.email;
     this.user.password = this.miFormulario.value.clave;
-    const miUser = await this.cloudSrv.GetByParameter('usuarios', 'correo', this.user.email).valueChanges().subscribe(async element=>{
+    const subscription = this.cloudSrv.GetByParameter('usuarios', 'correo', this.user.email).valueChanges().subscribe(async element=>{
     if (element[0].estado == 'pendiente') {
       this.alert('warning', 'Su cuenta esta pendiente')
     } else if (element[0].estado == 'rechazado') {
@@ -59,17 +60,19 @@ export class LoginPage implements OnInit {
       let user = await this.authSvc.onLogin(this.user);
       if (user) {
         this.authSvc.currentUser = this.user;
-
         if (this.user.email == 'supervisor@yopmail.com') {
           this.router.navigateByUrl('/supervisor');
         }
         else {
           this.router.navigateByUrl('/home');
         }
-
       }
     }
-  })
+  });
+  setTimeout(() => {
+    if(subscription)
+      subscription.unsubscribe();
+  }, 1000);
   }
 
   public submit() {
