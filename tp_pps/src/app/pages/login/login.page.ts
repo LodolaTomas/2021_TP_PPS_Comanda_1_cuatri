@@ -6,7 +6,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { CloudFirestoreService } from 'src/app/services/cloud-firestore.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
