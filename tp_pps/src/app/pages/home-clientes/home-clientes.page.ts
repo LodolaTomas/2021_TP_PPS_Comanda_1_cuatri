@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { CloudFirestoreService } from 'src/app/services/cloud-firestore.service';
+import Swal, { SweetAlertIcon } from 'sweetalert2';
 
 @Component({
   selector: 'app-home-clientes',
@@ -64,14 +65,14 @@ export class HomeClientesPage implements OnInit {
   }
   openQR() {
     console.log("QR!")
-    this.scanner.scan({ formats: "PDF_417" }).then(res => {
+    this.scanner.scan().then(res => {
       this.scannedBarCode = res;
       console.log(res);
       let scannedCode = res.text;
       const userWaitList = { id:this.cliente.id, status:"esperando", date:new Date() };
       this.fbService.Insert("lista_espera_local",userWaitList)
                     .then((val)=>{
-                      alert("Agregado a la lista de espera!");
+                      this.alert('success', "Agregado a la lista de espera!");
                     });
       this.displayQREspera=false;
       this.input = this.scannedBarCode["text"];
@@ -80,4 +81,25 @@ export class HomeClientesPage implements OnInit {
     });
 
   }
+
+  alert(icon: SweetAlertIcon, text: string) {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'bottom',
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+
+    Toast.fire({
+      icon: icon,
+      title: text
+    })
+  }
+
 }

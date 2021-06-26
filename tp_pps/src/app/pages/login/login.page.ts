@@ -63,11 +63,17 @@ export class LoginPage implements OnInit {
       this.alert('warning', 'Su cuenta esta pendiente')
     } else if (element.estado == 'rechazado') {
       this.cargando = false;
-      this.alert('error', 'Su cuenta ah sido rechazada')
+      this.alert('error', 'Su cuenta ha sido rechazada')
     } else {
       let user = await this.authSvc.onLogin(this.user);
       if (user) {
         this.authSvc.currentUser = this.user;
+
+        if (this.user.email == 'admin@yopmail.com') {
+          this.cargando = false;
+          this.router.navigateByUrl('/home');
+        }
+
         if (this.user.email == 'supervisor@yopmail.com') {
           this.cargando = false;
           this.router.navigateByUrl('/supervisor');
