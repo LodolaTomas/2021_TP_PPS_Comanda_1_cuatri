@@ -17,64 +17,73 @@ export class AdmUsuariosPage implements OnInit {
 
   public usuarios: any = []
 
-  public verPendientes:boolean = true;
-  public verAceptados:boolean = false;
-  public verTodos:boolean = false;
+  public verPendientes: boolean = true;
+  public verAceptados: boolean = false;
+  public verTodos: boolean = false;
 
   public buttonColor1: string = "light";
   public buttonColor2: string = "dark";
   public buttonColor3: string = "dark";
 
-  public userLoged:any;
-  
+  public userLoged: any;
 
-  constructor(private authS: AuthService, private router: Router, private firestore: CloudFirestoreService, private localNotifications: LocalNotifications,  private emailSVC:EmailService) {
 
-  this.usuarios = ''
+  constructor(private authS: AuthService, private router: Router, private firestore: CloudFirestoreService, private localNotifications: LocalNotifications, private emailSVC: EmailService) {
 
-  this.userLoged = this.authS.GetCurrentUser();
+    this.usuarios = ''
 
-    console.log(this.userLoged);
-    
+    this.userLoged = this.authS.GetCurrentUser()
+
+    console.log(this.userLoged)
+
     firestore.GetAll("usuarios")
-    .subscribe((data) => {
-      this.usuarios = data;
-      data.forEach(uno => {
-        
-        if(uno.estado =='pendiente')
-        {
-     
-          this.notificar(uno)
-        }
+      .subscribe((data) => {
+        this.usuarios = data;
+        data.forEach(uno => {
 
+          if (uno.estado == 'pendiente') {
+
+            this.notificar(uno)
+          }
+
+        });
+        console.log(data)
       });
-      console.log(data)
-    });
 
 
 
   }
 
+  async esSupervisor() {
 
-Test()
-{
-  this.localNotifications.schedule({
-    id: 1,
-    text: 'Test',
-    sound: 'file://android/app/src/main/res/raw/sound.mp3',
-  });
 
-}
 
-  notificar(user:any)
-  {
+    const fbCollection = await this.firestore.GetByParameter("usuarios", "correo", "supervisor@yopmail.com").get().toPromise();
+
+    const element = fbCollection.docs[0].data();
+
+    return element;
+
+  }
+
+
+  Test() {
+    this.localNotifications.schedule({
+      id: 1,
+      text: 'Test',
+      sound: 'file://android/app/src/main/res/raw/sound.mp3',
+    });
+
+  }
+
+  notificar(user: any) {
     this.localNotifications.schedule({
       id: 1,
       text: 'Un usuario a verificar: ' + user.name,
       sound: 'file://android/app/src/main/res/raw/sound.mp3',
     });
 
-  
+
   }
 
 
@@ -102,46 +111,43 @@ Test()
     }
   }
 
-  verAceptadosBTN(){
-    if(this.verAceptados)
-    {
-    
+  verAceptadosBTN() {
+    if (this.verAceptados) {
+
     }
-    else{
+    else {
       this.seleccionarFiltro('aceptados')
-      this.verAceptados =true;
-      this.verPendientes =false;
-      this.verTodos =false;
+      this.verAceptados = true;
+      this.verPendientes = false;
+      this.verTodos = false;
     }
 
   }
 
-  verTodosBTN(){
-    if(this.verTodos)
-    {
-    
+  verTodosBTN() {
+    if (this.verTodos) {
+
     }
-    else{
+    else {
       this.seleccionarFiltro('todos')
-      this.verAceptados =false;
-      this.verPendientes =false;
-      this.verTodos =true;
+      this.verAceptados = false;
+      this.verPendientes = false;
+      this.verTodos = true;
     }
-    
+
   }
 
-  verPendientesBTN(){
-    if(this.verPendientes)
-    {
-      
+  verPendientesBTN() {
+    if (this.verPendientes) {
+
     }
-    else{
+    else {
       this.seleccionarFiltro('pendientes')
-      this.verAceptados =false;
-      this.verPendientes =true;
-      this.verTodos =false;
+      this.verAceptados = false;
+      this.verPendientes = true;
+      this.verTodos = false;
     }
-    
+
   }
 
   ngOnInit() {
@@ -150,8 +156,7 @@ Test()
   }
 
 
-  Aceptar(user)
-  {
+  Aceptar(user) {
     let auxUser = user;
     user.estado = 'aceptado';
     this.emailSVC.sendEmail(user, "Su cuenta ha sido aceptada, ya puede ingresar a la app")
@@ -159,7 +164,7 @@ Test()
 
   }
 
-  Rechazar(user){
+  Rechazar(user) {
     let auxUser = user;
     user.estado = 'rechazado';
     this.emailSVC.sendEmail(user, "Su cuenta ha sido rechazada, si cree que es un error puede contactar al administrador")
