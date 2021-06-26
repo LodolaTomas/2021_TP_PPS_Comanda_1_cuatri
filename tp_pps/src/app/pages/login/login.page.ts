@@ -50,10 +50,14 @@ export class LoginPage implements OnInit {
   async onLogin() {
     this.user.email = this.miFormulario.value.email;
     this.user.password = this.miFormulario.value.clave;
-    const subscription = this.cloudSrv.GetByParameter('usuarios', 'correo', this.user.email).valueChanges().subscribe(async element=>{
-    if (element[0].estado == 'pendiente') {
+
+    const fbCollection = await this.cloudSrv.GetByParameter("usuarios", "correo", this.user.email).get().toPromise();
+    const element = fbCollection.docs[0].data();
+    // console.log(fbCollection.docs[0].data());
+
+    if (element.estado == 'pendiente') {
       this.alert('warning', 'Su cuenta esta pendiente')
-    } else if (element[0].estado == 'rechazado') {
+    } else if (element.estado == 'rechazado') {
       this.alert('error', 'Su cuenta ah sido rechazada')
     } else {
       let user = await this.authSvc.onLogin(this.user);
@@ -67,11 +71,6 @@ export class LoginPage implements OnInit {
         }
       }
     }
-  });
-  setTimeout(() => {
-    if(subscription)
-      subscription.unsubscribe();
-  }, 1000);
   }
 
   public submit() {
