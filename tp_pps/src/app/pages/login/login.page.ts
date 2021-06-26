@@ -51,7 +51,7 @@ export class LoginPage implements OnInit {
     this.user.email = this.miFormulario.value.email;
     this.user.password = this.miFormulario.value.clave;
 
-    const fbCollection = await this.cloudSrv.GetByParameter("usuarios", "correo", this.user.email).get().toPromise();
+    const fbCollection = await this.cloudSrv.GetByParameter("usuarios", "email", this.user.email).get().toPromise();
     const element = fbCollection.docs[0].data();
     // console.log(fbCollection.docs[0].data());
 

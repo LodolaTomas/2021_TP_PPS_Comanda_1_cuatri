@@ -15,7 +15,7 @@ export class EmailService {
     let templateParams = {
       nombre_cliente: usuario.name,
       Mensaje: mensaje,
-      email_cliente: usuario.correo
+      email_cliente: usuario.email
     };
 
     emailjs.send("service_cyp", "template_email", templateParams)

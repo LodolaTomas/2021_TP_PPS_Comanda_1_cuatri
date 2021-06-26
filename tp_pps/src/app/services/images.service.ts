@@ -43,5 +43,21 @@ export class ImagesService {
     })
   }
 
+  uploadPhotoMesa(path: string, file: any) {
+    let hora = new Date().getTime();//obtengo hora actual
+    let ubicacion = path + hora;//le digo la ubicacion de la foto en el firebaseStorage
+    return new Promise((resolve) => {
+      this.storage.upload(ubicacion, file).then(() => {
+      let storages = firebase.default.storage();
+      let storageRef = storages.ref();
+      let spaceRef = storageRef.child(ubicacion);
+        spaceRef.getDownloadURL().then(url => {
+          resolve(url)
+        })
+      })
+    })
+  }
+
+
 
 }
