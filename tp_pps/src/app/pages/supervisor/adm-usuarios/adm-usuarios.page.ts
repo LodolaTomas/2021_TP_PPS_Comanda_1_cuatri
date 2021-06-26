@@ -25,12 +25,17 @@ export class AdmUsuariosPage implements OnInit {
   public buttonColor2: string = "dark";
   public buttonColor3: string = "dark";
 
+  public userLoged:any;
   
 
   constructor(private authS: AuthService, private router: Router, private firestore: CloudFirestoreService, private localNotifications: LocalNotifications,  private emailSVC:EmailService) {
 
   this.usuarios = ''
 
+  this.userLoged = this.authS.GetCurrentUser();
+
+    console.log(this.userLoged);
+    
     firestore.GetAll("usuarios")
     .subscribe((data) => {
       this.usuarios = data;
@@ -38,6 +43,7 @@ export class AdmUsuariosPage implements OnInit {
         
         if(uno.estado =='pendiente')
         {
+     
           this.notificar(uno)
         }
 
@@ -71,11 +77,6 @@ Test()
   
   }
 
-
-  alertarPendientes()
-  {
-
-  }
 
 
 
