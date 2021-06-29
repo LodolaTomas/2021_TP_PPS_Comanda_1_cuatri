@@ -19,6 +19,9 @@ export class HomeClientesPage implements OnInit {
   input: any;
   cliente:any;
   displayQREspera:boolean=true;
+  numeroMesa:number=5;
+  displayQRmesa:boolean=true;
+  actionsMesa:boolean=false;
 
 
   //barcodeScannerOptions: BarcodeScannerOptions;
@@ -85,6 +88,28 @@ export class HomeClientesPage implements OnInit {
     });
 
   }
+
+  openQRmesa() {
+    console.log("QR!")
+    this.scanner.scan().then(res => {
+      this.scannedBarCode = res;
+      console.log(res);
+      let scannedCode = res.text;
+      const userWaitList = { id:this.cliente.id, status:"esperando", date:new Date() };
+      this.fbService.Insert("lista_espera_local",userWaitList)
+                    .then((val)=>{
+                    this.displayQRmesa = false;
+                    this.actionsMesa = true;
+                    });
+    
+      this.input = this.scannedBarCode["text"];
+
+    }).catch(err => {
+      alert(err);
+    });
+
+  }
+
   notificar(user: any) {
     this.localNotifications.schedule({
       id: 1,

@@ -44,7 +44,7 @@
 
   <div class="container mt-3 ion-text-center">
 
-    <div id="ingresarAlistaEspera" *ngIf="displayQREspera" align="center">
+    <!--     <div id="ingresarAlistaEspera" *ngIf="displayQREspera" align="center">
       <ion-card>
       <h1>Lista de espera</h1>
       <h3>Escanee el QR para ingresar</h3>
@@ -61,11 +61,33 @@
         <h3>Espere a ser aceptado</h3>
       </ion-card>
     </div>
+ -->
+
+    <div id="escanearMesa" *ngIf="displayQRmesa" align="center">
+      <ion-card>
+        <h1>Ha sido asignado a Mesa {{numeroMesa}}</h1>
+        <h3>Escanee el QR para tomar la mesa</h3>
+        <ion-fab-button class="mb-2" (click)="openQRmesa()">
+          <ion-icon name="qr-code-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-card>
+    </div>
+
+    <div id="enEspera" *ngIf="!displayQRmesa">
+      <ion-card>
+        <h1>Acciones</h1>
+        <ion-button expand="block" >Carta</ion-button>
+        <br>
+        <ion-button expand="block">Consulta</ion-button>
+        <br>
+        <br>
+      </ion-card>
+    </div>
 
 
     <br>
     <img src="../../assets/icon.png" height="200px" alt="">
-    <h4>Deslice hacia la derecha para ver las opciones ⇨ </h4>
+    <h4>Coma y punto </h4>
   </div>
 
 
