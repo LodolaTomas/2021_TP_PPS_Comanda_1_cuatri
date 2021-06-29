@@ -20,6 +20,7 @@ export class HomeClientesPage implements OnInit {
   cliente:any;
   displayQREspera:boolean=true;
 
+
   //barcodeScannerOptions: BarcodeScannerOptions;
 
   constructor(private authS:AuthService, 

@@ -7,7 +7,9 @@
       Bienvenido
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button color="danger" (click)="logout()"><ion-icon slot="icon-only" name="exit"></ion-icon></ion-button>
+      <ion-button color="danger" (click)="logout()">
+        <ion-icon slot="icon-only" name="exit"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -29,7 +31,8 @@
       <ion-list *ngFor="let pages of navigate">
         <ion-menu-toggle auto-hide="true">
           <ion-item [routerLink]="pages.url" routerDirection="forward">
-            <ion-icon [name]="pages.icon" slot="start" *ngIf="pages.icon=='qr-code' && displayQREspera" (click)="openQR()"></ion-icon>
+            <ion-icon [name]="pages.icon" slot="start" *ngIf="pages.icon=='qr-code' && displayQREspera"
+              (click)="openQR()"></ion-icon>
             <ion-icon [name]="pages.icon" slot="start" *ngIf="pages.icon!='qr-code'"></ion-icon>
             {{pages.title}}
           </ion-item>
@@ -40,11 +43,31 @@
 
 
   <div class="container mt-3 ion-text-center">
+
+    <div id="ingresarAlistaEspera" *ngIf="displayQREspera" align="center">
+      <ion-card>
+      <h1>Lista de espera</h1>
+      <h3>Escanee el QR para ingresar</h3>
+      <ion-fab-button class="mb-2" (click)="openQR()">
+        <ion-icon name="qr-code-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-card>
+    </div>
+
+    <div id="enEspera" *ngIf="!displayQREspera">
+      <ion-card>
+        <h1>Lista de espera</h1>
+        <ion-spinner></ion-spinner>
+        <h3>Espere a ser aceptado</h3>
+      </ion-card>
+    </div>
+
+
     <br>
     <img src="../../assets/icon.png" height="200px" alt="">
     <h4>Deslice hacia la derecha para ver las opciones ⇨ </h4>
   </div>
 
 
-  <ion-router-outlet id="content1"></ion-router-outlet>
+
 </ion-content>
