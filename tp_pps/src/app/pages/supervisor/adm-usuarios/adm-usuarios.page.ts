@@ -25,16 +25,13 @@ export class AdmUsuariosPage implements OnInit {
   public buttonColor2: string = "dark";
   public buttonColor3: string = "dark";
 
-  public userLoged: any;
 
 
   constructor(private authS: AuthService, private router: Router, private firestore: CloudFirestoreService, private localNotifications: LocalNotifications, private emailSVC: EmailService) {
 
     this.usuarios = ''
 
-    this.userLoged = this.esSupervisor()
 
-    console.log(this.userLoged)
 
     firestore.GetAll("usuarios")
       .subscribe((data) => {
@@ -54,27 +51,10 @@ export class AdmUsuariosPage implements OnInit {
 
   }
 
-  async esSupervisor() {
 
 
 
-    const fbCollection = await this.firestore.GetByParameter("usuarios", "email", "supervisor@yopmail.com").get().toPromise();
 
-    const element = fbCollection.docs[0].data();
-
-    return element;
-
-  }
-
-
-  Test() {
-    this.localNotifications.schedule({
-      id: 1,
-      text: 'Test',
-      sound: 'file://android/app/src/main/res/raw/sound.mp3',
-    });
-
-  }
 
   notificar(user: any) {
     this.localNotifications.schedule({

@@ -40,10 +40,8 @@ export class RegisterPage implements OnInit {
     }else if (form.value.password !== form.value.confirm) {
       document.getElementById('password').setAttribute('value', '')
       document.getElementById('confirm').setAttribute('value', '')
-      Swal.fire({
-        icon: 'error',
-        title: 'La contraseña no coinciden'
-      })
+      this.alert('error', 'Las contraseña no coinciden')
+      
     } else if (this.imageElement == undefined) {
       this.alert('error', 'Deber tomar o subir una foto');
 
@@ -55,7 +53,7 @@ export class RegisterPage implements OnInit {
       } else {
         data = { 'name': form.value.name, 'lastname': form.value.lastname, 'DNI': form.value.dni, 'password': form.value.password, 'email':form.value.email,'perfil': 'cliente', 'estado': 'pendiente', 'image': url };
       }
-      this.cloudSrv.Insert('/usuarios/', data)
+      this.cloudSrv.Insert('usuarios', data)
       console.log(data)
       form.reset();
       this.auth.onRegister(data).then(()=>this.alert('success', 'Registro exitoso'))
