@@ -17,12 +17,13 @@ import { environment } from './../environments/environment';
 import { File } from '@ionic-native/file/ngx';
 
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { ShowfoodComponent } from './component/showfood/showfood.component';
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent,ShowfoodComponent],
   entryComponents: [],
-  imports: [BrowserModule , IonicModule.forRoot(), AppRoutingModule, AngularFireAuthModule, AngularFireModule.initializeApp(environment.firebaseConfig)],
+  imports: [BrowserModule , IonicModule.forRoot(), AppRoutingModule, AngularFireAuthModule, AngularFireModule.initializeApp(environment.firebaseConfig),IonicModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, File,  BarcodeScanner, LocalNotifications,
     { 
       provide: RouteReuseStrategy, 

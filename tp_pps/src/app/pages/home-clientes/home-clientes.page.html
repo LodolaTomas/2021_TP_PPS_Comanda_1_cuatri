@@ -63,7 +63,7 @@
     </div>
  -->
 
-    <div id="escanearMesa" *ngIf="displayQRmesa !carga" align="center">
+    <div id="escanearMesa" *ngIf="!displayQRmesa" align="center">
       <ion-card>
         <h1>Ha sido asignado a Mesa {{numeroMesa}}</h1>
         <h3>Escanee el QR para tomar la mesa</h3>
@@ -73,10 +73,11 @@
       </ion-card>
     </div>
 
+
     <div id="enEspera" *ngIf="!displayQRmesa && !carga">
       <ion-card>
         <h1>Acciones</h1>
-        <ion-button expand="block" >Carta</ion-button>
+        <ion-button expand="block" (click)="cartfood()">Carta</ion-button>
         <br>
         <ion-button expand="block">Consulta</ion-button>
         <br>
