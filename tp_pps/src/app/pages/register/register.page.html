@@ -19,6 +19,11 @@
           </div>
           <div class="ion-text-center" size-md="6" size-lg="5" size-xs="12">
             <ion-card color="light" class="auth-card ion-margin">
+              <div class="ion-align-items-center" style="background-color: white;">
+                <div *ngIf="takePhoto!=false">
+                  <img [src]="imageElement" class="m-1" style="border: 2px solid gray; width: auto;height: 120px;">
+                </div>
+              </div>
               <ion-item>
                 <ion-input name="name" id="name" type="text" placeholder="Nombre" ngModel required></ion-input>
                 <ion-icon name="person"></ion-icon>
@@ -42,13 +47,8 @@
                 <ion-input name="confirm" type="password" id="confirm" placeholder="Repita Clave" ngModel required>
                 </ion-input>
               </ion-item>
-              <ion-item>
-                <div *ngIf="imageElement!=undefined">
-                  <img [src]="imageElement" class="m-1" style="border-radius: 100%; width: 120px;height: 120px;">
-                </div>
-                <ion-button (click)="takePicture()">
-                  <ion-icon name="camera"></ion-icon>
-                </ion-button>
+              <ion-item >
+                <ion-button expand="full" style="width: 100% !important;" (click)="takePicture()" size="large"><ion-icon  slot="icon-only" name="camera"></ion-icon></ion-button>
               </ion-item>
             </ion-card>
           </div>
