@@ -22,7 +22,7 @@ export class HomeClientesPage implements OnInit {
   numeroMesa:number=5;
   displayQRmesa:boolean=true;
   actionsMesa:boolean=false;
-
+  carga:boolean=false;
 
   //barcodeScannerOptions: BarcodeScannerOptions;
 
@@ -70,6 +70,7 @@ export class HomeClientesPage implements OnInit {
     this.router.navigateByUrl('login')
   }
   openQR() {
+    
     console.log("QR!")
     this.scanner.scan().then(res => {
       this.scannedBarCode = res;
@@ -79,6 +80,7 @@ export class HomeClientesPage implements OnInit {
       this.fbService.Insert("lista_espera_local",userWaitList)
                     .then((val)=>{
                       this.alert('success', "Agregado a la lista de espera!");
+             
                     });
       this.displayQREspera=false;
       this.input = this.scannedBarCode["text"];
@@ -90,6 +92,8 @@ export class HomeClientesPage implements OnInit {
   }
 
   openQRmesa() {
+    this.displayQRmesa = false;
+    this.carga = true;
     console.log("QR!")
     this.scanner.scan().then(res => {
       this.scannedBarCode = res;
@@ -100,6 +104,7 @@ export class HomeClientesPage implements OnInit {
                     .then((val)=>{
                     this.displayQRmesa = false;
                     this.actionsMesa = true;
+                    this.carga = false;
                     });
     
       this.input = this.scannedBarCode["text"];
