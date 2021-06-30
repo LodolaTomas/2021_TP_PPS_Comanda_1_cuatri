@@ -12,17 +12,30 @@
 <ion-content>
   <ion-row>
     <ion-col>
-      <ion-button expand="block" color="medium">Comidas</ion-button>
+      <ion-button expand="block" (click)="selectFood()" color="medium">Comidas</ion-button>
     </ion-col>
     <ion-col>
-      <ion-button  expand="block" color="secondary">Bebidas</ion-button>
+      <ion-button  expand="block" (click)="selectDrink()" color="secondary">Bebidas</ion-button>
     </ion-col>
     <ion-col>
-      <ion-button  expand="block" color="tertiary">Postres</ion-button>
+      <ion-button  expand="block" (click)="selectDessert()" color="tertiary">Postres</ion-button>
     </ion-col>
   </ion-row>
 
-  <div>
+  <div *ngIf="comida">
+    <div  *ngFor="let item of listFood">
+      <ion-card >
+        <ion-card-header>
+          <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+          <ion-card-title>Card Title</ion-card-title>
+        </ion-card-header>
+      
+        <ion-card-content>
+          Keep close to Nature's heart... and break clear away, once in awhile,
+          and climb a mountain or spend a week in the woods. Wash your spirit clean.
+        </ion-card-content>
+      </ion-card>
+    </div>
   </div>
 </ion-content>
 
