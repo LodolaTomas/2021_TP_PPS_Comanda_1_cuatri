@@ -16,6 +16,7 @@ export class SupervisorPage implements OnInit {
 
   logout()
   {
+    localStorage.removeItem('token')
     this.authS.LogOutCurrentUser()
     this.router.navigateByUrl('login')
   }

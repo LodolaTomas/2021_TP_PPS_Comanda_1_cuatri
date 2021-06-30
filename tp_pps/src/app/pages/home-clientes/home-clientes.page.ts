@@ -94,7 +94,7 @@ export class HomeClientesPage implements OnInit {
         });
       this.displayQREspera = false;
       this.input = this.scannedBarCode["text"];
-      this.notifSVC.notifyByProfile("Alguien", "En la lista de espera: ", this.usuarioLog, "admin")
+      this.notifSVC.notifyByProfile("En la lista de espera: ", this.usuarioLog, "admin")
  //     this.notificar({ name: 'Pepe Anonimo' });
     }).catch(err => {
       alert(err);
