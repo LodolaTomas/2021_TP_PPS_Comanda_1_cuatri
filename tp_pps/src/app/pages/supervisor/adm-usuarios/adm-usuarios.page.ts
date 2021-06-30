@@ -1,3 +1,4 @@
+import { NotificationsService } from './../../../services/notifications.service';
 import { TestBed } from '@angular/core/testing';
 import { EmailService } from './../../../services/email.service';
 
@@ -24,26 +25,35 @@ export class AdmUsuariosPage implements OnInit {
   public buttonColor1: string = "light";
   public buttonColor2: string = "dark";
   public buttonColor3: string = "dark";
+  public usuarioLog: any = {}
 
 
 
-  constructor(private authS: AuthService, private router: Router, private firestore: CloudFirestoreService, private localNotifications: LocalNotifications, private emailSVC: EmailService) {
+  constructor(private authS: AuthService, private notifSVC: NotificationsService, private router: Router, private firestore: CloudFirestoreService, private localNotifications: LocalNotifications, private emailSVC: EmailService) {
 
     this.usuarios = ''
-
+    this.usuarioLog = ''
 
 
     firestore.GetAll("usuarios")
       .subscribe((data) => {
         this.usuarios = data;
+
+        this.traerUsuario()
+
         data.forEach(uno => {
 
           if (uno.estado == 'pendiente') {
 
-            this.notificar(uno)
+            this.usuarioLog =  JSON.parse(localStorage.getItem('token'));
+
+            this.notifSVC.notifyByProfile("Usuarios pendientes de verificacion", this.usuarioLog, "supervisor")//Mensaje, usuario logeado, y perfiles a notificar
+            //this.notificar(uno)
           }
 
         });
+
+
         console.log(data)
       });
 
@@ -51,21 +61,30 @@ export class AdmUsuariosPage implements OnInit {
 
   }
 
+  async traerUsuario() {
+    this.authS.GetCurrentUser().then((response) => {
+      if (response != null) {
+        let user = this.usuarios.filter((u) => u.email == response.email);
+        localStorage.setItem('token', JSON.stringify(user[0]))
+      }
 
-
-
-
-
-  notificar(user: any) {
-    this.localNotifications.schedule({
-      id: 1,
-      text: 'Un usuario a verificar: ' + user.name,
-      sound: 'file://android/app/src/main/res/raw/sound.mp3',
     });
-
-
   }
 
+
+
+  /* 
+  
+    notificar(user: any) {
+      this.localNotifications.schedule({
+        id: 1,
+        text: 'Un usuario a verificar: ' + user.name,
+        sound: 'file://android/app/src/main/res/raw/sound.mp3',
+      });
+  
+  
+    }
+   */
 
 
 

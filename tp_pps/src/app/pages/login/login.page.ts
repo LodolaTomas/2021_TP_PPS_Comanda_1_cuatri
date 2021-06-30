@@ -1,3 +1,4 @@
+import { NotificationsService } from './../../services/notifications.service';
 import { User } from './../../shared/User.class';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -21,6 +22,8 @@ export class LoginPage implements OnInit {
 
   public cargando: boolean = false;
 
+
+
   users = [
     { "email": "admin@yopmail.com", "clave": "123456" },
     { "email": "metre@yopmail.com", "clave": "123456" },
@@ -29,7 +32,7 @@ export class LoginPage implements OnInit {
     { "email": "supervisor@yopmail.com", "clave": "123456" }
   ];
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private authSvc: AuthService, private cloudSrv: CloudFirestoreService) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private authSvc: AuthService, private cloudSrv: CloudFirestoreService, private notificationsService:NotificationsService) {
     this.miFormulario = formBuilder.group({
       email: new FormControl(""),
       clave: new FormControl(""),
@@ -40,6 +43,8 @@ export class LoginPage implements OnInit {
     this.ingresando = false;
 
 
+
+
   }
 
   ngOnInit() {
@@ -47,6 +52,8 @@ export class LoginPage implements OnInit {
 
   autenticar(form) {
   }
+
+
 
 
   async onLogin() {

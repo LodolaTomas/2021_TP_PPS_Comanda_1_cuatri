@@ -14,6 +14,7 @@
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
@@ -41,7 +42,6 @@
     </ion-content>
   </ion-menu>
 
-
   <div class="container mt-3 ion-text-center">
 
     <!--     <div id="ingresarAlistaEspera" *ngIf="displayQREspera" align="center">
@@ -63,7 +63,7 @@
     </div>
  -->
 
-    <div id="escanearMesa" *ngIf="!displayQRmesa" align="center">
+    <div id="escanearMesa" *ngIf="displayQRmesa" align="center">
       <ion-card>
         <h1>Ha sido asignado a Mesa {{numeroMesa}}</h1>
         <h3>Escanee el QR para tomar la mesa</h3>
@@ -72,7 +72,6 @@
         </ion-fab-button>
       </ion-card>
     </div>
-
 
     <div id="enEspera" *ngIf="!displayQRmesa && !carga">
       <ion-card>

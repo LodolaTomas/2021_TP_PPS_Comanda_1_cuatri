@@ -1,0 +1,46 @@
+import { CloudFirestoreService } from 'src/app/services/cloud-firestore.service';
+import { Injectable } from '@angular/core';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class NotificationsService {
+
+
+  public usuarios: any = []
+  public supervisores: any = []
+  public metres: any = []
+  public admins: any = []
+  public clientes: any = []
+
+
+  constructor(private localNotifications: LocalNotifications) {
+
+  }
+
+
+  notifyByProfile(message: string, userLoged: any, target: string) {
+
+    //target es el perfil a notificar, userLoged el usuario logeado, para saber si debe notificarlo
+    if (target == userLoged.perfil) {
+      console.log("true")
+      this.notify(message) //La notifiacion recibe un mensaje
+
+    }
+  }
+
+
+
+  notify(message: string) {
+    this.localNotifications.schedule({
+      id: 1,
+      text: message,
+      sound: 'file://android/app/src/main/res/raw/sound.mp3',
+    });
+  }
+
+}
+
+
+
