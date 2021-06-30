@@ -18,6 +18,7 @@ export class RegisterPage implements OnInit {
   scannedBarCode: any;
   imageElement: any = undefined;
   flag = false;
+  takePhoto=false;
   public cargando: boolean;
   constructor(private router: Router, private barcodeScanner: BarcodeScanner, private imgSrv: ImagesService, private cloudSrv: CloudFirestoreService,private auth:AuthService) {
     this.cargando = false
@@ -28,6 +29,7 @@ export class RegisterPage implements OnInit {
   }
 
   ngOnInit() {
+    
   }
 
   async register(form) {
@@ -65,6 +67,8 @@ export class RegisterPage implements OnInit {
     if(flag==true){
       this.cloudSrv.Insert('usuarios', data).then(()=>{
         this.auth.onRegister(data).then(()=>this.alert('success', 'Registro exitoso')).catch(e=>console.log(e))
+        this.takePhoto=false
+        this.imageElement=undefined
         form.reset();
         this.cargando = false;
         this.router.navigateByUrl('login')
@@ -86,6 +90,7 @@ export class RegisterPage implements OnInit {
       promptLabelCancel: 'Cancelar',
       saveToGallery: true
     });
+    this.takePhoto=true;
     this.imageElement = image.dataUrl;//muestro la foto para que previsualize el cliente
   }
 

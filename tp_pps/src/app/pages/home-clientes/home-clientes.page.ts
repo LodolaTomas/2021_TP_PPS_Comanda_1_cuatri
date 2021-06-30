@@ -139,5 +139,8 @@ export class HomeClientesPage implements OnInit {
       title: text
     })
   }
+  cartfood(){
+    this.router.navigateByUrl('cartfood')
+  }
 
 }
