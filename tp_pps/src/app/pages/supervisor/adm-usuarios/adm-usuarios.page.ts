@@ -45,7 +45,9 @@ export class AdmUsuariosPage implements OnInit {
 
           if (uno.estado == 'pendiente') {
 
-            this.notifSVC.notifyByProfile(uno, "Pendiente de verificacion: ", this.usuarioLog, "supervisor")
+            this.usuarioLog =  JSON.parse(localStorage.getItem('token'));
+
+            this.notifSVC.notifyByProfile("Usuarios pendientes de verificacion", this.usuarioLog, "supervisor")//Mensaje, usuario logeado, y perfiles a notificar
             //this.notificar(uno)
           }
 
@@ -61,14 +63,11 @@ export class AdmUsuariosPage implements OnInit {
 
   async traerUsuario() {
     this.authS.GetCurrentUser().then((response) => {
-      if(response != null)
-      { 
+      if (response != null) {
         let user = this.usuarios.filter((u) => u.email == response.email);
-        this.usuarioLog = user[0];
-        console.log(this.usuarioLog.perfil)
-
+        localStorage.setItem('token', JSON.stringify(user[0]))
       }
-  
+
     });
   }
 

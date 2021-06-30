@@ -15,59 +15,29 @@ export class NotificationsService {
   public clientes: any = []
 
 
-  constructor(private localNotifications: LocalNotifications, private firestore: CloudFirestoreService) {
-
-    this.usuarios = ''
-
-
-
-    firestore.GetAll("usuarios")
-      .subscribe((data) => {
-        this.usuarios = data;
-        console.log(data)
-        this.getByProfile("supervisor", this.supervisores)
-        // console.log(this.supervisores)
-      });
+  constructor(private localNotifications: LocalNotifications) {
 
   }
 
 
+  notifyByProfile(message: string, userLoged: any, target: string) {
 
-  getByProfile(target, arrayAux) {
-    this.usuarios.forEach(uno => {
-
-      if (uno.perfil == target) {
-        arrayAux.push(uno)
-      }
-
-    });
-
-  }
-
-
-
-
-
-  notifyByProfile(user: any, message: string, userLoged: any, target: string) {
-
-    console.log(userLoged.perfil)
-
+    //target es el perfil a notificar, userLoged el usuario logeado, para saber si debe notificarlo
     if (target == userLoged.perfil) {
       console.log("true")
-      this.notify(user, message)
+      this.notify(message) //La notifiacion recibe un mensaje
 
     }
-
-
   }
 
-  notify(user: any, message: string) {
+
+
+  notify(message: string) {
     this.localNotifications.schedule({
       id: 1,
-      text: message + user.name,
+      text: message,
       sound: 'file://android/app/src/main/res/raw/sound.mp3',
     });
-
   }
 
 }
