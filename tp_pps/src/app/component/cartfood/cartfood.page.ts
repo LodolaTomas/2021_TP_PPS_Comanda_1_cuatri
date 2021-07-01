@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { CloudFirestoreService } from 'src/app/services/cloud-firestore.service';
+import { ShowfoodComponent } from '../showfood/showfood.component';
 @Component({
   selector: 'app-cartfood',
   templateUrl: './cartfood.page.html',
@@ -9,30 +10,46 @@ import { CloudFirestoreService } from 'src/app/services/cloud-firestore.service'
 })
 export class CartfoodPage implements OnInit {
   listFood=[]
-  listdrinks=[]
-  listdessert=[]
+  listDrinks=[]
+  listDessert=[]
   carrito=[]
   comida=true;
   bebida=false;
   postre=false;
-  constructor(private router:Router,private fire:CloudFirestoreService) { 
+  total_price=0;
+  total_quantity=0;
+  constructor(private router:Router,private fire:CloudFirestoreService,private modalController: ModalController) { 
     fire.GetAll('productos').subscribe(data=>{
       data.forEach(element=>{
         if(element.type=='postre'){
-          this.listdessert.push(element);
+          this.listDessert.push(element);
         }
         if(element.type=='comida'){
           this.listFood.push(element);
         }
         if(element.type=='bebida'){
-          this.listdrinks.push(element);
+          this.listDrinks.push(element);
         }
       })
     })
-    console.log(this.listdessert)
+    console.log(this.listDessert)
   }
 
   ngOnInit() {
+  }
+  async openModal(item){
+    const modal = await this.modalController.create({
+      component: ShowfoodComponent,
+      componentProps:{value:item}
+    });
+    await modal.present();
+    const { data } = await modal.onWillDismiss();
+    if(data!=null){
+      this.total_quantity+=data.total_quantity
+      this.total_price+=data.total_price;
+      this.carrito.push(data)
+    }
+
   }
 
   selectFood(){
