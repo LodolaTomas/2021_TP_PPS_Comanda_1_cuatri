@@ -65,15 +65,16 @@
 
     <div id="escanearMesa" *ngIf="displayQRmesa" align="center">
       <ion-card>
-        <h1>Ha sido asignado a Mesa {{numeroMesa}}</h1>
-        <h3>Escanee el QR para tomar la mesa</h3>
-        <ion-fab-button class="mb-2" (click)="openQRmesa()">
+        <h1 *ngIf="existeUserEnListaEspera && !userEsperandoAsignacionDeMesa">Ha sido asignado a Mesa {{numeroMesa}}</h1>
+        <h3 *ngIf="!existeUserEnListaEspera">Escanee el QR para ingresar al establecimiento</h3>
+        <h3 *ngIf="existeUserEnListaEspera && userEsperandoAsignacionDeMesa">Aguarde un momento, en breve le asignaremos una mesa</h3>
+        <ion-fab-button class="mb-2" (click)="openQR()">
           <ion-icon name="qr-code-outline"></ion-icon>
         </ion-fab-button>
       </ion-card>
     </div>
 
-    <div id="enEspera" *ngIf="!displayQRmesa && !carga">
+    <div id="enEspera" *ngIf="!userEsperandoAsignacionDeMesa">
       <ion-card>
         <h1>Acciones</h1>
         <ion-button expand="block" (click)="cartfood()">Carta</ion-button>

@@ -39,19 +39,28 @@ export class RegisterPage implements OnInit {
     if (form.value.dni == undefined) {
       flag=false
       let url = await this.imgSrv.uploadPhoto('/usuarios/', this.imageElement);
-      data = { 'name': form.value.name, 'image': url };
+      data = { 'name': form.value.name, 'image': url, 'uid':'' };
     } else {
       let url = await this.imgSrv.uploadPhoto('/usuarios/', this.imageElement);
-      data = { 'name': form.value.name, 'lastname': form.value.lastname, 'DNI': form.value.dni, 'password': form.value.password, 'email':form.value.email,'perfil': 'cliente', 'estado': 'pendiente', 'image': url };
+      data = { 'name': form.value.name, 'lastname': form.value.lastname, 'DNI': form.value.dni, 'password': form.value.password, 'email':form.value.email,'perfil': 'cliente', 'estado': 'pendiente', 'image': url, 'uid':'' };
     }
 
     if(this.isAnonimous){
       flag=false
-      this.cloudSrv.Insert('usuarios', data).then(()=>{
-        this.cargando = false;
-        this.router.navigateByUrl('/home-clientes');
-      })
-
+      this.auth.registerAnonymously();
+      this.auth.getCurrentUser2((user)=>{
+        if (user) {
+          // User is signed in, see docs for a list of available properties
+          // https://firebase.google.com/docs/reference/js/firebase.User
+          data.uid= user.uid;
+          this.cloudSrv.Insert('usuarios', data).then(()=>{
+            this.cargando = false;
+            this.router.navigateByUrl('/home-clientes');
+          });
+        } else {
+          // User is signed out
+        }
+        });
     }else if (form.value.password !== form.value.confirm) {
       document.getElementById('password').setAttribute('value', '')
       document.getElementById('confirm').setAttribute('value', '')
@@ -66,7 +75,16 @@ export class RegisterPage implements OnInit {
     
     if(flag==true){
       this.cloudSrv.Insert('usuarios', data).then(()=>{
-        this.auth.onRegister(data).then(()=>this.alert('success', 'Registro exitoso')).catch(e=>console.log(e))
+        this.auth.onRegister(data).then(()=>this.alert('success', 'Registro exitoso')).catch(e=>console.log(e));
+        this.auth.getCurrentUser2((user)=>{
+          if (user) {
+            data.uid= user.uid;
+            this.cloudSrv.Insert('usuarios', data).then(()=>{
+              this.cargando = false;
+              this.router.navigateByUrl('/home-clientes');
+            });
+          }
+          });
         this.takePhoto=false
         this.imageElement=undefined
         form.reset();
@@ -76,8 +94,6 @@ export class RegisterPage implements OnInit {
     }
 
   }
-
-
 
   async takePicture() {
     const image = await Camera.getPhoto({

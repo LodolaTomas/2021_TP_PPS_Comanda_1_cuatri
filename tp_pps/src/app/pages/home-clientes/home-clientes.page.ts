@@ -24,6 +24,8 @@ export class HomeClientesPage implements OnInit {
   displayQRmesa: boolean = true;
   actionsMesa: boolean = false;
   carga: boolean = false;
+  existeUserEnListaEspera:boolean = false;
+  userEsperandoAsignacionDeMesa:boolean=true;
 
   public usuarios: any = []
   public usuarioLog: any = {}
@@ -36,25 +38,7 @@ export class HomeClientesPage implements OnInit {
     private fbService: CloudFirestoreService,
     private notifSVC: NotificationsService) {
     this.sideMenu();
-    this.getUser();
-
-    fbService.GetAll("usuarios")
-      .subscribe((data) => {
-        this.usuarios = data;
-        this.traerUsuario();
-      });
-  }
-
-  async getUser() {
-    // this.authS.GetCurrentUser().then((response) => {
-    //   let userId =  response.uid;
-    // });
-
-    var currentUser = { uid: "edb4z9BC3llciFBhEomB" };
-    // var currentUser = await this.authS.GetCurrentUser();
-    const fbCollection = await this.fbService.GetByParameter("usuarios", "id", currentUser.uid).get().toPromise();
-    fbCollection.docs.forEach(d => this.cliente = d.data());
-    console.log(fbCollection.docs[0].data());
+    this.traerUsuario();
   }
   ngOnInit() {
   }
@@ -87,57 +71,63 @@ export class HomeClientesPage implements OnInit {
       this.scannedBarCode = res;
       console.log(res);
       let scannedCode = res.text;
-      const userWaitList = { id: this.cliente.id, status: "esperando", date: new Date() };
-      this.fbService.Insert("lista_espera_local", userWaitList)
+      const userWaitingList = { id: this.usuarioLog.uid, status: "esperando", date: new Date() };
+      this.fbService.Insert("lista_espera_local", userWaitingList)
         .then((val) => {
           this.alert('success', "Agregado a la lista de espera!");
         });
       this.displayQREspera = false;
       this.input = this.scannedBarCode["text"];
-      this.notifSVC.notifyByProfile("En la lista de espera: ", this.usuarioLog, "admin")
- //     this.notificar({ name: 'Pepe Anonimo' });
+      // this.notifSVC.notifyByProfile("En la lista de espera: ", this.usuarioLog, "admin")
+      this.notifSVC.notify("Cliente en lista de espera");
+      //  this.notificar({ name: 'Pepe Anonimo' });
     }).catch(err => {
       alert(err);
     });
 
   }
 
-  async traerUsuario() {
-    this.authS.GetCurrentUser().then((response) => {
-      if (response != null) {
-        let user = this.usuarios.filter((u) => u.email == response.email);
-        this.usuarioLog = user[0];
-        console.log(this.usuarioLog.perfil)
-
-      }
-
-    });
+   traerUsuario() {
+      this.authS.getCurrentUser2((user)=>{
+      if (user != null) {
+        this.fbService.GetByParameter("usuarios","uid",user.uid).get().toPromise().then((userCollection)=>{
+           if(!userCollection.empty){
+             this.usuarioLog.uid = userCollection.docs[0].data().uid;
+             this.existeUserEnListaEspera=true;
+           }
+           if(this.existeUserEnListaEspera){
+             this.userEsperandoAsignacionDeMesa = this.usuarioLog.status =='esperando';
+           }
+         });
+       }
+     });
+    
   }
 
 
-  openQRmesa() {
-    this.displayQRmesa = false;
-    this.carga = true;
-    console.log("QR!")
-    this.scanner.scan().then(res => {
-      this.scannedBarCode = res;
-      console.log(res);
-      let scannedCode = res.text;
-      const userWaitList = { id: this.cliente.id, status: "esperando", date: new Date() };
-      this.fbService.Insert("lista_espera_local", userWaitList)
-        .then((val) => {
-          this.displayQRmesa = false;
-          this.actionsMesa = true;
-          this.carga = false;
-        });
+  // openQRmesa() {
+  //   this.displayQRmesa = false;
+  //   this.carga = true;
+  //   console.log("QR!")
+  //   this.scanner.scan().then(res => {
+  //     this.scannedBarCode = res;
+  //     console.log(res);
+  //     let scannedCode = res.text;
+  //     const userWaitList = { id: this.cliente.uid, status: "esperando", date: new Date() };
+  //     this.fbService.Insert("lista_espera_local", userWaitList)
+  //       .then((val) => {
+  //         this.displayQRmesa = false;
+  //         this.actionsMesa = true;
+  //         this.carga = false;
+  //       });
 
-      this.input = this.scannedBarCode["text"];
+  //     this.input = this.scannedBarCode["text"];
 
-    }).catch(err => {
-      alert(err);
-    });
+  //   }).catch(err => {
+  //     alert(err);
+  //   });
 
-  }
+  // }
 
 
 
