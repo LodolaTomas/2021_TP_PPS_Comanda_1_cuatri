@@ -22,10 +22,17 @@ export class AdmConsultasPage implements OnInit {
   private scrollContainer: any;
   public mensajeEnviado:any={};
 
+  public mesa1: any = []
+  public mesa2: any = []
+  public mesa3: any = []
+
   
   mensaje: any;
 
   item$: Observable<any[]>;
+
+  public msjs: any = []
+  
 
   public listChats:boolean=true
 
@@ -42,6 +49,8 @@ export class AdmConsultasPage implements OnInit {
     });
 
     this.item$ = chatSVC.ObtenerTodos().valueChanges();
+
+    this.msjs= this.item$
   }
 
   async traerUsuario() {
@@ -59,6 +68,20 @@ export class AdmConsultasPage implements OnInit {
     {
       this.listChats = false
     }
+  }
+
+  orderChats()
+  {
+    this.msjs.forEach(uno => {
+      
+      console.log(uno)
+      if(uno.mesa == 'mesa1')
+      {
+        this.mesa1.push(uno)
+      }
+    });
+
+    console.log(this.mesa1)
   }
 
 
@@ -89,7 +112,19 @@ export class AdmConsultasPage implements OnInit {
 
   
   back() {
+    
+
+    if(this.listChats)
+    {
+      this.router.navigateByUrl("mozo")
+    }
+    else{
+      
     this.listChats = true;
+    }
   }
+
+  
+
 
 }
