@@ -66,7 +66,23 @@ const routes: Routes = [
   {
     path: 'cartfood',
     loadChildren: () => import('./component/cartfood/cartfood.module').then( m => m.CartfoodPageModule)
+  },  {
+    path: 'metre',
+    loadChildren: () => import('./pages/metre/metre.module').then( m => m.MetrePageModule)
+  },
+  {
+    path: 'consultas',
+    loadChildren: () => import('./pages/consultas/consultas.module').then( m => m.ConsultasPageModule)
+  },
+  {
+    path: 'adm-consultas',
+    loadChildren: () => import('./pages/adm-consultas/adm-consultas.module').then( m => m.AdmConsultasPageModule)
+  },
+  {
+    path: 'mozo',
+    loadChildren: () => import('./pages/mozo/mozo.module').then( m => m.MozoPageModule)
   }
+
 ];
 
 @NgModule({
