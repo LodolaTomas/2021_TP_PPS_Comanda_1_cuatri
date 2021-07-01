@@ -11,7 +11,7 @@ import { ModalPage } from '../modal/modal.page';
 })
 export class ListaEsperaMesasPage implements OnInit {
 
-  clientListWaiting:any[]=[]; 
+  clientWaitingList:any[]=[]; 
   userList:any[]=[];
   public ingresando: boolean;
 
@@ -25,21 +25,18 @@ export class ListaEsperaMesasPage implements OnInit {
   ngOnInit() {
   }
   async getAllUsers(){
-    this.clientListWaiting=[];
+    this.clientWaitingList=[];
     this.userList=[];
     this.ingresando=true;
       const usersWaitingFb = await this.fbService.GetByParameter("lista_espera_local","status","esperando").get().toPromise();
-      usersWaitingFb.docs.forEach(d=> this.clientListWaiting.push(d.data()));
-      for (const client of this.clientListWaiting) {
-        const usersFb = await this.fbService.GetByParameter("usuarios","id",client.id).get().toPromise();
-        usersFb.docs.forEach(d=> {
-          var newUser ={ nombre:"",fecha:null, id:""};
-          newUser.fecha = client.fecha;
-          newUser.nombre = d.data().nombre;
-          newUser.id= client.id; 
-          console.log(newUser);
-          this.userList.push(newUser);
-        } );
+      usersWaitingFb.docs.forEach(item=> this.clientWaitingList.push(item.data()));
+      for (const client of this.clientWaitingList) {
+        const usersFb = await this.fbService.GetByParameter("usuarios","uid",client.uid).get().toPromise();
+        if(!usersFb.empty){
+          usersFb.docs.forEach(userData=> {
+            this.userList.push(userData);
+          });
+        }
       }
       this.ingresando=false;
   }
@@ -67,14 +64,15 @@ export class ListaEsperaMesasPage implements OnInit {
       this.fbService.Update(mesa.id,"mesas",mesa).then(()=> this.ingresando=false);
   }
   async asigarMesaAlUsuario(user:any,numeroMesa:number){
-    const userFb = await this.fbService.GetByParameter("usuarios","id",user.id).get().toPromise();
+    const userFb = await this.fbService.GetByParameter("usuarios","uid",user.uid).get().toPromise();
     userFb.docs[0].data().mesa = numeroMesa;
+    console.log(userFb.docs[0]);
 }
 async actualizarListadoDeEspera(user:any){
   console.log(user)
   user.status ="ingresado";
 
-  this.fbService.Update('XXBdrt7n9mChYBJXNeJj',"lista_espera_local",user).then(()=> this.ingresando=false);
+  this.fbService.Update(user.uid,"lista_espera_local",user).then(()=> this.ingresando=false);
 }
   async presentAlert(message:string, title:string, isError:boolean){
         /*** ALERTS ***/
