@@ -4,7 +4,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { CloudFirestoreService } from 'src/app/services/cloud-firestore.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
-import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { NotificationsService } from 'src/app/services/notifications.service';
 
 @Component({
@@ -18,6 +17,7 @@ export class HomeClientesPage implements OnInit {
   encodedData: any;
   scannedBarCode: {};
   input: any;
+  idMesa: any;
   cliente: any;
   displayQREspera: boolean = true;
   numeroMesa: number = 5;
@@ -42,13 +42,11 @@ export class HomeClientesPage implements OnInit {
       .subscribe((data) => {
         this.usuarios = data;
         this.traerUsuario();
+        console.log(this.usuarios)
       });
   }
 
   async getUser() {
-    // this.authS.GetCurrentUser().then((response) => {
-    //   let userId =  response.uid;
-    // });
 
     var currentUser = { uid: "edb4z9BC3llciFBhEomB" };
     // var currentUser = await this.authS.GetCurrentUser();
@@ -74,8 +72,10 @@ export class HomeClientesPage implements OnInit {
         }
       ]
   }
+
   logout() {
-    
+
+    this.idMesa = localStorage.removeItem('idMesa')
     this.authS.LogOutCurrentUser()
     this.router.navigateByUrl('login')
   }
@@ -95,7 +95,7 @@ export class HomeClientesPage implements OnInit {
       this.displayQREspera = false;
       this.input = this.scannedBarCode["text"];
       this.notifSVC.notifyByProfile("En la lista de espera: ", this.usuarioLog, "admin")
- //     this.notificar({ name: 'Pepe Anonimo' });
+      //     this.notificar({ name: 'Pepe Anonimo' });
     }).catch(err => {
       alert(err);
     });
@@ -122,27 +122,28 @@ export class HomeClientesPage implements OnInit {
     this.scanner.scan().then(res => {
       this.scannedBarCode = res;
       console.log(res);
-      let scannedCode = res.text;
-      const userWaitList = { id: this.cliente.id, status: "esperando", date: new Date() };
-      this.fbService.Insert("lista_espera_local", userWaitList)
-        .then((val) => {
-          this.displayQRmesa = false;
-          this.actionsMesa = true;
-          this.carga = false;
-        });
 
-      this.input = this.scannedBarCode["text"];
-
+      this.idMesa = this.scannedBarCode["text"];
+      localStorage.setItem('idMesa', this.idMesa)
     }).catch(err => {
       alert(err);
     });
 
   }
 
-
-
-
+  consultar() {
+    console.log(this.idMesa)
   
+    this.router.navigateByUrl('consultas')
+
+
+  }
+
+
+  cartfood() {
+    this.router.navigateByUrl('cartfood')
+  }
+
   alert(icon: SweetAlertIcon, text: string) {
     const Toast = Swal.mixin({
       toast: true,
@@ -162,8 +163,6 @@ export class HomeClientesPage implements OnInit {
       title: text
     })
   }
-  cartfood() {
-    this.router.navigateByUrl('cartfood')
-  }
+
 
 }

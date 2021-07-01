@@ -16,7 +16,7 @@ import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 })
 export class AdmUsuariosPage implements OnInit {
 
-  public usuarios: any = []
+
 
   public verPendientes: boolean = true;
   public verAceptados: boolean = false;
@@ -26,66 +26,54 @@ export class AdmUsuariosPage implements OnInit {
   public buttonColor2: string = "dark";
   public buttonColor3: string = "dark";
   public usuarioLog: any = {}
+  public usuarios: any = []
 
 
-
-  constructor(private authS: AuthService, private notifSVC: NotificationsService, private router: Router, private firestore: CloudFirestoreService, private localNotifications: LocalNotifications, private emailSVC: EmailService) {
+  constructor(private authS: AuthService,
+    private notifSVC: NotificationsService,
+    private router: Router,
+    private firestore: CloudFirestoreService,
+    private emailSVC: EmailService) {
 
     this.usuarios = ''
     this.usuarioLog = ''
 
 
+
     firestore.GetAll("usuarios")
       .subscribe((data) => {
         this.usuarios = data;
-
         this.traerUsuario()
-
-        data.forEach(uno => {
-
-          if (uno.estado == 'pendiente') {
-
-            this.usuarioLog =  JSON.parse(localStorage.getItem('token'));
-
-            this.notifSVC.notifyByProfile("Usuarios pendientes de verificacion", this.usuarioLog, "supervisor")//Mensaje, usuario logeado, y perfiles a notificar
-            //this.notificar(uno)
-          }
-
-        });
-
-
-        console.log(data)
+        this.notificarPendientes()
       });
-
-
 
   }
 
-  async traerUsuario() {
-    this.authS.GetCurrentUser().then((response) => {
-      if (response != null) {
-        let user = this.usuarios.filter((u) => u.email == response.email);
-        localStorage.setItem('token', JSON.stringify(user[0]))
+  notificarPendientes() {
+    this.usuarios.forEach(uno => {
+
+      if (uno.estado == 'pendiente') {
+
+        this.usuarioLog = JSON.parse(localStorage.getItem('token'));
+        console.log(this.usuarioLog)
+
+        //this.notifSVC.notify("usuarios pendiente")
+        this.notifSVC.notifyByProfile("Usuarios pendientes de verificacion", this.usuarioLog, "supervisor")//Mensaje, usuario logeado, y perfiles a notificar
       }
 
     });
   }
 
 
+  async traerUsuario() {
+    this.authS.GetCurrentUser().then((response) => {
+      if (response != null) {
+        let user = this.usuarios.filter((u) => u.email == response.email);
 
-  /* 
-  
-    notificar(user: any) {
-      this.localNotifications.schedule({
-        id: 1,
-        text: 'Un usuario a verificar: ' + user.name,
-        sound: 'file://android/app/src/main/res/raw/sound.mp3',
-      });
-  
-  
-    }
-   */
-
+        localStorage.setItem('token', JSON.stringify(user[0]))
+      }
+    });
+  }
 
 
   seleccionarFiltro(tipo: string) {
@@ -158,7 +146,7 @@ export class AdmUsuariosPage implements OnInit {
   Aceptar(user) {
     let auxUser = user;
     user.estado = 'aceptado';
-    this.emailSVC.sendEmail(user, "Su cuenta ha sido aceptada, ya puede ingresar a la app")
+    //this.emailSVC.sendEmail(user, "Su cuenta ha sido aceptada, ya puede ingresar a la app")
     this.firestore.Update(user.id, "usuarios", auxUser)
 
   }
@@ -166,7 +154,7 @@ export class AdmUsuariosPage implements OnInit {
   Rechazar(user) {
     let auxUser = user;
     user.estado = 'rechazado';
-    this.emailSVC.sendEmail(user, "Su cuenta ha sido rechazada, si cree que es un error puede contactar al administrador")
+    //   this.emailSVC.sendEmail(user, "Su cuenta ha sido rechazada, si cree que es un error puede contactar al administrador")
     this.firestore.Update(user.id, "usuarios", auxUser)
   }
 
