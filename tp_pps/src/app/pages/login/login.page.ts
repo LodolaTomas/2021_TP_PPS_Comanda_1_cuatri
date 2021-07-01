@@ -29,7 +29,8 @@ export class LoginPage implements OnInit {
     { "email": "metre@yopmail.com", "clave": "123456" },
     { "email": "cliente@yopmail.com", "clave": "123456" },
     { "email": "cocinero@yopmail.com", "clave": "123456" },
-    { "email": "supervisor@yopmail.com", "clave": "123456" }
+    { "email": "supervisor@yopmail.com", "clave": "123456" },
+    { "email": "mozo@yopmail.com", "clave": "123456" }
   ];
 
   constructor(private formBuilder: FormBuilder, private router: Router, private authSvc: AuthService, private cloudSrv: CloudFirestoreService, private notificationsService:NotificationsService) {
@@ -81,14 +82,27 @@ export class LoginPage implements OnInit {
         if (this.user.email == 'supervisor@yopmail.com') {
           this.cargando = false;
           this.router.navigateByUrl('/supervisor');
+          this.miFormulario.reset()
         }
         else if (this.user.email == 'admin@yopmail.com') {
           this.cargando = false;
           this.router.navigateByUrl('/home');
+          this.miFormulario.reset()
+        }
+        else if (this.user.email == 'metre@yopmail.com') {
+          this.cargando = false;
+          this.router.navigateByUrl('/metre');
+          this.miFormulario.reset()
+        }
+        else if (this.user.email == 'mozo@yopmail.com') {
+          this.cargando = false;
+          this.router.navigateByUrl('/mozo');
+          this.miFormulario.reset()
         }
         else {
           this.cargando = false;
           this.router.navigateByUrl('/home-clientes');
+          this.miFormulario.reset()
         }
       }
     }

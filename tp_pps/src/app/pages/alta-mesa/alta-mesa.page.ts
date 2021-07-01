@@ -1,7 +1,6 @@
 import { CloudFirestoreService } from './../../services/cloud-firestore.service';
 import { ImagesService } from './../../services/images.service';
 import { Mesa } from './../../clases/mesa';
-import { MesaService } from './../../services/mesa.service';
 import { Component, OnInit } from '@angular/core';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 
@@ -31,7 +30,7 @@ export class AltaMesaPage implements OnInit {
 
 
 
-  constructor(private mesaSVC: MesaService, private imgSVC: ImagesService, private firestore:CloudFirestoreService) {
+  constructor(private imgSVC: ImagesService, private firestore:CloudFirestoreService) {
     this.cantidadComensales = 0;
     this.tipoMesa = "normal"
     this.mesa = new Mesa()

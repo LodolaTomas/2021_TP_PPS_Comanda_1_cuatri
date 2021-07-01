@@ -73,12 +73,14 @@
       </ion-card>
     </div>
 
-    <div id="enEspera" *ngIf="!displayQRmesa && !carga">
+   
+
+    <div id="enEspera" *ngIf=" true">
       <ion-card>
         <h1>Acciones</h1>
         <ion-button expand="block" (click)="cartfood()">Carta</ion-button>
         <br>
-        <ion-button expand="block">Consulta</ion-button>
+        <ion-button expand="block" (click)="consultar()" >Consultar</ion-button>
         <br>
         <br>
       </ion-card>
