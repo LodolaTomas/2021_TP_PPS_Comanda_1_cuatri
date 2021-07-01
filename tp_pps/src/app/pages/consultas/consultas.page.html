@@ -12,7 +12,35 @@
 <ion-content>
 
 
- 
+  <div *ngFor="let mensaje of item$ | async" >
+
+
+
+    <ion-grid>
+    <div *ngIf="mensaje.nombre !== usuarioLog.name">
+      <ion-card  class="message other-message">
+        <ion-card-header>
+          <ion-card-title color="dark">
+            {{mensaje.nombre}}
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          {{mensaje.text}}
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+
+
+    <div *ngIf="mensaje.nombre === usuarioLog.name" class="ion-text-end">
+      <ion-card class="message my-message" >
+        <ion-card-content>
+          {{mensaje.text}}
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </ion-grid>
+  </div>
 
 
 </ion-content>
