@@ -30,12 +30,15 @@ export class ListaEsperaMesasPage implements OnInit {
     this.ingresando=true;
       const usersWaitingFb = await this.fbService.GetByParameter("lista_espera_local","status","esperando").get().toPromise();
       usersWaitingFb.docs.forEach(item=> this.clientWaitingList.push(item.data()));
-      for (const client of this.clientWaitingList) {
-        const usersFb = await this.fbService.GetByParameter("usuarios","uid",client.uid).get().toPromise();
-        if(!usersFb.empty){
-          usersFb.docs.forEach(userData=> {
-            this.userList.push(userData);
-          });
+      // console.log(this.clientWaitingList);
+      for (const clientEnEspera of this.clientWaitingList) {
+        if(clientEnEspera.id != null){
+          const usersFb = await this.fbService.GetByParameter("usuarios","id",clientEnEspera.id).get().toPromise();
+          if(!usersFb.empty){
+            var user = usersFb.docs[0].data();
+            user.docRefId = usersFb.docs[0].id;//lo agrego para tener el ID del documento y updatear despues.
+            this.userList.push(user);
+          }
         }
       }
       this.ingresando=false;
@@ -57,22 +60,34 @@ export class ListaEsperaMesasPage implements OnInit {
        this.getAllUsers();
      }
   }
+  /**
+   * Actualiza la mesa a estado "OCUPADA"
+   * @param numeroMesa Numero de mesa
+   */
   async actualizarEstadoMesa(numeroMesa:number){
       const mesaFb = await this.fbService.GetByParameter("mesas","numero",numeroMesa).get().toPromise();
       let mesa = mesaFb.docs[0].data();
       mesa.ocupada=true;//actualiza el campo ocupada
       this.fbService.Update(mesa.id,"mesas",mesa).then(()=> this.ingresando=false);
   }
+  /**
+   * Actualiza el usuario asignandole el numero de mesa que ocupará
+   * @param user Usuario
+   * @param numeroMesa Numero de Mesa
+   */
   async asigarMesaAlUsuario(user:any,numeroMesa:number){
-    const userFb = await this.fbService.GetByParameter("usuarios","uid",user.uid).get().toPromise();
-    userFb.docs[0].data().mesa = numeroMesa;
-    console.log(userFb.docs[0]);
+    user.mesa = numeroMesa;
+    this.fbService.Update(user.docRefId,"usuarios",user).then(()=> this.ingresando=false);
 }
+/**
+ * Actualiza el usuario de la lista de espera cambiandole el estado a "INGRESADO"
+ * @param user Usuario
+ */
 async actualizarListadoDeEspera(user:any){
-  console.log(user)
-  user.status ="ingresado";
-
-  this.fbService.Update(user.uid,"lista_espera_local",user).then(()=> this.ingresando=false);
+  const userFirebaseDoc = await this.fbService.GetByParameter("lista_espera_local","id",user.uid).get().toPromise();//Aclaracion: lista_espera_local tiene ID, usuarios tiene UID como mismo dato
+  let userDoc = userFirebaseDoc.docs[0].data();
+  userDoc.status='ingresado';
+  this.fbService.Update(userFirebaseDoc.docs[0].id,"lista_espera_local",userDoc).then(()=> this.ingresando=false);
 }
   async presentAlert(message:string, title:string, isError:boolean){
         /*** ALERTS ***/

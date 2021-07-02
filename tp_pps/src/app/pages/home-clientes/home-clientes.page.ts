@@ -69,17 +69,18 @@ export class HomeClientesPage implements OnInit {
     console.log("QR!")
     this.scanner.scan().then(res => {
       this.scannedBarCode = res;
-      console.log(res);
       let scannedCode = res.text;
       const userWaitingList = { id: this.usuarioLog.uid, status: "esperando", date: new Date() };
       this.fbService.Insert("lista_espera_local", userWaitingList)
         .then((val) => {
           this.alert('success', "Agregado a la lista de espera!");
+          this.existeUserEnListaEspera=true;
+          this.userEsperandoAsignacionDeMesa=true;
         });
       this.displayQREspera = false;
       this.input = this.scannedBarCode["text"];
       // this.notifSVC.notifyByProfile("En la lista de espera: ", this.usuarioLog, "admin")
-      this.notifSVC.notify("Cliente en lista de espera");
+      this.notifSVC.notify("Nuevo Cliente en lista de espera");
       //  this.notificar({ name: 'Pepe Anonimo' });
     }).catch(err => {
       alert(err);
@@ -90,49 +91,23 @@ export class HomeClientesPage implements OnInit {
    traerUsuario() {
       this.authS.getCurrentUser2((user)=>{
       if (user != null) {
-        this.fbService.GetByParameter("usuarios","uid",user.uid).get().toPromise().then((userCollection)=>{
-           if(!userCollection.empty){
-             this.usuarioLog.uid = userCollection.docs[0].data().uid;
-             this.existeUserEnListaEspera=true;
+        this.fbService.GetByParameter("usuarios","uid",user.uid).valueChanges().subscribe((userCollection)=>{
+           if(userCollection.length > 0){
+             this.usuarioLog = userCollection[0];
            }
-           if(this.existeUserEnListaEspera){
-             this.userEsperandoAsignacionDeMesa = this.usuarioLog.status =='esperando';
-           }
+            this.fbService.GetByParameter("lista_espera_local","uid",user.uid).get().toPromise().then((userCollection)=>{
+              if(!userCollection.empty){
+                this.existeUserEnListaEspera=true;
+              }
+              if(this.existeUserEnListaEspera){
+                this.userEsperandoAsignacionDeMesa = this.usuarioLog.status =='esperando';
+              }
+          });
          });
        }
      });
-    
   }
 
-
-  // openQRmesa() {
-  //   this.displayQRmesa = false;
-  //   this.carga = true;
-  //   console.log("QR!")
-  //   this.scanner.scan().then(res => {
-  //     this.scannedBarCode = res;
-  //     console.log(res);
-  //     let scannedCode = res.text;
-  //     const userWaitList = { id: this.cliente.uid, status: "esperando", date: new Date() };
-  //     this.fbService.Insert("lista_espera_local", userWaitList)
-  //       .then((val) => {
-  //         this.displayQRmesa = false;
-  //         this.actionsMesa = true;
-  //         this.carga = false;
-  //       });
-
-  //     this.input = this.scannedBarCode["text"];
-
-  //   }).catch(err => {
-  //     alert(err);
-  //   });
-
-  // }
-
-
-
-
-  
   alert(icon: SweetAlertIcon, text: string) {
     const Toast = Swal.mixin({
       toast: true,

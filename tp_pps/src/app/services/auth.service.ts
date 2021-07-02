@@ -80,7 +80,8 @@ export class AuthService {
 
   registerAnonymously(){
     this.afAuth.signInAnonymously()
-    .then(() => {
+    .then((a) => {
+      console.log("registerAnonymously",a);
       // Signed in..
     })
     .catch((error) => {
