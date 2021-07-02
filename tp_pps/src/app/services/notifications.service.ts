@@ -18,6 +18,8 @@ export class NotificationsService {
   notifyByProfile(message: string, userLoged: any, target: string) {
     //target es el perfil a notificar, userLoged el usuario logeado, para saber si debe notificarlo
     if (target == userLoged.perfil) { //target == userLoged.perfil
+      console.log(userLoged.perfil)
+      console.log(target)
       console.log(userLoged.perfil + " " + message)
       this.notify(message) //La notifiacion recibe un mensaje
 
