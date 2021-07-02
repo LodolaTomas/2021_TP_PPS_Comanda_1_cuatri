@@ -82,7 +82,8 @@ const routes: Routes = [
   {
     path: 'mozo',
     loadChildren: () => import('./pages/mozo/mozo.module').then( m => m.MozoPageModule)
-  },  {
+  },
+  {
     path: 'juegos',
     loadChildren: () => import('./pages/juegos/juegos.module').then( m => m.JuegosPageModule)
   },

@@ -19,7 +19,8 @@ export class AltaProductoPage implements OnInit {
   imageElement: Array<any> = []
   title = 'app';
   elementType = 'url';
-  value = 'Techiediaries';
+  public cargando:boolean;
+
   constructor(private imgSrv: ImagesService,
     private file: File,
     private cloudSrv: CloudFirestoreService) { }
@@ -32,6 +33,7 @@ export class AltaProductoPage implements OnInit {
   }
 
   async register(form: any) {
+    this.cargando = true;
     console.log(form.value)
     let flag = true;
     let data: any;
@@ -52,6 +54,8 @@ export class AltaProductoPage implements OnInit {
       this.cloudSrv.InsertCustomID('productos',customId ,data).then(()=>{
         this.imageElement.splice(0,this.imageElement.length)
         form.reset();
+            this.cargando = false;
+
         this.alert('success','Alta de producto Realizada')
       }).catch(e=>console.log(e))
     }
