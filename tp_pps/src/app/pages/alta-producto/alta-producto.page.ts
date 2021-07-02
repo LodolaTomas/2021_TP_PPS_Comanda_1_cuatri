@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ModalController, NavParams  } from '@ionic/angular';
 import { File } from '@ionic-native/file/ngx';
 import { StorageService } from 'src/app/services/storage.service';
+import { Camera, CameraResultType } from '@capacitor/camera';
+import { CloudFirestoreService } from 'src/app/services/cloud-firestore.service';
 
 @Component({
   selector: 'app-alta-producto',
@@ -13,17 +15,18 @@ export class AltaProductoPage implements OnInit {
   usuario: any;
   progress: boolean;
   showQR:boolean=false;
-
+  imageElement:Array<any>=[]
   title = 'app';
   elementType = 'url';
   value = 'Techiediaries';
-
   constructor(
               private modalController: ModalController,
               private file: File,
-              private storage:StorageService) { }
+              private storage:StorageService,
+              private cloudSrv:CloudFirestoreService) { }
 
   ngOnInit() {
+    
   }
   showQRCode(){
     this.showQR=true;
@@ -32,6 +35,23 @@ export class AltaProductoPage implements OnInit {
   register(form:any)
   {
 
+  }
+
+  async takePicture() {
+    const image = await Camera.getPhoto({
+      quality: 50,
+      allowEditing: false,
+      resultType: CameraResultType.DataUrl,
+      promptLabelHeader: 'Foto',
+      promptLabelPhoto: 'Buscar de la Galería',
+      promptLabelPicture: 'Tomar una Foto',
+      promptLabelCancel: 'Cancelar',
+      saveToGallery: true,
+    });
+    if(this.imageElement.length<=2){
+      this.imageElement.push(image.dataUrl);//muestro la foto para que previsualize el cliente
+    }
+    
   }
 
   makeFileIntoBlob(_imagePath) {
