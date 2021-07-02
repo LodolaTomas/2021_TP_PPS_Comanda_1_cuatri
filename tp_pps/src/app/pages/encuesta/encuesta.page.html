@@ -16,7 +16,7 @@
     <ion-card>
       <ion-label>Que tan satisfecho has estado con la atencion:</ion-label>
       <ion-item>
-        <ion-range min="0" max="10" pin color="dark">
+        <ion-range min="0" max="10" pin color="dark" [ngModel]="">
           <ion-icon slot="start" name="sad-outline"></ion-icon>
           <ion-icon slot="end" name="happy-outline"></ion-icon>
         </ion-range>
@@ -81,7 +81,7 @@
     
     <div padding *ngIf="!cargando">
       <ion-button class="ion-margin-start ion-margin-end ion-margin-bottom" color="success" size="large"
-      type="submit"  expand="block">Confirmar</ion-button>
+      type="submit"  expand="block">Enviar</ion-button>
   </div>
 
     <div padding *ngIf="cargando">

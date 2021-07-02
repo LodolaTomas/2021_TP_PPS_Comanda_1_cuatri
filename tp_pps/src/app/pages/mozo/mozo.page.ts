@@ -29,4 +29,16 @@ export class MozoPage implements OnInit {
     this.router.navigateByUrl('adm-consultas')
   }
 
+  BTNpedidos()
+  {
+    this.router.navigateByUrl('adm-pedidos')
+  }
+
+  BTNcarta()
+  {
+    this.router.navigateByUrl('cartfood')
+  }
+
+
+
 }
