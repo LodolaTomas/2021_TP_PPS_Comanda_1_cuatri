@@ -13,6 +13,15 @@
           </div>
           <div class="ion-text-center" size-md="6" size-lg="5" size-xs="12">
             <ion-card color="light" class="auth-card ion-margin">
+              <ion-item>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-4 mb-1 mt-1" *ngFor="let item of imageElement"  style="padding: 0;width: 100%;">
+                      <img src="{{item}}">
+                    </div>
+                  </div>
+                </div>
+              </ion-item>
             <ion-item>
               <ion-input  name="name" type="text" placeholder="Nombre" ngModel required></ion-input>
             </ion-item>
@@ -26,8 +35,15 @@
               <ion-input name="price" type="number" placeholder="Precio" ngModel required></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input [disabled]="true" name="foto" type="text" placeholder="Adjuntar Fotos" ngModel></ion-input>
-              <ion-button color="primary"><ion-icon name="camera"></ion-icon></ion-button>
+              <ion-label>Tipo</ion-label>
+          <ion-select okText="Aceptar" cancelText="Cancelar">
+            <ion-select-option value="Food">Comida</ion-select-option>
+            <ion-select-option value="Drink">Bebida</ion-select-option>
+            <ion-select-option value="Dessert">Postre</ion-select-option>
+          </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-button expand="full" style="width: 100% !important;" (click)="takePicture()" size="large"><ion-icon  slot="icon-only" name="camera"></ion-icon></ion-button>
             </ion-item>
             <ion-item>
               <ion-input [disabled]="true" name="foto" type="text" placeholder="Generar QR" ngModel ></ion-input>

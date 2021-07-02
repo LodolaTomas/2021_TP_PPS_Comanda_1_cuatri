@@ -7,36 +7,53 @@ import { ModalController, NavParams } from '@ionic/angular';
   styleUrls: ['./showfood.component.scss'],
 })
 export class ShowfoodComponent implements OnInit {
-  item: any = {}
+  item: any = {};
   quantity: number;
   price: number;
-  constructor(private navPrarams: NavParams, private modalController: ModalController) {
-    this.item = this.navPrarams.get('value')
+  constructor(
+    private navPrarams: NavParams,
+    private modalController: ModalController
+  ) {
+    this.item = this.navPrarams.get('value');
     this.quantity = this.item.quantity;
-    this.price = this.item.price
+    this.price = this.item.price;
   }
 
   ngOnInit() {
-
+    if (this.quantity <= 1) {
+      document
+        .getElementById('icon_remove')
+        .setAttribute('style', 'color:gray;font-size: 25px;');
+    }
   }
   back() {
-    this.modalController.dismiss(null)
+    this.modalController.dismiss(null);
   }
   removeQuantity() {
-
     if (this.quantity > 1) {
       this.quantity--;
       this.price -= this.item.price;
     }
-
+    if (this.quantity <= 1) {
+      document
+        .getElementById('icon_remove')
+        .setAttribute('style', 'color:gray;font-size: 25px;');
+    }
   }
   addQuantity() {
     this.quantity++;
     this.price += this.item.price;
+    if (this.quantity >= 2) {
+      document.getElementById('icon_remove').style.color = 'black';
+    }
   }
 
-  addToCart(){
-    let data ={food_name:this.item.name,total_price:this.price,total_quantity:this.quantity}
-    this.modalController.dismiss(data)
+  addToCart() {
+    let data = {
+      food_name: this.item.name,
+      total_price: this.price,
+      total_quantity: this.quantity,
+    };
+    this.modalController.dismiss(data);
   }
 }

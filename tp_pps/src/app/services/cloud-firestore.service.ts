@@ -15,6 +15,10 @@ export class CloudFirestoreService {
     return this.cloudFireStore.collection(collectionName).add(data);
   }
 
+  ReturnFirestore(){
+    return this.cloudFireStore
+  }
+
   InsertCustomID(collectionName: string, idCustom: any, data: any) {
     return this.cloudFireStore.collection(collectionName).doc(idCustom).set(data);
   }
