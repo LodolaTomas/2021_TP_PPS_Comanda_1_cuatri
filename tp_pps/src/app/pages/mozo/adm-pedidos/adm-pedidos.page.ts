@@ -1,17 +1,16 @@
-import { NotificationsService } from './../../../services/notifications.service';
-import { EmailService } from './../../../services/email.service';
-import { CloudFirestoreService } from './../../../services/cloud-firestore.service';
-import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-
+import { NotificationsService } from 'src/app/services/notifications.service';
+import { CloudFirestoreService } from 'src/app/services/cloud-firestore.service';
+import { EmailService } from 'src/app/services/email.service';
 
 @Component({
-  selector: 'app-adm-usuarios',
-  templateUrl: './adm-usuarios.page.html',
-  styleUrls: ['./adm-usuarios.page.scss'],
+  selector: 'app-adm-pedidos',
+  templateUrl: './adm-pedidos.page.html',
+  styleUrls: ['./adm-pedidos.page.scss'],
 })
-export class AdmUsuariosPage implements OnInit {
+export class AdmPedidosPage implements OnInit {
 
 
 
@@ -24,16 +23,17 @@ export class AdmUsuariosPage implements OnInit {
   public buttonColor3: string = "dark";
   public usuarioLog: any = {}
   public usuarios: any = []
+  public pedidos: any = []
 
 
   constructor(private authS: AuthService,
     private notifSVC: NotificationsService,
     private router: Router,
-    private firestore: CloudFirestoreService,
-    private emailSVC: EmailService) {
+    private firestore: CloudFirestoreService) {
 
     this.usuarios = ''
     this.usuarioLog = ''
+    this.pedidos = ''
 
 
 
@@ -41,7 +41,13 @@ export class AdmUsuariosPage implements OnInit {
       .subscribe((data) => {
         this.usuarios = data;
         this.traerUsuario()
-        this.notificarPendientes()
+      });
+
+
+    firestore.GetAll("pedidos")
+      .subscribe((data) => {
+        this.pedidos = data;
+    console.log(data)
       });
 
   }
@@ -50,10 +56,6 @@ export class AdmUsuariosPage implements OnInit {
     this.usuarios.forEach(uno => {
 
       if (uno.estado == 'pendiente') {
-
-        this.usuarioLog = JSON.parse(localStorage.getItem('token'));
-        console.log(this.usuarioLog)
-
         //this.notifSVC.notify("usuarios pendiente")
         this.notifSVC.notifyByProfile("Usuarios pendientes de verificacion", this.usuarioLog, "supervisor")//Mensaje, usuario logeado, y perfiles a notificar
       }
@@ -139,30 +141,24 @@ export class AdmUsuariosPage implements OnInit {
 
   }
 
-
-  Aceptar(user) {
-    let auxUser = user;
-    user.estado = 'aceptado';
-    //this.emailSVC.sendEmail(user, "Su cuenta ha sido aceptada, ya puede ingresar a la app")
-    this.firestore.Update(user.id, "usuarios", auxUser)
-
-  }
-
-  Rechazar(user) {
-    let auxUser = user;
-    user.estado = 'rechazado';
-    //   this.emailSVC.sendEmail(user, "Su cuenta ha sido rechazada, si cree que es un error puede contactar al administrador")
-    this.firestore.Update(user.id, "usuarios", auxUser)
-  }
-
   back() {
-    this.authS.LogOutCurrentUser()
-    this.router.navigateByUrl('supervisor')
+    this.router.navigateByUrl("mozo")
+
   }
 
+  Aceptar(pedido) {
+    let auxPedido = pedido;
+    pedido.estado = 'aceptado';
+    //this.emailSVC.sendEmail(user, "Su cuenta ha sido aceptada, ya puede ingresar a la app")
+    this.firestore.Update(pedido.id, "pedidos", auxPedido)
 
+  }
+
+  Rechazar(pedido) {
+    let auxPedido = pedido;
+    pedido.estado = 'rechazado';
+    //   this.emailSVC.sendEmail(user, "Su cuenta ha sido rechazada, si cree que es un error puede contactar al administrador")
+    this.firestore.Update(pedido.id, "pedidos", auxPedido)
+  }
 
 }
-
-
-

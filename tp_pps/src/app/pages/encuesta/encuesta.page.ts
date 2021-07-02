@@ -65,4 +65,7 @@ export class EncuestaPage implements OnInit {
 
   }
 
+
+  
+
 }

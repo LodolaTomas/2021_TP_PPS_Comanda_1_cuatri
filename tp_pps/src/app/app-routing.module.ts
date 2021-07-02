@@ -90,6 +90,10 @@ const routes: Routes = [
   {
     path: 'encuesta',
     loadChildren: () => import('./pages/encuesta/encuesta.module').then( m => m.EncuestaPageModule)
+  },
+  {
+    path: 'adm-pedidos',
+    loadChildren: () => import('./pages/mozo/adm-pedidos/adm-pedidos.module').then( m => m.AdmPedidosPageModule)
   }
 
 

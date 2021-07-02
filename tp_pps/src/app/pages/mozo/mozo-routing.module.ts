@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: MozoPage
+  },  {
+    path: 'adm-pedidos',
+    loadChildren: () => import('./adm-pedidos/adm-pedidos.module').then( m => m.AdmPedidosPageModule)
   }
+
 ];
 
 @NgModule({
