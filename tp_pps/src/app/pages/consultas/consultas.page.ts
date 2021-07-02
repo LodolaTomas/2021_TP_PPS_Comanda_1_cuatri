@@ -34,7 +34,7 @@ export class ConsultasPage implements OnInit {
     this.idMesa = localStorage.getItem('idMesa')
 
     this.usuarios = ''
-    this.usuarioLog = ''
+
 
 
 
@@ -51,16 +51,6 @@ export class ConsultasPage implements OnInit {
       this.mensajes = data;
 
 
-      console.log(this.mensajes[this.mensajes.length - 1].nombre)
-
-      console.log(this.usuarioLog.name)
-
-
-
-   //   console.log(this.usuarioLog.name == this.mensajes[this.mensajes.length - 1].nombre)  //false
-
-   //   console.log(this.mensajes[this.mensajes.length - 1].nombre !== this.usuarioLog.name)
-
 
       if (this.mensajes[this.mensajes.length - 1].nombre !== this.usuarioLog.name) {
 
@@ -71,20 +61,17 @@ export class ConsultasPage implements OnInit {
   }
 
   async traerUsuario() {
-    this.authS.GetCurrentUser().then((response) => {
-      if (response != null) {
-        let user = this.usuarios.filter((u) => u.email == response.email);
-        this.usuarioLog = user[0]
-      }
-    });
+    const fbCollection = await this.firestore.GetByParameter("usuarios", "email", this.usuarioLog.email).get().toPromise();
+    const element = fbCollection.docs[0].data();
+    this.usuarioLog = element
+    localStorage.setItem('token', JSON.stringify(element));
   }
 
   ngOnInit() {
-
+    this.usuarioLog = JSON.parse(localStorage.getItem('token'));
+    this.traerUsuario()
+    console.log(this.usuarioLog)
   }
-
-
-
 
   back() {
     this.router.navigateByUrl('home-clientes')
@@ -105,9 +92,6 @@ export class ConsultasPage implements OnInit {
       this.msg = '';
 
     });
-
-    //this.firestore.Insert(this.idMesa, Object.assign({}, this.mensajeEnviado)) 
-
 
   }
 

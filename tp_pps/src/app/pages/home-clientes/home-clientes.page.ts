@@ -35,14 +35,12 @@ export class HomeClientesPage implements OnInit {
     private scanner: BarcodeScanner,
     private fbService: CloudFirestoreService,
     private notifSVC: NotificationsService) {
-    this.sideMenu();
     this.getUser();
 
     fbService.GetAll("usuarios")
       .subscribe((data) => {
         this.usuarios = data;
         this.traerUsuario();
-        console.log(this.usuarios)
       });
   }
 
@@ -52,25 +50,8 @@ export class HomeClientesPage implements OnInit {
     // var currentUser = await this.authS.GetCurrentUser();
     const fbCollection = await this.fbService.GetByParameter("usuarios", "id", currentUser.uid).get().toPromise();
     fbCollection.docs.forEach(d => this.cliente = d.data());
-    console.log(fbCollection.docs[0].data());
   }
   ngOnInit() {
-  }
-  sideMenu() {
-    this.navigate =
-      [
-        {
-          title: "Escaneo de Entrada",
-          // url   : "/alta-producto",
-          icon: "qr-code"
-        }
-        ,
-        {
-          title: "Historial Encuesta",
-          // url   : "/alta-mesa",
-          icon: "book-outline"
-        }
-      ]
   }
 
   logout() {
@@ -81,8 +62,6 @@ export class HomeClientesPage implements OnInit {
   }
 
   openQR() {
-
-    console.log("QR!")
     this.scanner.scan().then(res => {
       this.scannedBarCode = res;
       console.log(res);
@@ -107,8 +86,7 @@ export class HomeClientesPage implements OnInit {
       if (response != null) {
         let user = this.usuarios.filter((u) => u.email == response.email);
         this.usuarioLog = user[0];
-        console.log(this.usuarioLog.perfil)
-
+  
       }
 
     });
@@ -118,7 +96,7 @@ export class HomeClientesPage implements OnInit {
   openQRmesa() {
     this.displayQRmesa = false;
     this.carga = true;
-    console.log("QR!")
+
     this.scanner.scan().then(res => {
       this.scannedBarCode = res;
       console.log(res);
@@ -142,6 +120,18 @@ export class HomeClientesPage implements OnInit {
 
   cartfood() {
     this.router.navigateByUrl('cartfood')
+  }
+
+
+  
+  BTNjuegos() {
+    this.router.navigateByUrl('juegos')
+  }
+
+
+  
+  BTNencuesta() {
+    this.router.navigateByUrl('encuesta')
   }
 
   alert(icon: SweetAlertIcon, text: string) {
