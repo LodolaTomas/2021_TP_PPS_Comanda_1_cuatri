@@ -1,7 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController, NavParams  } from '@ionic/angular';
+import { ModalController, NavParams } from '@ionic/angular';
 import { File } from '@ionic-native/file/ngx';
-import { StorageService } from 'src/app/services/storage.service';
+import { Camera, CameraResultType } from '@capacitor/camera';
+import { CloudFirestoreService } from 'src/app/services/cloud-firestore.service';
+import { ImagesService } from 'src/app/services/images.service';
+import Swal, { SweetAlertIcon } from 'sweetalert2';
 
 @Component({
   selector: 'app-alta-producto',
@@ -12,25 +15,62 @@ export class AltaProductoPage implements OnInit {
   listaFotos: any;
   usuario: any;
   progress: boolean;
-  showQR:boolean=false;
-
+  showQR: boolean = false;
+  imageElement: Array<any> = []
   title = 'app';
   elementType = 'url';
   value = 'Techiediaries';
-
-  constructor(
-              private modalController: ModalController,
-              private file: File,
-              private storage:StorageService) { }
+  constructor(private imgSrv: ImagesService,
+    private file: File,
+    private cloudSrv: CloudFirestoreService) { }
 
   ngOnInit() {
+
   }
-  showQRCode(){
-    this.showQR=true;
+  showQRCode() {
+    this.showQR = true;
   }
 
-  register(form:any)
-  {
+  async register(form: any) {
+    console.log(form.value)
+    let flag = true;
+    let data: any;
+
+    let url = await this.imgSrv.uploadPhoto('/comida/', this.imageElement[0]);
+    let url2 = await this.imgSrv.uploadPhoto('/comida/', this.imageElement[1]);
+    let url3 = await this.imgSrv.uploadPhoto('/comida/', this.imageElement[2]);
+    data = { 'name': form.value.name,'description': form.value.description,'elaboration_time':form.value.time,'price':form.value.price,'photos': [url,url2,url3],'quantity':1,'type':form.value.type,'id':'1' };
+    if (this.imageElement.length < 2) {
+      this.alert('error', 'Deber tomar o subir 3 fotos');
+      flag = false;
+    }
+
+    if(flag==true){
+      let customId=this.cloudSrv.ReturnFirestore().createId()
+      data.id=customId;
+      console.log(data)
+      this.cloudSrv.InsertCustomID('productos',customId ,data).then(()=>{
+        this.imageElement.splice(0,this.imageElement.length)
+        form.reset();
+        this.alert('success','Alta de producto Realizada')
+      }).catch(e=>console.log(e))
+    }
+  }
+
+  async takePicture() {
+    const image = await Camera.getPhoto({
+      quality: 50,
+      allowEditing: false,
+      resultType: CameraResultType.DataUrl,
+      promptLabelHeader: 'Foto',
+      promptLabelPhoto: 'Buscar de la Galería',
+      promptLabelPicture: 'Tomar una Foto',
+      promptLabelCancel: 'Cancelar',
+      saveToGallery: true,
+    });
+    if (this.imageElement.length <= 2) {
+      this.imageElement.push(image.dataUrl);//muestro la foto para que previsualize el cliente
+    }
 
   }
 
@@ -66,7 +106,25 @@ export class AltaProductoPage implements OnInit {
         });
     });
   }
- 
+  alert(icon: SweetAlertIcon, text: string) {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'bottom',
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+
+    Toast.fire({
+      icon: icon,
+      title: text
+    })
+  }
 }
 @Component({
   selector: 'app-setPictureName',
@@ -89,18 +147,18 @@ export class AltaProductoPage implements OnInit {
   styleUrls: ['./alta-producto.page.scss'],
 })
 class PictureNameModal {
-  
-  @Input()fileName:string;
+
+  @Input() fileName: string;
 
   constructor(params: NavParams,
-              private modalController:ModalController) {
+    private modalController: ModalController) {
     //  console.log('UserId', params.get('userId'));
   }
- confirm(){
-  // using the injected ModalController this page
- // can "dismiss" itself and optionally pass back data
+  confirm() {
+    // using the injected ModalController this page
+    // can "dismiss" itself and optionally pass back data
     this.modalController.dismiss({
       'name': this.fileName
     });
-}
+  }
 }
