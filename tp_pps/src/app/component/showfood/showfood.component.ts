@@ -49,8 +49,9 @@ export class ShowfoodComponent implements OnInit {
   }
 
   addToCart() {
+    this.item.quantity=this.quantity
     let data = {
-      food_name: this.item.name,
+      food_obj: this.item,
       total_price: this.price,
       total_quantity: this.quantity,
     };
