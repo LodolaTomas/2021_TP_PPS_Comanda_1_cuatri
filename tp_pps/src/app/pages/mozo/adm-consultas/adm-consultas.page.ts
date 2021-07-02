@@ -1,5 +1,5 @@
-import { NotificationsService } from './../../services/notifications.service';
-import { ChatService } from './../../services/chat.service';
+import { NotificationsService } from '../../../services/notifications.service';
+import { ChatService } from '../../../services/chat.service';
 import { Router } from '@angular/router';
 import { CloudFirestoreService } from 'src/app/services/cloud-firestore.service';
 import { Component, OnInit } from '@angular/core';
@@ -20,12 +20,13 @@ export class AdmConsultasPage implements OnInit {
   public usuarios: any = []
   public msg: string;
 
-  private scrollContainer: any;
   public mensajeEnviado: any = {};
 
   public mesa1: any = []
   public mesa2: any = []
   public mesa3: any = []
+
+  public userActivo: any = []
 
 
   mensaje: any;
@@ -38,10 +39,10 @@ export class AdmConsultasPage implements OnInit {
   public listChats: boolean = true
 
 
-  constructor(private authS: AuthService, private firestore: CloudFirestoreService, private router: Router, private chatSVC: ChatService, private notiSVC: NotificationsService) {
+  constructor(private firestore: CloudFirestoreService, private router: Router, private chatSVC: ChatService, private notiSVC: NotificationsService) {
 
     this.usuarios = ''
-    this.usuarioLog = ''
+
 
     firestore.GetAll("usuarios")
       .subscribe((data) => {
@@ -55,27 +56,22 @@ export class AdmConsultasPage implements OnInit {
       this.mensajes = data;
 
 
-      console.log(this.mensajes[this.mensajes.length - 1].nombre)
-      console.log(this.usuarioLog.name)
-
-     // console.log(this.usuarioLog.name !== this.mensajes[this.mensajes.length - 1].nombre)  //false
-
-
-     if (this.mensajes[this.mensajes.length - 1].nombre !== this.usuarioLog.name) //true?
+      if (this.mensajes[this.mensajes.length - 1].nombre !== this.usuarioLog.name) //true?
       {
-        this.notiSVC.notifyByProfile("Tiene un mensaje nuevo", this.usuarioLog, "mozo")  
-     
+        this.notiSVC.notifyByProfile("Tiene un mensaje nuevo", this.usuarioLog, "mozo")
+
       }
     });
   }
 
   async traerUsuario() {
-    this.authS.GetCurrentUser().then((response) => {
-      if (response != null) {
-        let user = this.usuarios.filter((u) => u.email == response.email);
-        this.usuarioLog = user[0]
-      }
-    });
+
+    const fbCollection = await this.firestore.GetByParameter("usuarios", "email", this.usuarioLog.email).get().toPromise();
+    const element = fbCollection.docs[0].data();
+    this.usuarioLog = element
+    localStorage.setItem('token', JSON.stringify(element));
+
+
   }
 
   openChat() {
@@ -102,6 +98,7 @@ export class AdmConsultasPage implements OnInit {
   }
 
   ngOnInit() {
+    this.usuarioLog = JSON.parse(localStorage.getItem('token'));
   }
 
 

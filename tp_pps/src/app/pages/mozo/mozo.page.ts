@@ -21,6 +21,8 @@ export class MozoPage implements OnInit {
     this.router.navigateByUrl('login')
   }
 
+  
+
 
   BTNconsultas()
   {

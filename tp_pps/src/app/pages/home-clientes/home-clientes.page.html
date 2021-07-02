@@ -22,25 +22,6 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-menu side="start" menuId="first" contentId="content1">
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Navigate</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content style="--background: white;">
-      <ion-list *ngFor="let pages of navigate">
-        <ion-menu-toggle auto-hide="true">
-          <ion-item [routerLink]="pages.url" routerDirection="forward">
-            <ion-icon [name]="pages.icon" slot="start" *ngIf="pages.icon=='qr-code' && displayQREspera"
-              (click)="openQR()"></ion-icon>
-            <ion-icon [name]="pages.icon" slot="start" *ngIf="pages.icon!='qr-code'"></ion-icon>
-            {{pages.title}}
-          </ion-item>
-        </ion-menu-toggle>
-      </ion-list>
-    </ion-content>
-  </ion-menu>
 
   <div class="container mt-3 ion-text-center">
 
@@ -73,25 +54,36 @@
       </ion-card>
     </div>
 
-   
+
 
     <div id="enEspera" *ngIf=" true">
       <ion-card>
         <h1>Acciones</h1>
         <ion-button expand="block" (click)="cartfood()">Carta</ion-button>
         <br>
-        <ion-button expand="block" (click)="consultar()" >Consultar</ion-button>
+        <ion-button expand="block" (click)="consultar()">Consultar</ion-button>
         <br>
         <br>
       </ion-card>
     </div>
 
-    
+
     <div id="enEspera" *ngIf="carga">
       <ion-card>
         <h3>Procesando..</h3>
         <ion-spinner></ion-spinner>
-      <h3>Espere</h3>
+        <h3>Espere</h3>
+      </ion-card>
+    </div>
+
+
+    <div id="juegosEncuesta" >
+      <ion-card>
+        <h1>Acciones</h1>
+        <ion-button expand="block" (click)="BTNjuegos()">Juegos</ion-button>
+        <br>
+        <ion-button expand="block" (click)="BTNencuesta()">Encuesta</ion-button>
+        <br>
       </ion-card>
     </div>
 
