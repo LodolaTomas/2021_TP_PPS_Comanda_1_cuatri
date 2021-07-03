@@ -36,9 +36,10 @@
         <ion-card-content>
           <ion-row>
             <ion-col>
-              <h2 class="mt-5">{{pedido.mesa}}</h2>
-              <h2 class="mt-1">{{pedido.estado}}</h2>
-              <h2 class="mt-5">{{pedido.platos}}</h2>
+              <h4 class="mt-1">Tiempo: {{pedido.total_time}}</h4>
+              <h4 class="mt-1">Cantidad: {{pedido.total_quantity}}</h4>
+              <h4 class="mt-1">Total: {{pedido.total_amount}}</h4>
+              <h4 class="mt-1">Estado: {{pedido.status}}</h4>
             </ion-col>
             <ion-col>
               <ion-button color="success" expand="block mt-3" *ngIf="pedido.estado != 'aceptado'" (click)="Aceptar(pedido)">Aceptar</ion-button>
@@ -63,9 +64,10 @@
           <ion-row>
 
             <ion-col>
-              <h2 class="mt-5">{{pedido.mesa}}</h2>
-              <h2 class="mt-1">{{pedido.estado}}</h2>
-              <h2 class="mt-5">{{pedido.platos}}</h2>
+              <h4 class="mt-1">Tiempo: {{pedido.total_time}}</h4>
+              <h4 class="mt-1">Cantidad: {{pedido.total_quantity}}</h4>
+              <h4 class="mt-1">Total: {{pedido.total_amount}}</h4>
+              <h4 class="mt-1">Estado: {{pedido.status}}</h4>
             </ion-col>
             <ion-col>
               <ion-button color="success" expand="block mt-3" *ngIf="pedido.estado != 'aceptado'" (click)="Aceptar(pedido)">Aceptar</ion-button>
@@ -87,9 +89,10 @@
         <ion-card-content>
           <ion-row>
             <ion-col>
-              <h2 class="mt-5">{{pedido.mesa}}</h2>
-              <h2 class="mt-1">{{pedido.estado}}</h2>
-              <h2 class="mt-5">{{pedido.platos}}</h2>
+              <h4 class="mt-1">Tiempo: {{pedido.total_time}}</h4>
+              <h4 class="mt-1">Cantidad: {{pedido.total_quantity}}</h4>
+              <h4 class="mt-1">Total: {{pedido.total_amount}}</h4>
+              <h4 class="mt-1">Estado: {{pedido.status}}</h4>
             </ion-col>
             <ion-col>
               <ion-button color="success" expand="block mt-3" *ngIf="pedido.estado != 'aceptado'" (click)="Aceptar(pedido)">Aceptar</ion-button>
