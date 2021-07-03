@@ -5,9 +5,17 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item *ngFor="let mesa of listMesas">
-      <ion-label (click)="dismiss(mesa.numero)">Asignar a Mesa {{mesa.numero}}</ion-label>
+
+
+  <ion-card *ngFor="let mesa of listMesas">
+    <ion-item>
+      <ion-icon name="tablet-landscape" slot="start"></ion-icon>
+      <ion-label>Mesa {{mesa.numero}}</ion-label>
+      <ion-button fill="outline" slot="end" (click)="dismiss(mesa.numero)">Asignar</ion-button>
     </ion-item>
-  </ion-list>
+  
+    <ion-card-content >Seleccione una Mesa
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>
