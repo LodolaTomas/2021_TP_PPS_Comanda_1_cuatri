@@ -23,7 +23,7 @@
       </ion-item>
 
       <ion-list>
-        <ion-radio-group value="biff">
+        <ion-radio-group value="biff" >
           <ion-list-header>
             <ion-label>Recomendarias el restaurante a un amigo:</ion-label>
           </ion-list-header>
@@ -80,7 +80,7 @@
 
     
     <div padding *ngIf="!cargando">
-      <ion-button class="ion-margin-start ion-margin-end ion-margin-bottom" color="success" size="large"
+      <ion-button class="ion-margin-start ion-margin-end ion-margin-bottom" color="success" (click)="enviarEncuesta()" size="large"
       type="submit"  expand="block">Enviar</ion-button>
   </div>
 

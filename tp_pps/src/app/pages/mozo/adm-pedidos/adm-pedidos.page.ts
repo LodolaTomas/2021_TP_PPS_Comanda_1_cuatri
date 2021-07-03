@@ -150,7 +150,7 @@ export class AdmPedidosPage implements OnInit {
 
   Aceptar(pedido) {
     let auxPedido = pedido;
-    pedido.estado = 'aceptado';
+    pedido.status = 'aceptado';
     //this.emailSVC.sendEmail(user, "Su cuenta ha sido aceptada, ya puede ingresar a la app")
     this.firestore.Update(pedido.id, "pedidos", auxPedido)
 
@@ -158,9 +158,10 @@ export class AdmPedidosPage implements OnInit {
 
   Rechazar(pedido) {
     let auxPedido = pedido;
-    pedido.estado = 'rechazado';
+    pedido.status = 'rechazado';
     //   this.emailSVC.sendEmail(user, "Su cuenta ha sido rechazada, si cree que es un error puede contactar al administrador")
     this.firestore.Update(pedido.id, "pedidos", auxPedido)
   }
 
+  
 }

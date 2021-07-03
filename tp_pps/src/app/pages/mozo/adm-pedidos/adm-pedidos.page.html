@@ -32,7 +32,7 @@
     <div *ngFor="let pedido of pedidos; let i = index ">
 
 
-      <ion-card *ngIf="pedido.estado == 'aceptado'">
+      <ion-card *ngIf="pedido.status == 'aceptado'">
         <ion-card-content>
           <ion-row>
             <ion-col>
@@ -42,8 +42,8 @@
               <h4 class="mt-1">Estado: {{pedido.status}}</h4>
             </ion-col>
             <ion-col>
-              <ion-button color="success" expand="block mt-3" *ngIf="pedido.estado != 'aceptado'" (click)="Aceptar(pedido)">Aceptar</ion-button>
-              <ion-button color="danger" expand="block mt-3" *ngIf="pedido.estado != 'rechazado'" (click)="Rechazar(pedido)">Rechazar</ion-button>
+              <ion-button color="success" expand="block mt-3" *ngIf="pedido.status != 'aceptado'" (click)="Aceptar(pedido)">Aceptar</ion-button>
+              <ion-button color="danger" expand="block mt-3" *ngIf="pedido.status != 'rechazado'" (click)="Rechazar(pedido)">Rechazar</ion-button>
             </ion-col>
 
           </ion-row>
@@ -59,7 +59,7 @@
 
 
 
-      <ion-card *ngIf="pedido.estado == 'pendiente'">
+      <ion-card *ngIf="pedido.status == 'pendiente'">
         <ion-card-content>
           <ion-row>
 
@@ -70,8 +70,8 @@
               <h4 class="mt-1">Estado: {{pedido.status}}</h4>
             </ion-col>
             <ion-col>
-              <ion-button color="success" expand="block mt-3" *ngIf="pedido.estado != 'aceptado'" (click)="Aceptar(pedido)">Aceptar</ion-button>
-              <ion-button color="danger" expand="block mt-3" *ngIf="pedido.estado != 'rechazado'" (click)="Rechazar(pedido)">Rechazar</ion-button>
+              <ion-button color="success" expand="block mt-3" *ngIf="pedido.status != 'aceptado'" (click)="Aceptar(pedido)">Aceptar</ion-button>
+              <ion-button color="danger" expand="block mt-3" *ngIf="pedido.status != 'rechazado'" (click)="Rechazar(pedido)">Rechazar</ion-button>
             </ion-col>
 
           </ion-row>
@@ -89,15 +89,18 @@
         <ion-card-content>
           <ion-row>
             <ion-col>
+            
               <h4 class="mt-1">Tiempo: {{pedido.total_time}}</h4>
               <h4 class="mt-1">Cantidad: {{pedido.total_quantity}}</h4>
               <h4 class="mt-1">Total: {{pedido.total_amount}}</h4>
               <h4 class="mt-1">Estado: {{pedido.status}}</h4>
             </ion-col>
             <ion-col>
-              <ion-button color="success" expand="block mt-3" *ngIf="pedido.estado != 'aceptado'" (click)="Aceptar(pedido)">Aceptar</ion-button>
-              <ion-button color="danger" expand="block mt-3" *ngIf="pedido.estado != 'rechazado'" (click)="Rechazar(pedido)">Rechazar</ion-button>
+              <ion-button color="success" expand="block mt-3" *ngIf="pedido.status != 'aceptado'" (click)="Aceptar(pedido)">Aceptar</ion-button>
+              <ion-button color="danger" expand="block mt-3" *ngIf="pedido.status != 'rechazado'" (click)="Rechazar(pedido)">Rechazar</ion-button>
             </ion-col>
+
+          
 
           </ion-row>
 

@@ -4,6 +4,7 @@ import { CloudFirestoreService } from 'src/app/services/cloud-firestore.service'
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { ImagesService } from 'src/app/services/images.service';
 import { File } from '@ionic-native/file/ngx';
+import Swal, { SweetAlertIcon } from 'sweetalert2';
 
 @Component({
   selector: 'app-encuesta',
@@ -65,7 +66,32 @@ export class EncuestaPage implements OnInit {
 
   }
 
+  enviarEncuesta()
+  {
+    this.alert('success','¡Gracias por responder!')
 
-  
+  }
 
+
+
+  alert(icon: SweetAlertIcon, text: string) {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'center',
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+
+    Toast.fire({
+      icon: icon,
+      title: text
+    })
+  }
 }
+  
