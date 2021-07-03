@@ -37,6 +37,7 @@ export class RegisterPage implements OnInit {
     let data: any;
     this.cargando = true;
     let url = await this.imgSrv.uploadPhoto('/usuarios/', this.imageElement);
+    let id=this.cloudSrv.ReturnFirestore().createId()
     if (form.value.dni == undefined) {
       flag=false
       data = { 'name': form.value.name, 'image': url, 'id':'' };
@@ -47,10 +48,9 @@ export class RegisterPage implements OnInit {
     if(this.isAnonimous){
       flag=false
       this.auth.registerAnonymously();
-      this.cloudSrv.Insert('usuarios', data).then((docRef)=>{
+      data.id=id;
+      this.cloudSrv.InsertCustomID('usuarios', id,data).then((docRef)=>{
             this.cargando = false;
-            data.id = docRef.id;
-            this.cloudSrv.Update(docRef.id,"usuarios",data);
             localStorage.setItem('token', JSON.stringify(data));
             this.router.navigateByUrl('/home-clientes');
           });
