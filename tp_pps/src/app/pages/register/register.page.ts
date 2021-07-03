@@ -36,22 +36,25 @@ export class RegisterPage implements OnInit {
     let flag=true;
     let data: any;
     this.cargando = true;
+    let url = await this.imgSrv.uploadPhoto('/usuarios/', this.imageElement);
     if (form.value.dni == undefined) {
       flag=false
-      let url = await this.imgSrv.uploadPhoto('/usuarios/', this.imageElement);
-      data = { 'name': form.value.name, 'image': url };
+      data = { 'name': form.value.name, 'image': url, 'id':'' };
     } else {
-      let url = await this.imgSrv.uploadPhoto('/usuarios/', this.imageElement);
-      data = { 'name': form.value.name, 'lastname': form.value.lastname, 'DNI': form.value.dni, 'password': form.value.password, 'email':form.value.email,'perfil': 'cliente', 'estado': 'pendiente', 'image': url };
+      data = { 'name': form.value.name, 'lastname': form.value.lastname, 'DNI': form.value.dni, 'password': form.value.password, 'email':form.value.email,'perfil': 'cliente', 'estado': 'pendiente', 'image': url, 'id':'' };
     }
 
     if(this.isAnonimous){
       flag=false
-      this.cloudSrv.Insert('usuarios', data).then(()=>{
-        this.cargando = false;
-        this.router.navigateByUrl('/home-clientes');
-      })
-
+      this.auth.registerAnonymously();
+      this.cloudSrv.Insert('usuarios', data).then((docRef)=>{
+            this.cargando = false;
+            data.id = docRef.id;
+            this.cloudSrv.Update(docRef.id,"usuarios",data);
+            localStorage.setItem('token', JSON.stringify(data));
+            this.router.navigateByUrl('/home-clientes');
+          });
+          
     }else if (form.value.password !== form.value.confirm) {
       document.getElementById('password').setAttribute('value', '')
       document.getElementById('confirm').setAttribute('value', '')
@@ -66,7 +69,13 @@ export class RegisterPage implements OnInit {
     
     if(flag==true){
       this.cloudSrv.Insert('usuarios', data).then(()=>{
-        this.auth.onRegister(data).then(()=>this.alert('success', 'Registro exitoso')).catch(e=>console.log(e))
+        this.auth.onRegister(data).then(()=>this.alert('success', 'Registro exitoso')).catch(e=>console.log(e));
+            this.cloudSrv.Insert('usuarios', data).then((docRef)=>{
+              this.cargando = false;
+              data.id = docRef.id;
+              this.cloudSrv.Update(docRef.id,"usuarios",data);
+              this.router.navigateByUrl('/home-clientes');
+            });
         this.takePhoto=false
         this.imageElement=undefined
         form.reset();
@@ -76,8 +85,6 @@ export class RegisterPage implements OnInit {
     }
 
   }
-
-
 
   async takePicture() {
     const image = await Camera.getPhoto({

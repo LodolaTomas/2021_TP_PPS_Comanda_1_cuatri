@@ -5,12 +5,33 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
+  <!-- <ion-list>
     <ion-item *ngFor="let user of userList">
-      <ion-label (click)="presentModal(user)">{{user.nombre}} - {{user.fecha ? user.fecha.toDate().toLocaleDateString() : '-'}} {{user.fecha ? user.fecha.toDate().toLocaleTimeString()  : '-'}}
+      <ion-label (click)="presentModal(user)">{{user.name}}
       </ion-label>
     </ion-item>
-  </ion-list>
+  </ion-list> -->
+
+  <ion-card *ngFor="let user of userList">
+    <ion-card-content (click)="presentModal(user)">
+      <ion-row>
+        <ion-col>
+          <img *ngIf="user.image" src="{{user.image}}" class="m-1"
+            style="border-radius: 95%; width: 120px;height: 120px;">
+          <img *ngIf="!user.image" src="https://www.uic.mx/posgrados/files/2018/05/default-user.png" height="80px"
+            class="mt-3 ml-2" />
+        </ion-col>
+        <ion-col>
+          <h2 class="mt-5">{{user.name}}</h2>
+        </ion-col>
+        <ion-col>
+          <ion-button fill="outline" (click)="presentModal(user)">Asignar Mesa</ion-button>
+        </ion-col>
+
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
   <div style="margin:auto; width:50%">
     <ion-spinner name="bubbles" *ngIf="ingresando"></ion-spinner>
   </div>
