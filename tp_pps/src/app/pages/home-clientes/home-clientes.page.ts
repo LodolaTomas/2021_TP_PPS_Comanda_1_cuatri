@@ -18,7 +18,6 @@ export class HomeClientesPage implements OnInit {
   scannedBarCode: {};
   input: any;
   idMesa: any;
-  cliente: any;
   displayQREspera: boolean = true;
   numeroMesa: number = 5;
   displayQRmesa: boolean = true;
@@ -39,19 +38,30 @@ export class HomeClientesPage implements OnInit {
     private notifSVC: NotificationsService) {
     this.getUser();
 
-    fbService.GetAll("usuarios")
-      .subscribe((data) => {
-        this.usuarios = data;
-        this.traerUsuario();
-      });
+    // fbService.GetAll("usuarios")
+    //   .subscribe((data) => {
+    //     this.usuarios = data;
+    //     this.traerUsuario();
+    //   });
   }
 
   async getUser() {
+    const tokenUser = JSON.parse(localStorage.getItem('token'));
+    this.fbService.GetByParameter("usuarios", "id", tokenUser.id).valueChanges()
+    .subscribe(async (usersList)=>{
+      if(usersList.length > 0){
+        this.usuarioLog = usersList[0];
+      }
 
-    var currentUser = { uid: "edb4z9BC3llciFBhEomB" };
-    // var currentUser = await this.authS.GetCurrentUser();
-    const fbCollection = await this.fbService.GetByParameter("usuarios", "id", currentUser.uid).get().toPromise();
-    fbCollection.docs.forEach(d => this.cliente = d.data());
+     await this.fbService.GetByParameter("lista_espera_local","id",this.usuarioLog.id).get().toPromise().then((userCollection)=>{
+       if(!userCollection.empty){
+         this.existeUserEnListaEspera=true;
+       }
+       if(this.existeUserEnListaEspera){
+         this.userEsperandoAsignacionDeMesa = this.usuarioLog.status =='esperando';
+       }
+   });
+    });
   }
   ngOnInit() {
   }
@@ -69,14 +79,14 @@ export class HomeClientesPage implements OnInit {
       let scannedCode = res.text;
       const userWaitingList = { id: this.usuarioLog.id, status: "esperando", date: new Date() };
       this.fbService.Insert("lista_espera_local", userWaitingList)
-        .then((val) => {
+        .then(() => {
           this.alert('success', "Agregado a la lista de espera!");
           this.existeUserEnListaEspera=true;
           this.userEsperandoAsignacionDeMesa=true;
         });
       this.displayQREspera = false;
       this.input = this.scannedBarCode["text"];
-      this.notifSVC.notifyByProfile("En la lista de espera: ", this.usuarioLog, "admin")
+      this.notifSVC.notifyByProfile("Cliente En la lista de espera: ", this.usuarioLog, "admin")
       //     this.notificar({ name: 'Pepe Anonimo' });
     }).catch(err => {
       alert(err);
@@ -84,16 +94,16 @@ export class HomeClientesPage implements OnInit {
 
   }
 
-  async traerUsuario() {
-    this.authS.GetCurrentUser().then((response) => {
-      if (response != null) {
-        let user = this.usuarios.filter((u) => u.email == response.email);
-        this.usuarioLog = user[0];
+  // async traerUsuario() {
+  //   this.authS.GetCurrentUser().then((response) => {
+  //     if (response != null) {
+  //       let user = this.usuarios.filter((u) => u.email == response.email);
+  //       this.usuarioLog = user[0];
   
-      }
+  //     }
 
-    });
-  }
+  //   });
+  // }
 
 
   openQRmesa() {

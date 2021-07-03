@@ -36,32 +36,25 @@ export class RegisterPage implements OnInit {
     let flag=true;
     let data: any;
     this.cargando = true;
+    let url = await this.imgSrv.uploadPhoto('/usuarios/', this.imageElement);
     if (form.value.dni == undefined) {
       flag=false
-      // let url = await this.imgSrv.uploadPhoto('/usuarios/', this.imageElement);
-      data = { 'name': form.value.name, 'image': "", 'id':'' };
+      data = { 'name': form.value.name, 'image': url, 'id':'' };
     } else {
-      let url = await this.imgSrv.uploadPhoto('/usuarios/', this.imageElement);
       data = { 'name': form.value.name, 'lastname': form.value.lastname, 'DNI': form.value.dni, 'password': form.value.password, 'email':form.value.email,'perfil': 'cliente', 'estado': 'pendiente', 'image': url, 'id':'' };
     }
 
     if(this.isAnonimous){
       flag=false
       this.auth.registerAnonymously();
-      this.auth.getCurrentUser2((user)=>{
-        if (user) {
-          // User is signed in, see docs for a list of available properties
-          // https://firebase.google.com/docs/reference/js/firebase.User
-          data.id= user.id;
-          console.log("getCurrentUser2",user);
-          // this.cloudSrv.Insert('usuarios', data).then(()=>{
-          //   this.cargando = false;
-          //   this.router.navigateByUrl('/home-clientes');
-          // });
-        } else {
-          // User is signed out
-        }
-        });
+      this.cloudSrv.Insert('usuarios', data).then((docRef)=>{
+            this.cargando = false;
+            data.id = docRef.id;
+            this.cloudSrv.Update(docRef.id,"usuarios",data);
+            localStorage.setItem('token', JSON.stringify(data));
+            this.router.navigateByUrl('/home-clientes');
+          });
+          
     }else if (form.value.password !== form.value.confirm) {
       document.getElementById('password').setAttribute('value', '')
       document.getElementById('confirm').setAttribute('value', '')
@@ -77,15 +70,12 @@ export class RegisterPage implements OnInit {
     if(flag==true){
       this.cloudSrv.Insert('usuarios', data).then(()=>{
         this.auth.onRegister(data).then(()=>this.alert('success', 'Registro exitoso')).catch(e=>console.log(e));
-        this.auth.getCurrentUser2((user)=>{
-          if (user) {
-            data.id= user.id;
-            this.cloudSrv.Insert('usuarios', data).then(()=>{
+            this.cloudSrv.Insert('usuarios', data).then((docRef)=>{
               this.cargando = false;
+              data.id = docRef.id;
+              this.cloudSrv.Update(docRef.id,"usuarios",data);
               this.router.navigateByUrl('/home-clientes');
             });
-          }
-          });
         this.takePhoto=false
         this.imageElement=undefined
         form.reset();
