@@ -84,7 +84,7 @@ export class ListaEsperaMesasPage implements OnInit {
  * @param user Usuario
  */
 async actualizarListadoDeEspera(user:any){
-  const userFirebaseDoc = await this.fbService.GetByParameter("lista_espera_local","id",user.uid).get().toPromise();//Aclaracion: lista_espera_local tiene ID, usuarios tiene UID como mismo dato
+  const userFirebaseDoc = await this.fbService.GetByParameter("lista_espera_local","id",user.id).get().toPromise();//Aclaracion: lista_espera_local tiene ID, usuarios tiene UID como mismo dato
   let userDoc = userFirebaseDoc.docs[0].data();
   userDoc.status='ingresado';
   this.fbService.Update(userFirebaseDoc.docs[0].id,"lista_espera_local",userDoc).then(()=> this.ingresando=false);
