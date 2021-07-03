@@ -48,16 +48,18 @@ export class AdmPedidosPage implements OnInit {
       .subscribe((data) => {
         this.pedidos = data;
     console.log(data)
+    this.notificarPendientes()
+
       });
 
   }
 
   notificarPendientes() {
-    this.usuarios.forEach(uno => {
+    this.pedidos.forEach(uno => {
 
-      if (uno.estado == 'pendiente') {
+      if (uno.status == 'pendiente') {
         //this.notifSVC.notify("usuarios pendiente")
-        this.notifSVC.notifyByProfile("Usuarios pendientes de verificacion", this.usuarioLog, "supervisor")//Mensaje, usuario logeado, y perfiles a notificar
+        this.notifSVC.notify("Pedidos pendientes")//Mensaje, usuario logeado, y perfiles a notificar
       }
 
     });
