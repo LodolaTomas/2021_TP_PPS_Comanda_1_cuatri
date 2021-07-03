@@ -49,7 +49,7 @@ export class RegisterPage implements OnInit {
       flag=false
       this.auth.registerAnonymously();
       data.id=id;
-      this.cloudSrv.InsertCustomID('usuarios', id,data).then((docRef)=>{
+      this.cloudSrv.InsertCustomID('usuarios', id,data).then(()=>{
             this.cargando = false;
             localStorage.setItem('token', JSON.stringify(data));
             this.router.navigateByUrl('/home-clientes');
