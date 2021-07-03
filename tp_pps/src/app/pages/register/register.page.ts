@@ -68,14 +68,14 @@ export class RegisterPage implements OnInit {
     }
     
     if(flag==true){
-      this.cloudSrv.Insert('usuarios', data).then(()=>{
+      this.cloudSrv.Insert('usuarios', data).then((docRef)=>{
         this.auth.onRegister(data).then(()=>this.alert('success', 'Registro exitoso')).catch(e=>console.log(e));
-            this.cloudSrv.Insert('usuarios', data).then((docRef)=>{
+            
               this.cargando = false;
               data.id = docRef.id;
               this.cloudSrv.Update(docRef.id,"usuarios",data);
               this.router.navigateByUrl('/home-clientes');
-            });
+          
         this.takePhoto=false
         this.imageElement=undefined
         form.reset();
