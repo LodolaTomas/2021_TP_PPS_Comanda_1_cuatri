@@ -18,9 +18,9 @@ export class RegisterPage implements OnInit {
   scannedBarCode: any;
   imageElement: any = undefined;
   flag = false;
-  takePhoto=false;
+  takePhoto = false;
   public cargando: boolean;
-  constructor(private router: Router, private barcodeScanner: BarcodeScanner, private imgSrv: ImagesService, private cloudSrv: CloudFirestoreService,private auth:AuthService) {
+  constructor(private router: Router, private barcodeScanner: BarcodeScanner, private imgSrv: ImagesService, private cloudSrv: CloudFirestoreService, private auth: AuthService) {
     this.cargando = false
     const state = this.router.getCurrentNavigation().extras.state;
     if (state != null) {
@@ -29,59 +29,61 @@ export class RegisterPage implements OnInit {
   }
 
   ngOnInit() {
-    
+
   }
 
   async register(form) {
-    let flag=true;
+    let flag = true;
     let data: any;
     this.cargando = true;
     let url = await this.imgSrv.uploadPhoto('/usuarios/', this.imageElement);
-    let id=this.cloudSrv.ReturnFirestore().createId()
+    let id = this.cloudSrv.ReturnFirestore().createId()
     if (form.value.dni == undefined) {
-      flag=false
-      data = { 'name': form.value.name, 'image': url, 'id':'' };
+      flag = false
+      data = { 'name': form.value.name, 'image': url, 'id': '' };
     } else {
-      data = { 'name': form.value.name, 'lastname': form.value.lastname, 'DNI': form.value.dni, 'password': form.value.password, 'email':form.value.email,'perfil': 'cliente', 'estado': 'pendiente', 'image': url, 'id':'' };
+      data = { 'name': form.value.name, 'lastname': form.value.lastname, 'DNI': form.value.dni, 'password': form.value.password, 'email': form.value.email, 'perfil': 'cliente', 'estado': 'pendiente', 'image': url, 'id': '' };
     }
 
-    if(this.isAnonimous){
-      flag=false
-      this.auth.registerAnonymously();
-      data.id=id;
-      this.cloudSrv.InsertCustomID('usuarios', id,data).then(()=>{
-            this.cargando = false;
-            localStorage.setItem('token', JSON.stringify(data));
-            this.router.navigateByUrl('/home-clientes');
-          });
-          
-    }else if (form.value.password !== form.value.confirm) {
+    if (this.isAnonimous) {
+      flag = false
+      //this.auth.registerAnonymously();
+      data.id = id;
+      console.log('entree')
+      this.cloudSrv.InsertCustomID('usuarios', id, data).then(() => {
+        this.cargando = false;
+        console.log('entre 2')
+        localStorage.setItem('token', JSON.stringify(data));
+        this.router.navigateByUrl('/home-clientes');
+      });
+
+    } else if (form.value.password !== form.value.confirm) {
       document.getElementById('password').setAttribute('value', '')
       document.getElementById('confirm').setAttribute('value', '')
-      this.alert('error','La contraseña no coinciden')
-      flag=false
+      this.alert('error', 'La contraseña no coinciden')
+      flag = false
       this.cargando = false;
     } else if (this.imageElement == undefined) {
       this.alert('error', 'Deber tomar o subir una foto');
-      flag=false
+      flag = false
       this.cargando = false;
     }
-    
-    if(flag==true){
-      this.cloudSrv.Insert('usuarios', data).then((docRef)=>{
-        this.auth.onRegister(data).then(()=>this.alert('success', 'Registro exitoso')).catch(e=>console.log(e));
-            
-              this.cargando = false;
-              data.id = docRef.id;
-              this.cloudSrv.Update(docRef.id,"usuarios",data);
-              this.router.navigateByUrl('/home-clientes');
-          
-        this.takePhoto=false
-        this.imageElement=undefined
+
+    if (flag == true) {
+      this.cloudSrv.Insert('usuarios', data).then((docRef) => {
+        this.auth.onRegister(data).then(() => this.alert('success', 'Registro exitoso')).catch(e => console.log(e));
+
+        this.cargando = false;
+        data.id = docRef.id;
+        this.cloudSrv.Update(docRef.id, "usuarios", data);
+        this.router.navigateByUrl('/home-clientes');
+
+        this.takePhoto = false
+        this.imageElement = undefined
         form.reset();
         this.cargando = false;
         this.router.navigateByUrl('login')
-      }).catch(e=>console.log(e))
+      }).catch(e => console.log(e))
     }
 
   }
@@ -96,9 +98,9 @@ export class RegisterPage implements OnInit {
       promptLabelPicture: 'Tomar una Foto',
       promptLabelCancel: 'Cancelar',
       saveToGallery: true,
-      
+
     });
-    this.takePhoto=true;
+    this.takePhoto = true;
     this.imageElement = image.dataUrl;//muestro la foto para que previsualize el cliente
   }
 
