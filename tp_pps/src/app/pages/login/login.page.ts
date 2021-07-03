@@ -29,7 +29,8 @@ export class LoginPage implements OnInit {
     { "email": "metre@yopmail.com", "clave": "123456" },
     { "email": "cliente@yopmail.com", "clave": "123456" },
     { "email": "cocinero@yopmail.com", "clave": "123456" },
-    { "email": "supervisor@yopmail.com", "clave": "123456" }
+    { "email": "supervisor@yopmail.com", "clave": "123456" },
+    { "email": "mozo@yopmail.com", "clave": "123456" }
   ];
 
   constructor(private formBuilder: FormBuilder, private router: Router, private authSvc: AuthService, private cloudSrv: CloudFirestoreService, private notificationsService:NotificationsService) {
@@ -41,9 +42,6 @@ export class LoginPage implements OnInit {
     this.user.email = '';
     this.user.password = '';
     this.ingresando = false;
-
-
-
 
   }
 
@@ -60,6 +58,8 @@ export class LoginPage implements OnInit {
     this.cargando = true;
     this.user.email = this.miFormulario.value.email;
     this.user.password = this.miFormulario.value.clave;
+
+    localStorage.setItem('token', JSON.stringify(this.user));
 
     const fbCollection = await this.cloudSrv.GetByParameter("usuarios", "email", this.user.email).get().toPromise();
     const element = fbCollection.docs[0].data();
@@ -81,14 +81,27 @@ export class LoginPage implements OnInit {
         if (this.user.email == 'supervisor@yopmail.com') {
           this.cargando = false;
           this.router.navigateByUrl('/supervisor');
+          this.miFormulario.reset()
         }
         else if (this.user.email == 'admin@yopmail.com') {
           this.cargando = false;
           this.router.navigateByUrl('/home');
+          this.miFormulario.reset()
+        }
+        else if (this.user.email == 'metre@yopmail.com') {
+          this.cargando = false;
+          this.router.navigateByUrl('/metre');
+          this.miFormulario.reset()
+        }
+        else if (this.user.email == 'mozo@yopmail.com') {
+          this.cargando = false;
+          this.router.navigateByUrl('/mozo');
+          this.miFormulario.reset()
         }
         else {
           this.cargando = false;
           this.router.navigateByUrl('/home-clientes');
+          this.miFormulario.reset()
         }
       }
     }

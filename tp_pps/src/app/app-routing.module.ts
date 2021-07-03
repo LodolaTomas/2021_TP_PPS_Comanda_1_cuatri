@@ -66,7 +66,37 @@ const routes: Routes = [
   {
     path: 'cartfood',
     loadChildren: () => import('./component/cartfood/cartfood.module').then( m => m.CartfoodPageModule)
+  },
+  {
+    path: 'metre',
+    loadChildren: () => import('./pages/metre/metre.module').then( m => m.MetrePageModule)
+  },
+  {
+    path: 'consultas',
+    loadChildren: () => import('./pages/consultas/consultas.module').then( m => m.ConsultasPageModule)
+  },
+  {
+    path: 'adm-consultas',
+    loadChildren: () => import('./pages/mozo/adm-consultas/adm-consultas.module').then( m => m.AdmConsultasPageModule)
+  },
+  {
+    path: 'mozo',
+    loadChildren: () => import('./pages/mozo/mozo.module').then( m => m.MozoPageModule)
+  },
+  {
+    path: 'juegos',
+    loadChildren: () => import('./pages/juegos/juegos.module').then( m => m.JuegosPageModule)
+  },
+  {
+    path: 'encuesta',
+    loadChildren: () => import('./pages/encuesta/encuesta.module').then( m => m.EncuestaPageModule)
+  },
+  {
+    path: 'adm-pedidos',
+    loadChildren: () => import('./pages/mozo/adm-pedidos/adm-pedidos.module').then( m => m.AdmPedidosPageModule)
   }
+
+
 ];
 
 @NgModule({

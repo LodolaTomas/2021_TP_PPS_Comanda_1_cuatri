@@ -98,14 +98,15 @@ export class RegisterPage implements OnInit {
 
   async takePicture() {
     const image = await Camera.getPhoto({
-      quality: 90,
+      quality: 50,
       allowEditing: false,
       resultType: CameraResultType.DataUrl,
       promptLabelHeader: 'Foto',
       promptLabelPhoto: 'Buscar de la Galería',
       promptLabelPicture: 'Tomar una Foto',
       promptLabelCancel: 'Cancelar',
-      saveToGallery: true
+      saveToGallery: true,
+      
     });
     this.takePhoto=true;
     this.imageElement = image.dataUrl;//muestro la foto para que previsualize el cliente

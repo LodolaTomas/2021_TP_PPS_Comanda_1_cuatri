@@ -1,10 +1,44 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Carta </ion-title>
+    <ion-title>{{item.name}} </ion-title>
     <ion-buttons slot="start">
       <ion-button color="dark" (click)="back()">
         <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
+  <ion-slides>
+    <ion-slide *ngFor="let photos of item.photos">
+      <div class="slide" style="position: relative;">
+          <img src="{{photos}}" />
+      </div>
+    </ion-slide>
+  </ion-slides>
+  <ion-card-header>
+    <ion-card-title>{{item.description}}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <h1>${{item.price}}</h1>
+  </ion-card-content>
 </ion-header>
+<ion-content fullscreen class="ion-padding" scroll-y="false">
+  <ion-card>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="8"><h3 style="color: black;">Unidades</h3></ion-col>
+        <ion-col size="4" style="margin: auto;" ><div align=center style="border-radius: 20px; background-color: #EAE3E3; color: black; margin: auto;">
+          <ion-row>
+            <ion-col style="margin: auto; display: flex; justify-content: center;align-items: center;" (click)="removeQuantity()" id="remove"><ion-icon name="remove-outline" id="icon_remove" style="font-size: 25px;"></ion-icon></ion-col>
+            <ion-col style="margin: auto;">{{quantity}}</ion-col>
+            <ion-col style="margin: auto; display: flex; justify-content: center;align-items: center;" (click)="addQuantity()"><ion-icon name="add-outline" style="font-size: 25px;"></ion-icon></ion-col>
+          </ion-row>
+        </div></ion-col>
+      </ion-row>
+    </ion-grid>
+    
+    
+  </ion-card>
+</ion-content>
+<ion-footer>
+  <button expand="block" class="btn rounded-pill btn-block m-4" (click)="addToCart()" style="background-color: #F90050 !important; height: 3em; color: white; margin-left: 0 !important;">Agregar a mi pedido ${{price}}</button>
+</ion-footer>

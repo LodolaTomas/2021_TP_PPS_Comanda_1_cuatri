@@ -9,11 +9,6 @@ export class NotificationsService {
 
 
   public usuarios: any = []
-  public supervisores: any = []
-  public metres: any = []
-  public admins: any = []
-  public clientes: any = []
-
 
   constructor(private localNotifications: LocalNotifications) {
 
@@ -21,10 +16,11 @@ export class NotificationsService {
 
 
   notifyByProfile(message: string, userLoged: any, target: string) {
-
     //target es el perfil a notificar, userLoged el usuario logeado, para saber si debe notificarlo
-    if (target == userLoged.perfil) {
-      console.log("true")
+    if (target == userLoged.perfil) { //target == userLoged.perfil
+      console.log(userLoged.perfil)
+      console.log(target)
+      console.log(userLoged.perfil + " " + message)
       this.notify(message) //La notifiacion recibe un mensaje
 
     }

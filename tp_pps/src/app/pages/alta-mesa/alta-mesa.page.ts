@@ -1,7 +1,6 @@
 import { CloudFirestoreService } from './../../services/cloud-firestore.service';
 import { ImagesService } from './../../services/images.service';
 import { Mesa } from './../../clases/mesa';
-import { MesaService } from './../../services/mesa.service';
 import { Component, OnInit } from '@angular/core';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 
@@ -19,7 +18,7 @@ export class AltaMesaPage implements OnInit {
 
   public mesa: Mesa
 
-  public cargando:boolean;
+  public cargando: boolean;
 
   public buttonColor1: string = "primary";
   public buttonColor2: string = "primary";
@@ -31,11 +30,11 @@ export class AltaMesaPage implements OnInit {
 
 
 
-  constructor(private mesaSVC: MesaService, private imgSVC: ImagesService, private firestore:CloudFirestoreService) {
+  constructor(private imgSVC: ImagesService, private firestore: CloudFirestoreService) {
     this.cantidadComensales = 0;
     this.tipoMesa = "normal"
     this.mesa = new Mesa()
-    this.cargando= false
+    this.cargando = false
   }
 
   ngOnInit() { }
@@ -90,7 +89,7 @@ export class AltaMesaPage implements OnInit {
     this.foto = $event.target.files[0];
     console.log(this.foto)
   }
-  
+
 
   async agregarMesa() {
 
@@ -101,11 +100,11 @@ export class AltaMesaPage implements OnInit {
     idCustom = idDate.getTime().toString()
     this.mesa.cantidadComensales = this.cantidadComensales;
     this.mesa.tipo = this.tipoMesa;
-    this.foto= await this.imgSVC.uploadPhotoMesa('/mesas/',this.foto)
+    this.foto = await this.imgSVC.uploadPhotoMesa('/mesas/', this.foto)
     this.mesa.foto = this.foto;
     this.mesa.id = idCustom
-    this.firestore.InsertCustomID('mesas', idCustom, Object.assign({}, this.mesa) )
-   // this.mesaSVC.agregarMesa(this.mesa)
+    this.firestore.InsertCustomID('mesas', idCustom, Object.assign({}, this.mesa))
+    // this.mesaSVC.agregarMesa(this.mesa)
     this.alert('success', 'Mesa agreagada al restaurante')
     this.limpiarForm();
     this.cargando = false;
@@ -114,8 +113,7 @@ export class AltaMesaPage implements OnInit {
   }
 
 
-  limpiarForm()
-  {
+  limpiarForm() {
     this.cantidadComensales = 1
     this.tipoMesa = "normal"
     this.buttonColor1 = "primary";

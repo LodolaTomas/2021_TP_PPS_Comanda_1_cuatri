@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Consultas {{idMesa}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-button color="dark" (click)="back()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+  <div *ngFor="let mensaje of item$ | async" >
+
+
+
+    <ion-grid>
+    <div *ngIf="mensaje.nombre !== usuarioLog.name">
+      <ion-card  class="message other-message">
+        <ion-card-header>
+          <ion-card-title color="dark">
+            {{mensaje.nombre}}
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          {{mensaje.text}}
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+
+
+    <div *ngIf="mensaje.nombre === usuarioLog.name" class="ion-text-end">
+      <ion-card class="message my-message" >
+        <ion-card-content>
+          {{mensaje.text}}
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </ion-grid>
+  </div>
+
+
+</ion-content>
+
+
+<ion-footer>
+  <ion-item>
+    <ion-textarea name="msg" [(ngModel)]="msg" rows="1" [value] placeholder="Ingresá tu mensaje...">
+    </ion-textarea>
+    <ion-button fill="clear"  class="mt-3" (click)="enviar()">
+      <ion-icon slot="end" name="send" size="large"></ion-icon>
+    </ion-button>
+  </ion-item>
+</ion-footer>
+
+

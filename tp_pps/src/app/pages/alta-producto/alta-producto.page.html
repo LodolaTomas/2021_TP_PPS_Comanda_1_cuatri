@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <form  #form="ngForm" (ngSubmit)="register(form)">
+  <form #form="ngForm" (ngSubmit)="register(form)">
     <ion-grid>
       <ion-row color="primary">
         <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
@@ -13,41 +13,57 @@
           </div>
           <div class="ion-text-center" size-md="6" size-lg="5" size-xs="12">
             <ion-card color="light" class="auth-card ion-margin">
-            <ion-item>
-              <ion-input  name="name" type="text" placeholder="Nombre" ngModel required></ion-input>
-            </ion-item>
-            <ion-item >
-              <ion-input  name="description" type="text" placeholder="Descripcion" ngModel required></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-input name="time" type="number" placeholder="Tiempo de Elaboración" ngModel required></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-input name="price" type="number" placeholder="Precio" ngModel required></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-input [disabled]="true" name="foto" type="text" placeholder="Adjuntar Fotos" ngModel></ion-input>
-              <ion-button color="primary"><ion-icon name="camera"></ion-icon></ion-button>
-            </ion-item>
-            <ion-item>
-              <ion-input [disabled]="true" name="foto" type="text" placeholder="Generar QR" ngModel ></ion-input>
-              <ion-button color="primary" (click)="showQRCode()"><ion-icon name="qr-code-outline" ></ion-icon></ion-button>
-            </ion-item>
-          </ion-card>
+              <ion-item>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-4 mb-1 mt-1" *ngFor="let item of imageElement" style="padding: 0;width: 100%;">
+                      <img src="{{item}}">
+                    </div>
+                  </div>
+                </div>
+              </ion-item>
+              <ion-item>
+                <ion-input name="name" type="text" placeholder="Nombre" ngModel required></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input name="description" type="text" placeholder="Descripcion" ngModel required></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input name="time" type="number" placeholder="Tiempo de Elaboración" ngModel required></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input name="price" type="number" placeholder="Precio" ngModel required></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label>Tipo</ion-label>
+                <ion-select okText="Aceptar" cancelText="Cancelar" name="type" ngModel required>
+                  <ion-select-option value="comida">Comida</ion-select-option>
+                  <ion-select-option value="bebida">Bebida</ion-select-option>
+                  <ion-select-option value="postre">Postre</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <ion-item>
+                <ion-button expand="full" style="width: 100% !important;" (click)="takePicture()" size="large">
+                  <ion-icon slot="icon-only" name="camera"></ion-icon>
+                </ion-button>
+              </ion-item>
+            </ion-card>
           </div>
-          <div padding>
-            <ion-button  class="ion-margin-start ion-margin-end ion-margin-bottom" color="success" size="large" type="submit" [disabled]="form.invalid" expand="block">Confirmar</ion-button>
+
+
+          <div padding *ngIf="!cargando">
+            <ion-button class="ion-margin-start ion-margin-end ion-margin-bottom" color="success" size="large"
+            type="submit" [disabled]="form.invalid" expand="block">Confirmar</ion-button>
+        </div>
+
+          <div padding *ngIf="cargando">
+            <ion-button class="ion-margin-start ion-margin-end ion-margin-bottom" color="success" size="large"
+              type="submit" disabled expand="block"> <ion-spinner name="circles" color="dark"></ion-spinner></ion-button>
           </div>
+
+    
         </ion-col>
       </ion-row>
     </ion-grid>
   </form>
-  <div style="text-align:center" *ngIf="showQR">
-      <ngx-qrcode 
-        [elementType]="elementType" 
-        [value]="value"
-        cssClass="qrClass"
-        errorCorrectionLevel="L">
-    </ngx-qrcode>
-  </div>
 </ion-content>

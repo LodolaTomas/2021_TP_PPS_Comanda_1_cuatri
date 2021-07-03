@@ -1,0 +1,115 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+    Administrar pedidos
+    </ion-title>
+    <ion-buttons slot="start">
+    <ion-button color="dark" (click)="back()">
+      <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-row>
+    <ion-col>
+      <ion-button [color]="buttonColor1" expand="block" (click)="verPendientesBTN()">Pendientes</ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button [color]="buttonColor2" expand="block" (click)="verAceptadosBTN()">Aceptados</ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button [color]="buttonColor3" expand="block" (click)="verTodosBTN()">Todos</ion-button>
+    </ion-col>
+  </ion-row>
+
+  <div *ngIf="verAceptados">
+    <div *ngFor="let pedido of pedidos; let i = index ">
+
+
+      <ion-card *ngIf="pedido.estado == 'aceptado'">
+        <ion-card-content>
+          <ion-row>
+            <ion-col>
+              <h2 class="mt-5">{{pedido.mesa}}</h2>
+              <h2 class="mt-1">{{pedido.estado}}</h2>
+              <h2 class="mt-5">{{pedido.platos}}</h2>
+            </ion-col>
+            <ion-col>
+              <ion-button color="success" expand="block mt-3" *ngIf="pedido.estado != 'aceptado'" (click)="Aceptar(pedido)">Aceptar</ion-button>
+              <ion-button color="danger" expand="block mt-3" *ngIf="pedido.estado != 'rechazado'" (click)="Rechazar(pedido)">Rechazar</ion-button>
+            </ion-col>
+
+          </ion-row>
+
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+
+  <div *ngIf="verPendientes">
+    <div *ngFor="let pedido of pedidos; let i = index ">
+
+
+
+
+      <ion-card *ngIf="pedido.estado == 'pendiente'">
+        <ion-card-content>
+          <ion-row>
+
+            <ion-col>
+              <h2 class="mt-5">{{pedido.mesa}}</h2>
+              <h2 class="mt-1">{{pedido.estado}}</h2>
+              <h2 class="mt-5">{{pedido.platos}}</h2>
+            </ion-col>
+            <ion-col>
+              <ion-button color="success" expand="block mt-3" *ngIf="pedido.estado != 'aceptado'" (click)="Aceptar(pedido)">Aceptar</ion-button>
+              <ion-button color="danger" expand="block mt-3" *ngIf="pedido.estado != 'rechazado'" (click)="Rechazar(pedido)">Rechazar</ion-button>
+            </ion-col>
+
+          </ion-row>
+
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+
+
+  <div *ngIf="verTodos">
+    <div *ngFor="let pedido of pedidos; let i = index ">
+
+      <ion-card>
+        <ion-card-content>
+          <ion-row>
+            <ion-col>
+              <h2 class="mt-5">{{pedido.mesa}}</h2>
+              <h2 class="mt-1">{{pedido.estado}}</h2>
+              <h2 class="mt-5">{{pedido.platos}}</h2>
+            </ion-col>
+            <ion-col>
+              <ion-button color="success" expand="block mt-3" *ngIf="pedido.estado != 'aceptado'" (click)="Aceptar(pedido)">Aceptar</ion-button>
+              <ion-button color="danger" expand="block mt-3" *ngIf="pedido.estado != 'rechazado'" (click)="Rechazar(pedido)">Rechazar</ion-button>
+            </ion-col>
+
+          </ion-row>
+
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+
+  <div *ngIf="!usuarios" align="center">
+    <br> <br>
+    <ion-spinner name="circles" color="dark"></ion-spinner>
+  </div>
+
+
+
+
+
+</ion-content>

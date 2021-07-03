@@ -1,0 +1,96 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Encuesta</ion-title>
+    <ion-buttons slot="start">
+      <ion-button color="dark" (click)="back()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+  <div id="titulo">
+    <ion-card>
+      <ion-label>Que tan satisfecho has estado con la atencion:</ion-label>
+      <ion-item>
+        <ion-range min="0" max="10" pin color="dark" [ngModel]="">
+          <ion-icon slot="start" name="sad-outline"></ion-icon>
+          <ion-icon slot="end" name="happy-outline"></ion-icon>
+        </ion-range>
+      </ion-item>
+
+      <ion-list>
+        <ion-radio-group value="biff">
+          <ion-list-header>
+            <ion-label>Recomendarias el restaurante a un amigo:</ion-label>
+          </ion-list-header>
+
+          <ion-item>
+            <ion-label>Si</ion-label>
+            <ion-radio slot="start" value="biff"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>No</ion-label>
+            <ion-radio slot="start" value="griff"></ion-radio>
+          </ion-item>
+
+        </ion-radio-group>
+      </ion-list>
+
+
+      <ion-list>
+        <ion-list-header>Que probaste:</ion-list-header>
+        <ion-item>
+          <ion-label>Comidas</ion-label>
+          <ion-checkbox slot="start"></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox slot="start"></ion-checkbox>
+          <ion-label>Bebidas</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox slot="start"></ion-checkbox>
+          <ion-label>Postres</ion-label>
+        </ion-item>
+      </ion-list>
+
+      <ion-item>
+        <ion-label>¿Volverias a visitarnos?</ion-label>
+        <ion-select interface="action-sheet">
+          <ion-select-option value="si">Si</ion-select-option>
+          <ion-select-option value="no">No</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Comentarios</ion-label>
+        <ion-textarea placeholder="Escribe una breve reseña"></ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-button expand="full" style="width: 100% !important;" (click)="takePicture()" size="large">
+          <ion-icon slot="icon-only" name="camera"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-card>
+
+    
+    <div padding *ngIf="!cargando">
+      <ion-button class="ion-margin-start ion-margin-end ion-margin-bottom" color="success" size="large"
+      type="submit"  expand="block">Enviar</ion-button>
+  </div>
+
+    <div padding *ngIf="cargando">
+      <ion-button class="ion-margin-start ion-margin-end ion-margin-bottom" color="success" size="large"
+        type="submit" disabled expand="block"> <ion-spinner name="circles" color="dark"></ion-spinner></ion-button>
+    </div>
+
+  </div>
+
+
+
+</ion-content>

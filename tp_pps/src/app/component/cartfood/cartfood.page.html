@@ -12,22 +12,86 @@
 <ion-content>
   <ion-row>
     <ion-col>
-      <ion-button expand="block" color="medium">Comidas</ion-button>
+      <ion-button expand="block" (click)="selectFood()" color="medium">Comidas</ion-button>
     </ion-col>
     <ion-col>
-      <ion-button  expand="block" color="secondary">Bebidas</ion-button>
+      <ion-button expand="block" (click)="selectDrink()" color="secondary">Bebidas</ion-button>
     </ion-col>
     <ion-col>
-      <ion-button  expand="block" color="tertiary">Postres</ion-button>
+      <ion-button expand="block" (click)="selectDessert()" color="tertiary">Postres</ion-button>
     </ion-col>
   </ion-row>
 
-  <div>
+  <div *ngIf="comida">
+    <div *ngFor="let item of listFood">
+      <ion-card (click)="openModal(item)">
+        <img src="{{item.photos[0]}}" style="width: 100vw;
+        height: 20em;
+        object-fit: cover; object-position: bottom;">
+        <ion-card-header>
+          <ion-card-subtitle>{{item.description}}</ion-card-subtitle>
+          <ion-card-title>{{item.name}}</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <h2>{{item.elaboration_time}} min <strong>&bull;</strong> ${{item.price}}</h2>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+  <div *ngIf="bebida">
+    <div *ngFor="let item of listDrinks">
+      <ion-card (click)="openModal(item)">
+        <img src="{{item.photos[0]}}" style="width: 100vw;
+        height: 20em;
+        object-fit: cover; object-position: center;">
+        <ion-card-header>
+          <ion-card-subtitle>{{item.description}}</ion-card-subtitle>
+          <ion-card-title>{{item.name}}</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <h2>{{item.elaboration_time}} min <strong>&bull;</strong> ${{item.price}}</h2>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+  <div *ngIf="postre">
+    <div *ngFor="let item of listDessert">
+      <ion-card (click)="openModal(item)">
+        <img src="{{item.photos[0]}}" style="width: 100vw;
+        height: 20em;
+        object-fit: cover; object-position: center;">
+        <ion-card-header>
+          <ion-card-subtitle>{{item.description}}</ion-card-subtitle>
+          <ion-card-title>{{item.name}}</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <h2>{{item.elaboration_time}} min <strong>&bull;</strong> ${{item.price}}</h2>
+        </ion-card-content>
+      </ion-card>
+    </div>
   </div>
 </ion-content>
 
-<ion-footer *ngIf="carrito.length>1">
-  <ion-toolbar>
-    <ion-title>Footer</ion-title>
-  </ion-toolbar>
+<ion-footer *ngIf="carrito.length!=0">
+  <button expand="block" class="btn rounded-pill btn-block m-4"
+    style="background-color: #F90050 !important; height: 3em; color: white; margin-left: 0 !important;" (click)="makeOrder()">
+    <div class="container">
+      <div class="row">
+        <div class="col d-flex justify-content-start position-relative" >
+          <ion-buttons slot="end">
+            <ion-icon slot="icon-only" name="cart-outline"></ion-icon>
+            <ion-badge color="danger" style="position: absolute; right: -5px; top: -3px;">{{total_quantity}}</ion-badge></ion-buttons>
+        </div>
+        <div class="col-6" style="font-size: large; justify-content: center;margin: auto;">
+          Realizar Pedido
+        </div>
+        <div class="col d-flex justify-content-end" style="font-size: large; vertical-align: top;">
+          ${{total_price}}
+        </div>
+      </div>
+    </div>
+  </button>
 </ion-footer>

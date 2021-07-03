@@ -4,7 +4,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { CloudFirestoreService } from 'src/app/services/cloud-firestore.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
-import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { NotificationsService } from 'src/app/services/notifications.service';
 
 @Component({
@@ -18,6 +17,7 @@ export class HomeClientesPage implements OnInit {
   encodedData: any;
   scannedBarCode: {};
   input: any;
+  idMesa: any;
   cliente: any;
   displayQREspera: boolean = true;
   numeroMesa: number = 5;
@@ -37,40 +37,37 @@ export class HomeClientesPage implements OnInit {
     private scanner: BarcodeScanner,
     private fbService: CloudFirestoreService,
     private notifSVC: NotificationsService) {
-    this.sideMenu();
-    this.traerUsuario();
+    this.getUser();
+
+    fbService.GetAll("usuarios")
+      .subscribe((data) => {
+        this.usuarios = data;
+        this.traerUsuario();
+      });
+  }
+
+  async getUser() {
+
+    var currentUser = { uid: "edb4z9BC3llciFBhEomB" };
+    // var currentUser = await this.authS.GetCurrentUser();
+    const fbCollection = await this.fbService.GetByParameter("usuarios", "id", currentUser.uid).get().toPromise();
+    fbCollection.docs.forEach(d => this.cliente = d.data());
   }
   ngOnInit() {
   }
-  sideMenu() {
-    this.navigate =
-      [
-        {
-          title: "Escaneo de Entrada",
-          // url   : "/alta-producto",
-          icon: "qr-code"
-        }
-        ,
-        {
-          title: "Historial Encuesta",
-          // url   : "/alta-mesa",
-          icon: "book-outline"
-        }
-      ]
-  }
+
   logout() {
-    
+
+    this.idMesa = localStorage.removeItem('idMesa')
     this.authS.LogOutCurrentUser()
     this.router.navigateByUrl('login')
   }
 
   openQR() {
-
-    console.log("QR!")
     this.scanner.scan().then(res => {
       this.scannedBarCode = res;
       let scannedCode = res.text;
-      const userWaitingList = { id: this.usuarioLog.uid, status: "esperando", date: new Date() };
+      const userWaitingList = { id: this.usuarioLog.id, status: "esperando", date: new Date() };
       this.fbService.Insert("lista_espera_local", userWaitingList)
         .then((val) => {
           this.alert('success', "Agregado a la lista de espera!");
@@ -79,33 +76,65 @@ export class HomeClientesPage implements OnInit {
         });
       this.displayQREspera = false;
       this.input = this.scannedBarCode["text"];
-      // this.notifSVC.notifyByProfile("En la lista de espera: ", this.usuarioLog, "admin")
-      this.notifSVC.notify("Nuevo Cliente en lista de espera");
-      //  this.notificar({ name: 'Pepe Anonimo' });
+      this.notifSVC.notifyByProfile("En la lista de espera: ", this.usuarioLog, "admin")
+      //     this.notificar({ name: 'Pepe Anonimo' });
     }).catch(err => {
       alert(err);
     });
 
   }
 
-   traerUsuario() {
-      this.authS.getCurrentUser2((user)=>{
-      if (user != null) {
-        this.fbService.GetByParameter("usuarios","uid",user.uid).valueChanges().subscribe((userCollection)=>{
-           if(userCollection.length > 0){
-             this.usuarioLog = userCollection[0];
-           }
-            this.fbService.GetByParameter("lista_espera_local","uid",user.uid).get().toPromise().then((userCollection)=>{
-              if(!userCollection.empty){
-                this.existeUserEnListaEspera=true;
-              }
-              if(this.existeUserEnListaEspera){
-                this.userEsperandoAsignacionDeMesa = this.usuarioLog.status =='esperando';
-              }
-          });
-         });
-       }
-     });
+  async traerUsuario() {
+    this.authS.GetCurrentUser().then((response) => {
+      if (response != null) {
+        let user = this.usuarios.filter((u) => u.email == response.email);
+        this.usuarioLog = user[0];
+  
+      }
+
+    });
+  }
+
+
+  openQRmesa() {
+    this.displayQRmesa = false;
+    this.carga = true;
+
+    this.scanner.scan().then(res => {
+      this.scannedBarCode = res;
+      console.log(res);
+
+      this.idMesa = this.scannedBarCode["text"];
+      localStorage.setItem('idMesa', this.idMesa)
+    }).catch(err => {
+      alert(err);
+    });
+
+  }
+
+  consultar() {
+    console.log(this.idMesa)
+  
+    this.router.navigateByUrl('consultas')
+
+
+  }
+
+
+  cartfood() {
+    this.router.navigateByUrl('cartfood')
+  }
+
+
+  
+  BTNjuegos() {
+    this.router.navigateByUrl('juegos')
+  }
+
+
+  
+  BTNencuesta() {
+    this.router.navigateByUrl('encuesta')
   }
 
   alert(icon: SweetAlertIcon, text: string) {
@@ -127,8 +156,4 @@ export class HomeClientesPage implements OnInit {
       title: text
     })
   }
-  cartfood() {
-    this.router.navigateByUrl('cartfood')
-  }
-
 }
