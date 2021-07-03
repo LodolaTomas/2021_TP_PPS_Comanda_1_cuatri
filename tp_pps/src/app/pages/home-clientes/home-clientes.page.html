@@ -33,13 +33,16 @@
         <h3 *ngIf="!existeUserEnListaEspera">Escanee el QR para ingresar al establecimiento</h3>
         <!-- si existe el usuario en la lista de espera y SI esta con estado esperando muestro lo siguiente: -->
         <h3 *ngIf="existeUserEnListaEspera && userEsperandoAsignacionDeMesa">Aguarde un momento, en breve le asignaremos una mesa</h3>
-        <ion-fab-button class="mb-2" (click)="openQR()">
+        <ion-fab-button class="mb-2" (click)="openQR()" *ngIf="!existeUserEnListaEspera">
+          <ion-icon name="qr-code-outline"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button class="mb-2" (click)="openQRmesa()" *ngIf="existeUserEnListaEspera && !userEsperandoAsignacionDeMesa">
           <ion-icon name="qr-code-outline"></ion-icon>
         </ion-fab-button>
       </ion-card>
     </div>
 
-    <div id="enEspera" *ngIf="!userEsperandoAsignacionDeMesa">
+    <div id="enEspera" *ngIf="actionsMesa">
       <ion-card>
         <h1>Acciones</h1>
         <ion-button expand="block" (click)="cartfood()">Carta</ion-button>

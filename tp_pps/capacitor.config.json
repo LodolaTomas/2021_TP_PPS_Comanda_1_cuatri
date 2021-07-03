@@ -16,10 +16,10 @@
       "spinnerColor": "#999999",
       "splashFullScreen": true,
       "splashImmersive": true,
-
       "LocalNotifications":{
         "sound": "sound.mp3"
       }
     }
   }
 }
+

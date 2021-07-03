@@ -115,7 +115,8 @@ export class HomeClientesPage implements OnInit {
       console.log(res);
 
       this.idMesa = this.scannedBarCode["text"];
-      localStorage.setItem('idMesa', this.idMesa)
+      localStorage.setItem('idMesa', this.idMesa);
+      this.actionsMesa =true;
     }).catch(err => {
       alert(err);
     });
