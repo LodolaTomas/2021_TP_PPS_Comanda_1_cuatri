@@ -25,6 +25,8 @@ export class EncuestaPage implements OnInit {
   elementType = 'url';
   public cargando:boolean;
 
+  encuesta: any = {}
+
   constructor(private firestore: CloudFirestoreService, private router: Router,    private file: File,) {
 
     
