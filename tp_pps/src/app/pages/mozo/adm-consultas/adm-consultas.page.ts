@@ -65,12 +65,10 @@ export class AdmConsultasPage implements OnInit {
   }
 
   async traerUsuario() {
-
     const fbCollection = await this.firestore.GetByParameter("usuarios", "email", this.usuarioLog.email).get().toPromise();
     const element = fbCollection.docs[0].data();
     this.usuarioLog = element
     localStorage.setItem('token', JSON.stringify(element));
-
 
   }
 
