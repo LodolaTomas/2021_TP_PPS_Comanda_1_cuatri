@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 import { CloudFirestoreService } from 'src/app/services/cloud-firestore.service';
+import { NotificationsService } from 'src/app/services/notifications.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { ModalPage } from '../modal/modal.page';
 
@@ -17,7 +18,8 @@ export class ListaEsperaMesasPage implements OnInit {
 
   constructor(private fbService:CloudFirestoreService,
               private modalController: ModalController,
-              public alertController: AlertController) {
+              public alertController: AlertController,
+              public notiSvc:NotificationsService) {
     this.getAllUsers();
     var date = new Date();
     date.toLocaleTimeString()
@@ -54,6 +56,7 @@ export class ListaEsperaMesasPage implements OnInit {
      if(data){
        this.ingresando=true;
        this.actualizarListadoDeEspera(user);
+       this.notiSvc.notify("Cliente En la lista de espera ")
        this.actualizarEstadoMesa(data.mesa);
        this.asigarMesaAlUsuario(user,data.mesa);
        this.alert('success',"Cliente Asignado a la Mesa" + data.mesa  +"!");
@@ -87,6 +90,7 @@ async actualizarListadoDeEspera(user:any){
   const userFirebaseDoc = await this.fbService.GetByParameter("lista_espera_local","id",user.id).get().toPromise();//Aclaracion: lista_espera_local tiene ID, usuarios tiene UID como mismo dato
   let userDoc = userFirebaseDoc.docs[0].data();
   userDoc.status='ingresado';
+  this.notiSvc.notify("Cliente En la lista de espera ")
   this.fbService.Update(userFirebaseDoc.docs[0].id,"lista_espera_local",userDoc).then(()=> this.ingresando=false);
 }
   async presentAlert(message:string, title:string, isError:boolean){

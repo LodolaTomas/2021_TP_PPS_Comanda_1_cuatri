@@ -69,6 +69,7 @@ export class HomeClientesPage implements OnInit {
   logout() {
 
     this.idMesa = localStorage.removeItem('idMesa')
+    localStorage.removeItem('token')
     this.authS.LogOutCurrentUser()
     this.router.navigateByUrl('login')
   }

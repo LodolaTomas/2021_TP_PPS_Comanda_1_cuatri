@@ -54,23 +54,25 @@ export class ConsultasPage implements OnInit {
 
       if (this.mensajes[this.mensajes.length - 1].nombre !== this.usuarioLog.name) {
 
-        console.log("entre")
+        this.usuarioLog = JSON.parse(localStorage.getItem('token'));
+        console.log(this.usuarioLog)
+
         this.notiSVC.notifyByProfile("Tiene un mensaje nuevo", this.usuarioLog, "cliente")
       }
     });
   }
 
   async traerUsuario() {
-    const fbCollection = await this.firestore.GetByParameter("usuarios", "email", this.usuarioLog.email).get().toPromise();
-    const element = fbCollection.docs[0].data();
-    this.usuarioLog = element
-    localStorage.setItem('token', JSON.stringify(element));
-  }
+    this.authS.GetCurrentUser().then((response) => {
+      if (response != null) {
+        let user = this.usuarios.filter((u) => u.email == response.email);
 
+        localStorage.setItem('token', JSON.stringify(user[0]))
+      }
+    });
+  }
   ngOnInit() {
     this.usuarioLog = JSON.parse(localStorage.getItem('token'));
-    this.traerUsuario()
-    console.log(this.usuarioLog)
   }
 
   back() {

@@ -39,7 +39,7 @@ export class AdmConsultasPage implements OnInit {
   public listChats: boolean = true
 
 
-  constructor(private firestore: CloudFirestoreService, private router: Router, private chatSVC: ChatService, private notiSVC: NotificationsService) {
+  constructor(private authS:AuthService, private firestore: CloudFirestoreService, private router: Router, private chatSVC: ChatService, private notiSVC: NotificationsService) {
 
     this.usuarios = ''
 
@@ -58,6 +58,10 @@ export class AdmConsultasPage implements OnInit {
 
       if (this.mensajes[this.mensajes.length - 1].nombre !== this.usuarioLog.name) //true?
       {
+
+        this.usuarioLog = JSON.parse(localStorage.getItem('token'));
+        console.log(this.usuarioLog)
+
         this.notiSVC.notifyByProfile("Tiene un mensaje nuevo", this.usuarioLog, "mozo")
 
       }
@@ -65,11 +69,13 @@ export class AdmConsultasPage implements OnInit {
   }
 
   async traerUsuario() {
-    const fbCollection = await this.firestore.GetByParameter("usuarios", "email", this.usuarioLog.email).get().toPromise();
-    const element = fbCollection.docs[0].data();
-    this.usuarioLog = element
-    localStorage.setItem('token', JSON.stringify(element));
+    this.authS.GetCurrentUser().then((response) => {
+      if (response != null) {
+        let user = this.usuarios.filter((u) => u.email == response.email);
 
+        localStorage.setItem('token', JSON.stringify(user[0]))
+      }
+    });
   }
 
   openChat() {

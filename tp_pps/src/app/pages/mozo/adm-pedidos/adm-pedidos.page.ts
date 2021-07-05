@@ -58,8 +58,11 @@ export class AdmPedidosPage implements OnInit {
     this.pedidos.forEach(uno => {
 
       if (uno.status == 'pendiente') {
-        //this.notifSVC.notify("usuarios pendiente")
-        this.notifSVC.notify("Pedidos pendientes")//Mensaje, usuario logeado, y perfiles a notificar
+
+        this.usuarioLog = JSON.parse(localStorage.getItem('token'));
+        console.log(this.usuarioLog)
+
+        this.notifSVC.notifyByProfile("Pedidos pendientes", this.usuarioLog, 'mozo')//Mensaje, usuario logeado, y perfiles a notificar
       }
 
     });
@@ -75,7 +78,6 @@ export class AdmPedidosPage implements OnInit {
       }
     });
   }
-
 
   seleccionarFiltro(tipo: string) {
 
