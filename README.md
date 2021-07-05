@@ -9,11 +9,19 @@ PPS - 1 cuat. - grupo Utn Devs
 
 ## Sprints
 
-<img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1.png?raw=true">
+<img src="https://user-images.githubusercontent.com/52363833/124345805-71362400-dbb1-11eb-87ef-16418e8d4961.png">
 
-<img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint2.png?raw=true">
+<img src="https://user-images.githubusercontent.com/52363833/124345828-97f45a80-dbb1-11eb-8a26-3069c6c59cd5.png">
 
-<img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint2Com.png?raw=true">
+<img src="https://user-images.githubusercontent.com/52363833/124345839-af334800-dbb1-11eb-8c37-40d975496690.png">
+
+<img src="https://user-images.githubusercontent.com/52363833/124345866-ddb12300-dbb1-11eb-8676-2aca317b409b.png">
+
+<img src="https://user-images.githubusercontent.com/52363833/124345879-f6b9d400-dbb1-11eb-8bf6-8414ccff0520.png">
+
+<img src="https://user-images.githubusercontent.com/52363833/124345903-21a42800-dbb2-11eb-95e3-1da771920966.png">
+
+<img src="https://user-images.githubusercontent.com/52363833/124345919-3b456f80-dbb2-11eb-84ce-4d818e11d1bf.png">
 
 
 ## Sprint 1
