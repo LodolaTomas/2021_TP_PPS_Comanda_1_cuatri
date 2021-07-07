@@ -112,9 +112,15 @@ export class RegisterPage implements OnInit {
       let userQR = this.scannedBarCode["text"]
       let data = userQR.split("@");
       console.log(data)
-      document.getElementById('name').setAttribute('value', data[2])
-      document.getElementById('lastname').setAttribute('value', data[1])
-      document.getElementById('DNI').setAttribute('value', data[4])
+      if (Number(data[4]) != NaN) {
+        document.getElementById('name').setAttribute('value', data[2])
+        document.getElementById('lastname').setAttribute('value', data[1])
+        document.getElementById('DNI').setAttribute('value', data[4])
+      } else {
+        document.getElementById('name').setAttribute('value', data[5])
+        document.getElementById('lastname').setAttribute('value', data[4])
+        document.getElementById('DNI').setAttribute('value', data[1])
+      }
     }).catch(err => {
       alert(err);
     });
