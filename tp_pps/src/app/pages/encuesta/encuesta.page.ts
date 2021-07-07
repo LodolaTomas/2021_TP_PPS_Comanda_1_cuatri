@@ -16,7 +16,8 @@ export class EncuestaPage implements OnInit {
 
   public usuarioLog: any = {}
   public usuarios: any = []
-
+  range = 2
+  emojis = ['😠', '😦', '😑', '😀', '😍'];
   listaFotos: any;
   usuario: any;
   progress: boolean;
@@ -30,7 +31,6 @@ export class EncuestaPage implements OnInit {
   elementType = 'url';
 
   public cargando: boolean;
-  public satisfaccion: any;
   public recomienda: any;
   public volverias: any;
   public probaste: any;
@@ -67,18 +67,21 @@ export class EncuestaPage implements OnInit {
     this.router.navigateByUrl('home-clientes')
   }
 
+  setRam(value) {
+    this.range = value;
+  }
 
   async enviar() {
 
 
-    if(this.imageElement  &&  this.satisfaccion && this.volverias && this.recomienda && this.comentarios)
+    if(this.imageElement  &&  this.range && this.volverias && this.recomienda && this.comentarios)
     {
     this.cargando = true
     let url = await this.imgSrv.uploadPhoto('/encuestas/', this.imageElement);
     let id = this.firestore.ReturnFirestore().createId()
 
     this.encuesta.id = id
-    this.encuesta.satifaccion = this.satisfaccion;
+    this.encuesta.satifaccion = this.range;
     this.encuesta.recomienda = this.recomienda;
     this.encuesta.volveria = this.volverias;
     this.encuesta.comentarios = this.comentarios;

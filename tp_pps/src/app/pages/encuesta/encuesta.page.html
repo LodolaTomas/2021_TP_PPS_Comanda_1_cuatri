@@ -16,9 +16,9 @@
     <ion-card>
       <ion-label>Que tan satisfecho has estado con la atencion:</ion-label>
       <ion-item>
-        <ion-range min="0" max="10" pin color="dark" [(ngModel)]="satisfaccion">
-          <ion-icon slot="start" name="sad-outline"></ion-icon>
-          <ion-icon slot="end" name="happy-outline"></ion-icon>
+        <span id='rate' for="customRange2" class="form-label emoji">{{emojis[range]}}</span>
+        <ion-range min="0" max="4"  pin color="dark" [(ngModel)]="range" (ngModelChange)="setRam($event)"
+          id="customRange2">
         </ion-range>
       </ion-item>
 
