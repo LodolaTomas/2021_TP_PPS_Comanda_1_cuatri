@@ -59,10 +59,12 @@ export class LoginPage implements OnInit {
     this.user.email = this.miFormulario.value.email;
     this.user.password = this.miFormulario.value.clave;
 
-    localStorage.setItem('token', JSON.stringify(this.user));
+    //localStorage.setItem('token', JSON.stringify(this.user));
 
     const fbCollection = await this.cloudSrv.GetByParameter("usuarios", "email", this.user.email).get().toPromise();
     const element = fbCollection.docs[0].data();
+
+    localStorage.setItem('token', JSON.stringify(element));
     // console.log(fbCollection.docs[0].data());
 
     if (element.estado == 'pendiente') {

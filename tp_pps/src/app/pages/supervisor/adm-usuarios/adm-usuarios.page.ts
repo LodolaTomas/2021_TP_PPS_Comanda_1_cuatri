@@ -39,6 +39,7 @@ export class AdmUsuariosPage implements OnInit {
 
     firestore.GetAll("usuarios")
       .subscribe((data) => {
+
         this.usuarios = data;
         this.traerUsuario()
         this.notificarPendientes()
@@ -143,7 +144,7 @@ export class AdmUsuariosPage implements OnInit {
   Aceptar(user) {
     let auxUser = user;
     user.estado = 'aceptado';
-    //this.emailSVC.sendEmail(user, "Su cuenta ha sido aceptada, ya puede ingresar a la app")
+    this.emailSVC.sendEmail(user, "Su cuenta ha sido aceptada, ya puede ingresar a la app")
     this.firestore.Update(user.id, "usuarios", auxUser)
 
   }
@@ -151,7 +152,7 @@ export class AdmUsuariosPage implements OnInit {
   Rechazar(user) {
     let auxUser = user;
     user.estado = 'rechazado';
-    //   this.emailSVC.sendEmail(user, "Su cuenta ha sido rechazada, si cree que es un error puede contactar al administrador")
+     this.emailSVC.sendEmail(user, "Su cuenta ha sido rechazada, si cree que es un error puede contactar al administrador")
     this.firestore.Update(user.id, "usuarios", auxUser)
   }
 

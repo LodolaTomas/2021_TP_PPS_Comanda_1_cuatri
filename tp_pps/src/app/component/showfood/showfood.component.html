@@ -10,7 +10,7 @@
   <ion-slides>
     <ion-slide *ngFor="let photos of item.photos">
       <div class="slide" style="position: relative;">
-          <img src="{{photos}}" />
+          <img src="{{photos}}" style="object-fit: cover; object-position: center; height: 15em;width: 100vw;"/>
       </div>
     </ion-slide>
   </ion-slides>
