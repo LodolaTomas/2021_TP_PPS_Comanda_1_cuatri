@@ -47,8 +47,8 @@ export class AdmPedidosPage implements OnInit {
     firestore.GetAll("pedidos")
       .subscribe((data) => {
         this.pedidos = data;
-    console.log(data)
-    this.notificarPendientes()
+        console.log(data)
+        this.notificarPendientes()
 
       });
 
@@ -152,7 +152,7 @@ export class AdmPedidosPage implements OnInit {
 
   Aceptar(pedido) {
     let auxPedido = pedido;
-    pedido.status = 'aceptado';
+    pedido.status = 'preparando';
     //this.emailSVC.sendEmail(user, "Su cuenta ha sido aceptada, ya puede ingresar a la app")
     this.firestore.Update(pedido.id, "pedidos", auxPedido)
 
@@ -165,5 +165,5 @@ export class AdmPedidosPage implements OnInit {
     this.firestore.Update(pedido.id, "pedidos", auxPedido)
   }
 
-  
+
 }

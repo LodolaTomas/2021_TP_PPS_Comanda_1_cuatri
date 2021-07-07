@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: HomeClientesPage
+  },  {
+    path: 'estado-pedido',
+    loadChildren: () => import('./estado-pedido/estado-pedido.module').then( m => m.EstadoPedidoPageModule)
   }
+
 ];
 
 @NgModule({

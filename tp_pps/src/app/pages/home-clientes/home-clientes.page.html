@@ -54,21 +54,17 @@
     </div>
 
 
-    <div id="enEspera" *ngIf="carga">
-      <ion-card>
-        <h3>Procesando..</h3>
-        <ion-spinner></ion-spinner>
-        <h3>Espere</h3>
-      </ion-card>
-    </div>
+
 
     <!-- cambiar el false por variable -->
-    <div id="juegosEncuesta" *ngIf="true"> 
+    <div id="juegosEncuesta" *ngIf="false"> 
       <ion-card>
         <h1>Acciones</h1>
         <ion-button expand="block" (click)="BTNjuegos()">Juegos</ion-button>
         <br>
         <ion-button expand="block" (click)="BTNencuesta()">Encuesta</ion-button>
+        <br>
+        <ion-button expand="block" (click)="BTNestadoPedido()">Encuesta</ion-button>
         <br>
       </ion-card>
     </div>
