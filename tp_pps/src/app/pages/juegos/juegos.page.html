@@ -11,7 +11,73 @@
 </ion-header>
 
 <ion-content>
+  <div id="container">
+    <div id="user-label" class="badge">User {{puntosUser}}</div>
+    <div id="comp-label" class="badge">PC {{puntoPC}}</div>
+    <table style="width: 250px; height: 250px; text-align: center" align="center" class="tablero">
+        <tr>
+            <td id="cell11" class="cell"></td>
+            <td id="cell12" class="cell"></td>
+            <td id="cell13" class="cell"></td>
+        </tr>
+        <tr>
+            <td id="cell21" class="cell"></td>
+            <td id="cell22" class="cell"></td>
+            <td id="cell23" class="cell"></td>
+        </tr>
+        <tr>
+            <td id="cell31" class="cell"></td>
+            <td id="cell32" class="cell"></td>
+            <td id="cell33" class="cell"></td>
+        </tr>
+    </table>
 
+    <p [ngClass]="{'discount': obtieneDescuentoLabel === true ,  'info' : obtieneDescuentoLabel === false}">{{ resultado }}</p>
+    <p class="info">+1 Gana -1 Pierde +0 Empate</p>
+
+    <div class="modal fade" id="modalGuardar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div *ngIf="true">
+                <div class="modal-content">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">
+                            Seguir Jugando
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalScores" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div *ngIf="true">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <table class="table table-striped table-bordered dt-responsive nowrap">
+                            <thead>
+                                <tr>
+                                    <th scope="col" align="center">Nombre</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of lista | async">
+                                    <td>{{ item.name }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">
+                            Cerrar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </ion-content>
 
 
