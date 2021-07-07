@@ -100,6 +100,11 @@ export class LoginPage implements OnInit {
           this.router.navigateByUrl('/mozo');
           this.miFormulario.reset()
         }
+        else if (this.user.email == 'cocinero@yopmail.com') {
+          this.cargando = false;
+          this.router.navigateByUrl('/cocinero');
+          this.miFormulario.reset()
+        }
         else {
           this.cargando = false;
           this.router.navigateByUrl('/home-clientes');
