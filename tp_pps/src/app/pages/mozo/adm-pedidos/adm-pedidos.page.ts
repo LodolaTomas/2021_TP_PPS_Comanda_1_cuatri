@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { CloudFirestoreService } from 'src/app/services/cloud-firestore.service';
-import { EmailService } from 'src/app/services/email.service';
+
 
 @Component({
   selector: 'app-adm-pedidos',
