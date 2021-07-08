@@ -67,6 +67,8 @@ export class CartfoodPage implements OnInit {
     order.id=id;
     this.fire.InsertCustomID('pedidos',id,order).then(()=>{
       this.alert('success','Pedido realizado');
+      localStorage.setItem('pedido',JSON.stringify(order))
+      /* this.router.navigateByUrl('home-clientes') */
     });
   }
 

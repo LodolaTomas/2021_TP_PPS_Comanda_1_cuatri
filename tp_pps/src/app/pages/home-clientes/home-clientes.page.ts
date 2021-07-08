@@ -110,7 +110,6 @@ export class HomeClientesPage implements OnInit {
   openQRmesa() {
     this.displayQRmesa = false;
     this.carga = true;
-
     this.scanner.scan().then(res => {
       this.scannedBarCode = res;
       console.log(res);
@@ -142,7 +141,9 @@ export class HomeClientesPage implements OnInit {
   BTNjuegos() {
     this.router.navigateByUrl('juegos')
   }
-
+  TheBill() {
+    this.router.navigateByUrl('juegos')
+  }
 
   
   BTNencuesta() {
