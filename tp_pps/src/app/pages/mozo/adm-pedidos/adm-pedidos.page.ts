@@ -158,6 +158,14 @@ export class AdmPedidosPage implements OnInit {
 
   }
 
+  Entregar(pedido) {
+    let auxPedido = pedido;
+    pedido.status = 'entregado';
+    //this.emailSVC.sendEmail(user, "Su cuenta ha sido aceptada, ya puede ingresar a la app")
+    this.firestore.Update(pedido.id, "pedidos", auxPedido)
+
+  }
+
   Rechazar(pedido) {
     let auxPedido = pedido;
     pedido.status = 'rechazado';
