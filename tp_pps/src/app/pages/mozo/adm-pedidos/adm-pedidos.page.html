@@ -85,7 +85,7 @@
   <div *ngIf="verTodos">
     <div *ngFor="let pedido of pedidos; let i = index ">
 
-      <ion-card>
+      <ion-card *ngIf="pedido.status == 'entregar'">
         <ion-card-content>
           <ion-row>
             <ion-col>
@@ -96,8 +96,8 @@
               <h4 class="mt-1">Estado: {{pedido.status}}</h4>
             </ion-col>
             <ion-col>
-              <ion-button color="success" expand="block mt-3" *ngIf="pedido.status != 'aceptado'" (click)="Aceptar(pedido)">Aceptar</ion-button>
-              <ion-button color="danger" expand="block mt-3" *ngIf="pedido.status != 'rechazado'" (click)="Rechazar(pedido)">Rechazar</ion-button>
+              <ion-button color="success" expand="block mt-3" *ngIf="pedido.status != 'aceptado'" (click)="Entregar(pedido)">Entregar</ion-button>
+    
             </ion-col>
 
           
