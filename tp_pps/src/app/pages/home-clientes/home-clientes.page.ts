@@ -21,7 +21,7 @@ export class HomeClientesPage implements OnInit {
   input: any;
   idMesa: any;
   displayQREspera: boolean = true;
-  numeroMesa: number = 5;
+  numeroMesa: number;
   displayQRmesa: boolean = true;
   actionsMesa: boolean = false;
   carga: boolean = false;

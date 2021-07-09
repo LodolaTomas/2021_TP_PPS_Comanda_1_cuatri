@@ -125,6 +125,12 @@ export class EncuestaPage implements OnInit {
     this.imageElement = image.dataUrl;//muestro la foto para que previsualize el cliente
   }
 
+  enviarEncuesta()
+  {
+    this.alert('success','¡Gracias por responder!')
+
+  }
+
 
   alert(icon: SweetAlertIcon, text: string) {
     const Toast = Swal.mixin({
@@ -146,4 +152,6 @@ export class EncuestaPage implements OnInit {
     })
   }
 
+
 }
+  

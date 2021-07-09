@@ -4,17 +4,117 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-    Administrar platos
+      Administrar platos
     </ion-title>
     <ion-buttons slot="start">
-    <ion-button color="dark" (click)="back()">
-      <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
-    </ion-button>
-  </ion-buttons>
+      <ion-button color="dark" (click)="back()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true">
+
+  <ion-row>
+    <ion-col>
+      <ion-button [color]="buttonColor1" expand="block" (click)="verEnPreparacionBTN()">En preparacion</ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button [color]="buttonColor2" expand="block" (click)="verListosBTN()">Listos</ion-button>
+    </ion-col>
+  </ion-row>
+
+  <div *ngIf="verAceptados">
+    <div *ngFor="let pedido of pedidos; let i = index ">
+
+
+      <ion-card *ngIf="pedido.status == 'entregar'">
+        <ion-card-content>
+          <ion-row>
+            <ion-col>
+              <h4 class="mt-1">Tiempo: {{pedido.total_time}}</h4>
+              <h4 class="mt-1">Cantidad: {{pedido.total_quantity}}</h4>
+              <h4 class="mt-1">Total: {{pedido.total_amount}}</h4>
+              <h4 class="mt-1">Estado: {{pedido.status}}</h4>
+            </ion-col>
+            <ion-col>
+
+            </ion-col>
+
+          </ion-row>
+
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+
+  <div *ngIf="verPendientes">
+    <div *ngFor="let pedido of pedidos; let i = index ">
+
+
+
+
+      <ion-card *ngIf="pedido.status == 'preparando'">
+        <ion-card-content>
+          <ion-row>
+
+            <ion-col>
+              <h4 class="mt-1">Tiempo: {{pedido.total_time}}</h4>
+              <h4 class="mt-1">Cantidad: {{pedido.total_quantity}}</h4>
+              <h4 class="mt-1">Total: {{pedido.total_amount}}</h4>
+              <h4 class="mt-1">Estado: {{pedido.status}}</h4>
+            </ion-col>
+            <ion-col>
+              <ion-button color="success" expand="block mt-3" *ngIf="pedido.status != 'aceptado'"
+                (click)="Aceptar(pedido)">Listo</ion-button>
+              <ion-button color="danger" expand="block mt-3" *ngIf="pedido.status != 'rechazado'"
+                (click)="Rechazar(pedido)">Rechazar</ion-button>
+            </ion-col>
+
+          </ion-row>
+
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+
+
+  <div *ngIf="verTodos">
+    <div *ngFor="let pedido of pedidos; let i = index ">
+
+      <ion-card>
+        <ion-card-content>
+          <ion-row>
+            <ion-col>
+
+              <h4 class="mt-1">Tiempo: {{pedido.total_time}}</h4>
+              <h4 class="mt-1">Cantidad: {{pedido.total_quantity}}</h4>
+              <h4 class="mt-1">Total: {{pedido.total_amount}}</h4>
+              <h4 class="mt-1">Estado: {{pedido.status}}</h4>
+            </ion-col>
+            <ion-col>
+              <ion-button color="success" expand="block mt-3" *ngIf="pedido.status != 'aceptado'"
+                (click)="Aceptar(pedido)">Listo</ion-button>
+              <ion-button color="danger" expand="block mt-3" *ngIf="pedido.status != 'rechazado'"
+                (click)="Rechazar(pedido)">Rechazar</ion-button>
+            </ion-col>
+
+
+
+          </ion-row>
+
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+
+  <div *ngIf="!usuarios" align="center">
+    <br> <br>
+    <ion-spinner name="circles" color="dark"></ion-spinner>
+  </div>
+
+
 
 
 
