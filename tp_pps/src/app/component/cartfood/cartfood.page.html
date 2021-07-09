@@ -77,7 +77,7 @@
 
 <ion-footer *ngIf="carrito.length!=0">
   <button expand="block" class="btn rounded-pill btn-block m-4"
-    style="background-color: #F90050 !important; height: 3em; color: white; margin-left: 0 !important;" (click)="makeOrder()">
+    style="background-color: #F90050 !important; height: 3em; color: white; margin-left: 0 !important;" (click)="ShowOrder()">
     <div class="container">
       <div class="row">
         <div class="col d-flex justify-content-start position-relative" >
@@ -86,7 +86,7 @@
             <ion-badge color="danger" style="position: absolute; right: -5px; top: -3px;">{{total_quantity}}</ion-badge></ion-buttons>
         </div>
         <div class="col-6" style="font-size: large; justify-content: center;margin: auto;">
-          Realizar Pedido
+          Ver Pedido
         </div>
         <div class="col d-flex justify-content-end" style="font-size: large; vertical-align: top;">
           ${{total_price}}

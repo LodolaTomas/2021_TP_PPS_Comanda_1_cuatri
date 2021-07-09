@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { CloudFirestoreService } from 'src/app/services/cloud-firestore.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
+import { CartComponent } from '../cart/cart.component';
 import { ShowfoodComponent } from '../showfood/showfood.component';
 @Component({
   selector: 'app-cartfood',
@@ -34,42 +35,42 @@ export class CartfoodPage implements OnInit {
         }
       })
     })
-    console.log(this.listDessert)
   }
 
   ngOnInit() {
   }
   async openModal(item){
+    let copiaItem={...item};
     const modal = await this.modalController.create({
       component: ShowfoodComponent,
-      componentProps:{value:item}
+      componentProps:{value:copiaItem}
     });
     await modal.present();
     const { data } = await modal.onWillDismiss();
     if(data!=null){
       this.total_quantity+=data.total_quantity
       this.total_price+=data.total_price;
-      this.carrito.push(data.food_obj) 
+      this.carrito.push(data.food_obj)
     }
-
   }
 
-  makeOrder(){
-    let flag=true;
-    this.carrito.forEach(element=>{
-      if(flag || element.elaboration_time>this.total_elaboration){
-        this.total_elaboration=element.elaboration_time;
-        flag=false;
-      }
-    })
-    let order:any={'order':this.carrito,'total_amount':this.total_price,'total_quantity':this.total_quantity,'total_time':this.total_elaboration,'status':'pendiente','id':'1'}
+  async ShowOrder(){
+    let order:any={'flag':true,'order':this.carrito,'total_amount':this.total_price,'total_quantity':this.total_quantity,'total_time':this.total_elaboration,'status':'pendiente','id':'1'}
     let id=this.fire.ReturnFirestore().createId();
     order.id=id;
-    this.fire.InsertCustomID('pedidos',id,order).then(()=>{
-      this.alert('success','Pedido realizado');
-      localStorage.setItem('pedido',JSON.stringify(order))
-      /* this.router.navigateByUrl('home-clientes') */
+    const modal = await this.modalController.create({
+      component: CartComponent,
+      componentProps:{value:order}
     });
+    await modal.present();
+    const { data } = await modal.onWillDismiss();
+    if(data!=null){
+      if(data.borrados==true){
+        this.total_quantity=0;
+        this.total_price=0;
+        this.carrito.splice(0,this.carrito.length)
+      }
+    }
   }
 
 

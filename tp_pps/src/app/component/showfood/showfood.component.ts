@@ -7,19 +7,20 @@ import { ModalController, NavParams } from '@ionic/angular';
   styleUrls: ['./showfood.component.scss'],
 })
 export class ShowfoodComponent implements OnInit {
-  item: any = {};
+  item: any = [];
   quantity: number;
   price: number;
   constructor(
     private navPrarams: NavParams,
     private modalController: ModalController
   ) {
-    this.item = this.navPrarams.get('value');
-    this.quantity = this.item.quantity;
-    this.price = this.item.price;
+    
   }
 
   ngOnInit() {
+    this.item = this.navPrarams.get('value');
+    this.quantity = 1;
+    this.price = this.item.price;
     if (this.quantity <= 1) {
       document
         .getElementById('icon_remove')
@@ -53,7 +54,7 @@ export class ShowfoodComponent implements OnInit {
     let data = {
       food_obj: this.item,
       total_price: this.price,
-      total_quantity: this.quantity,
+      total_quantity: this.quantity
     };
     this.modalController.dismiss(data);
   }

@@ -103,13 +103,7 @@ const routes: Routes = [
   {
     path: 'adm-platos',
     loadChildren: () => import('./pages/cocinero/adm-platos/adm-platos.module').then( m => m.AdmPlatosPageModule)
-  },
-
-
-
-
-
-
+  }
 ];
 
 @NgModule({
