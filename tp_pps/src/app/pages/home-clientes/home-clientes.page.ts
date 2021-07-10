@@ -7,6 +7,7 @@ import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { ModalController } from '@ionic/angular';
 import { CartComponent } from 'src/app/component/cart/cart.component';
+import { MakeOrderComponent } from 'src/app/component/make-order/make-order.component';
 
 @Component({
   selector: 'app-home-clientes',
@@ -136,10 +137,11 @@ export class HomeClientesPage implements OnInit {
     this.router.navigateByUrl('juegos')
   }
 
-  async theBill(item){
+  async theBill(){
+    let pedido=JSON.parse(localStorage.getItem('pedido'))
     const modal = await this.modalController.create({
-      component: CartComponent,
-      componentProps:{value:item}
+      component: MakeOrderComponent,
+      componentProps:{value:pedido}
     });
     await modal.present();
     const { data } = await modal.onWillDismiss();

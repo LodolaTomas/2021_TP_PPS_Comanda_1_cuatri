@@ -9,7 +9,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="container">
   <ion-row>
     <ion-col>
       <ion-button expand="block" (click)="selectFood()" color="medium">Comidas</ion-button>
@@ -23,11 +23,9 @@
   </ion-row>
 
   <div *ngIf="comida">
-    <div *ngFor="let item of listFood">
+    <div *ngFor="let item of listFood" class="food_card">
       <ion-card (click)="openModal(item)">
-        <img src="{{item.photos[0]}}" style="width: 100vw;
-        height: 20em;
-        object-fit: cover; object-position: bottom;">
+        <img src="{{item.photos[0]}}">
         <ion-card-header>
           <ion-card-subtitle>{{item.description}}</ion-card-subtitle>
           <ion-card-title>{{item.name}}</ion-card-title>
@@ -39,12 +37,10 @@
       </ion-card>
     </div>
   </div>
-  <div *ngIf="bebida">
-    <div *ngFor="let item of listDrinks">
+  <div *ngIf="bebida" >
+    <div *ngFor="let item of listDrinks" >
       <ion-card (click)="openModal(item)">
-        <img src="{{item.photos[0]}}" style="width: 100vw;
-        height: 20em;
-        object-fit: cover; object-position: center;">
+        <img src="{{item.photos[0]}}">
         <ion-card-header>
           <ion-card-subtitle>{{item.description}}</ion-card-subtitle>
           <ion-card-title>{{item.name}}</ion-card-title>
@@ -56,12 +52,10 @@
       </ion-card>
     </div>
   </div>
-  <div *ngIf="postre">
+  <div *ngIf="postre" >
     <div *ngFor="let item of listDessert">
       <ion-card (click)="openModal(item)">
-        <img src="{{item.photos[0]}}" style="width: 100vw;
-        height: 20em;
-        object-fit: cover; object-position: center;">
+        <img src="{{item.photos[0]}}">
         <ion-card-header>
           <ion-card-subtitle>{{item.description}}</ion-card-subtitle>
           <ion-card-title>{{item.name}}</ion-card-title>
