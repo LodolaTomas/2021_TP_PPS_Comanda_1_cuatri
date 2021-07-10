@@ -28,21 +28,25 @@
     <div id="escanearMesa" *ngIf="displayQRmesa" align="center">
       <ion-card>
         <!-- si existe el usuario en la lista de espera y NO esta con estado esperando muestro lo siguiente:-->
-        <h1 *ngIf="existeUserEnListaEspera && !userEsperandoAsignacionDeMesa">Ha sido asignado a Mesa {{numeroMesa}}</h1>
+        <h1 *ngIf="userEsperandoAsignacionDeMesa">Ha sido asignado a Mesa {{tokenUser.table}}</h1>
         <!-- si NO existe el usuario en la lista de espera (sea con status ingresado o esperando) muestro lo siguiente: -->
-        <h3 *ngIf="!existeUserEnListaEspera">Escanee el QR para ingresar al establecimiento</h3>
+        <h3 *ngIf="userEsperandoAsignacionDeMesa==false">Escanee el QR para ingresar a la Lista de Espera</h3>
         <!-- si existe el usuario en la lista de espera y SI esta con estado esperando muestro lo siguiente: -->
-        <h3 *ngIf="existeUserEnListaEspera && userEsperandoAsignacionDeMesa">Aguarde un momento, en breve le asignaremos una mesa</h3>
-        <ion-fab-button class="mb-2" (click)="openQR()" *ngIf="!existeUserEnListaEspera">
+        <div *ngIf="existeUserEnListaEspera">
+          <h3>Aguarde un momento, en breve le asignaremos una mesa</h3>
+          <ion-button expand="block">Encuestas en Graficos</ion-button>
+        </div>
+        
+        <ion-fab-button class="mb-2" (click)="openQR()">
           <ion-icon name="qr-code-outline"></ion-icon>
         </ion-fab-button>
-        <ion-fab-button class="mb-2" (click)="openQRmesa()" *ngIf="existeUserEnListaEspera && !userEsperandoAsignacionDeMesa">
+        <!-- <ion-fab-button class="mb-2" (click)="openQRmesa()" *ngIf="existeUserEnListaEspera && !userEsperandoAsignacionDeMesa">
           <ion-icon name="qr-code-outline"></ion-icon>
-        </ion-fab-button>
+        </ion-fab-button> -->
       </ion-card>
     </div>
 
-    <div id="enEspera" *ngIf="!actionsMesa">
+    <div id="enEspera" *ngIf="actionsMesa">
       <ion-card>
         <h1>Acciones</h1>
         <ion-button expand="block" (click)="cartfood()">Carta</ion-button>
@@ -52,12 +56,8 @@
         <br>
       </ion-card>
     </div>
-
-
-
-
     <!-- cambiar el false por variable -->
-    <div id="juegosEncuesta" *ngIf="true"> 
+    <div id="juegosEncuesta" *ngIf="actionsMesa"> 
       <ion-card>
         <h1>Acciones</h1>
         <ion-button expand="block" (click)="BTNjuegos()">Juegos</ion-button>
