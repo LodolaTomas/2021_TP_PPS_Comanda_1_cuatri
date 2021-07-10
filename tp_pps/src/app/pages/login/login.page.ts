@@ -59,12 +59,10 @@ export class LoginPage implements OnInit {
     this.user.email = this.miFormulario.value.email;
     this.user.password = this.miFormulario.value.clave;
 
-    //localStorage.setItem('token', JSON.stringify(this.user));
-
     const fbCollection = await this.cloudSrv.GetByParameter("usuarios", "email", this.user.email).get().toPromise();
     const element = fbCollection.docs[0].data();
 
-    localStorage.setItem('token', JSON.stringify(element));
+    localStorage.setItem('token', JSON.stringify(this.user.email));
     // console.log(fbCollection.docs[0].data());
 
     if (element.estado == 'pendiente') {
@@ -77,9 +75,6 @@ export class LoginPage implements OnInit {
       let user = await this.authSvc.onLogin(this.user);
       if (user) {
         this.authSvc.currentUser = this.user;
-
-
-
         if (this.user.email == 'supervisor@yopmail.com') {
           this.cargando = false;
           this.router.navigateByUrl('/supervisor');
