@@ -4,7 +4,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      Administrar pedidos
+      Administrar Bebidas
     </ion-title>
     <ion-buttons slot="start">
       <ion-button color="dark" (click)="back()">
@@ -16,20 +16,12 @@
 
 <ion-content [fullscreen]="true">
 
-
-
   <ion-row>
     <ion-col>
-      <ion-button [color]="buttonColor1" expand="block" (click)="verPendientesBTN()">Pendientes</ion-button>
+      <ion-button [color]="buttonColor1" expand="block" (click)="verEnPreparacionBTN()">En preparacion</ion-button>
     </ion-col>
     <ion-col>
-      <ion-button [color]="buttonColor2" expand="block" (click)="verAceptadosBTN()">En preparacion</ion-button>
-    </ion-col>
-    <ion-col>
-      <ion-button [color]="buttonColor3" expand="block" (click)="verTodosBTN()">A entregar</ion-button>
-    </ion-col>
-    <ion-col>
-      <ion-button [color]="buttonColor3" expand="block" (click)="verTodosBTN()">A cobrar</ion-button>
+      <ion-button [color]="buttonColor2" expand="block" (click)="verListosBTN()">Listos</ion-button>
     </ion-col>
   </ion-row>
 
@@ -37,7 +29,7 @@
     <div *ngFor="let pedido of pedidos; let i = index ">
 
 
-      <ion-card *ngIf="pedido.status == 'preparando'">
+      <ion-card *ngIf="pedido.status == 'entregar'">
         <ion-card-content>
           <ion-row>
             <ion-col>
@@ -46,7 +38,9 @@
               <h4 class="mt-1">Total: {{pedido.total_amount}}</h4>
               <h4 class="mt-1">Estado: {{pedido.status}}</h4>
             </ion-col>
+            <ion-col>
 
+            </ion-col>
 
           </ion-row>
 
@@ -61,7 +55,7 @@
 
 
 
-      <ion-card *ngIf="pedido.status == 'pendiente'">
+      <ion-card *ngIf="pedido.status == 'preparando'">
         <ion-card-content>
           <ion-row>
 
@@ -73,7 +67,7 @@
             </ion-col>
             <ion-col>
               <ion-button color="success" expand="block mt-3" *ngIf="pedido.status != 'aceptado'"
-                (click)="Aceptar(pedido)">Aceptar</ion-button>
+                (click)="Aceptar(pedido)">Listo</ion-button>
               <ion-button color="danger" expand="block mt-3" *ngIf="pedido.status != 'rechazado'"
                 (click)="Rechazar(pedido)">Rechazar</ion-button>
             </ion-col>
@@ -89,7 +83,7 @@
   <div *ngIf="verTodos">
     <div *ngFor="let pedido of pedidos; let i = index ">
 
-      <ion-card *ngIf="pedido.status == 'entregar'">
+      <ion-card>
         <ion-card-content>
           <ion-row>
             <ion-col>
@@ -101,8 +95,9 @@
             </ion-col>
             <ion-col>
               <ion-button color="success" expand="block mt-3" *ngIf="pedido.status != 'aceptado'"
-                (click)="Entregar(pedido)">Entregar</ion-button>
-
+                (click)="Aceptar(pedido)">Listo</ion-button>
+              <ion-button color="danger" expand="block mt-3" *ngIf="pedido.status != 'rechazado'"
+                (click)="Rechazar(pedido)">Rechazar</ion-button>
             </ion-col>
 
 
