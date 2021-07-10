@@ -42,7 +42,7 @@
       </ion-card>
     </div>
 
-    <div id="enEspera" *ngIf="actionsMesa">
+    <div id="enEspera" *ngIf="!actionsMesa">
       <ion-card>
         <h1>Acciones</h1>
         <ion-button expand="block" (click)="cartfood()">Carta</ion-button>
@@ -57,14 +57,14 @@
 
 
     <!-- cambiar el false por variable -->
-    <div id="juegosEncuesta" *ngIf="false"> 
+    <div id="juegosEncuesta" *ngIf="true"> 
       <ion-card>
         <h1>Acciones</h1>
         <ion-button expand="block" (click)="BTNjuegos()">Juegos</ion-button>
         <br>
         <ion-button expand="block" (click)="BTNencuesta()">Encuesta</ion-button>
         <br>
-        <ion-button expand="block" (click)="BTNestadoPedido()">Encuesta</ion-button>
+        <ion-button expand="block" (click)="theBill()">Pedir Cuenta</ion-button>
         <br>
       </ion-card>
     </div>

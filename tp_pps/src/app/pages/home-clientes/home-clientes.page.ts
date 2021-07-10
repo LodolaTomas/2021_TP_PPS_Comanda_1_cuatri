@@ -5,6 +5,9 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { CloudFirestoreService } from 'src/app/services/cloud-firestore.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { NotificationsService } from 'src/app/services/notifications.service';
+import { ModalController } from '@ionic/angular';
+import { CartComponent } from 'src/app/component/cart/cart.component';
+import { MakeOrderComponent } from 'src/app/component/make-order/make-order.component';
 
 @Component({
   selector: 'app-home-clientes',
@@ -35,7 +38,8 @@ export class HomeClientesPage implements OnInit {
     private router: Router,
     private scanner: BarcodeScanner,
     private fbService: CloudFirestoreService,
-    private notifSVC: NotificationsService) {
+    private notifSVC: NotificationsService,
+    private modalController: ModalController) {
     this.getUser();
 
     // fbService.GetAll("usuarios")
@@ -52,7 +56,6 @@ export class HomeClientesPage implements OnInit {
       if(usersList.length > 0){
         this.usuarioLog = usersList[0];
       }
-
      await this.fbService.GetByParameter("lista_espera_local","id",this.usuarioLog.id).get().toPromise().then((userCollection)=>{
        if(!userCollection.empty){
          this.existeUserEnListaEspera=true;
@@ -63,11 +66,11 @@ export class HomeClientesPage implements OnInit {
    });
     });
   }
+
   ngOnInit() {
   }
 
   logout() {
-
     this.idMesa = localStorage.removeItem('idMesa')
     localStorage.removeItem('token')
     this.authS.LogOutCurrentUser()
@@ -92,7 +95,6 @@ export class HomeClientesPage implements OnInit {
     }).catch(err => {
       alert(err);
     });
-
   }
 
   // async traerUsuario() {
@@ -110,26 +112,20 @@ export class HomeClientesPage implements OnInit {
   openQRmesa() {
     this.displayQRmesa = false;
     this.carga = true;
-
     this.scanner.scan().then(res => {
       this.scannedBarCode = res;
       console.log(res);
-
       this.idMesa = this.scannedBarCode["text"];
       localStorage.setItem('idMesa', this.idMesa);
       this.actionsMesa =true;
     }).catch(err => {
       alert(err);
     });
-
   }
 
   consultar() {
     console.log(this.idMesa)
-  
     this.router.navigateByUrl('consultas')
-
-
   }
 
 
@@ -137,12 +133,21 @@ export class HomeClientesPage implements OnInit {
     this.router.navigateByUrl('cartfood')
   }
 
-
-  
   BTNjuegos() {
     this.router.navigateByUrl('juegos')
   }
 
+  async theBill(){
+    let pedido=JSON.parse(localStorage.getItem('pedido'))
+    const modal = await this.modalController.create({
+      component: MakeOrderComponent,
+      componentProps:{value:pedido}
+    });
+    await modal.present();
+    const { data } = await modal.onWillDismiss();
+    console.log(data)
+
+  }
 
   
   BTNencuesta() {
