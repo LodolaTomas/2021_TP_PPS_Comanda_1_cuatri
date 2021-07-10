@@ -79,7 +79,7 @@ export class ListaEsperaMesasPage implements OnInit {
    * @param numeroMesa Numero de Mesa
    */
   async asigarMesaAlUsuario(user:any,numeroMesa:number){
-    user.mesa = numeroMesa;
+    user.table = numeroMesa;
     this.fbService.Update(user.docRefId,"usuarios",user).then(()=> this.ingresando=false);
 }
 /**
