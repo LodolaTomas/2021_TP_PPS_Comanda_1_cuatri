@@ -44,13 +44,11 @@
           <ion-row>
 
             <ion-col>
+              <h2 class="mt-1"> <b>Mesa: {{pedido.table}} </b> </h2>
               <h4 class="mt-1" *ngFor="let plato of pedido.order">
-                <b>Plato:</b> {{plato.name}}
+                <b>Plato:</b> {{plato.name |titlecase}}
               </h4>
-
-
               <h4 class="mt-1">Cantidad total: {{pedido.total_quantity}}</h4>
-              <h4 class="mt-1">Mesa: {{pedido.table}}</h4>
               <h4 class="mt-1">Estado: <b>{{pedido.status | titlecase }}</b></h4>
             </ion-col>
             <ion-col>
@@ -77,11 +75,11 @@
           <ion-row>
 
             <ion-col>
+              <h2 class="mt-1"> <b>Mesa: {{pedido.table}} </b> </h2>
               <h4 class="mt-1" *ngFor="let plato of pedido.order">
-                <b>Plato:</b> {{plato.name}}
+                <b>Plato:</b> {{plato.name |titlecase}}
               </h4>
               <h4 class="mt-1">Cantidad total: {{pedido.total_quantity}}</h4>
-              <h4 class="mt-1">Mesa: {{pedido.table}}</h4>
               <h4 class="mt-1">Estado: <b>{{pedido.status |titlecase  }}</b></h4>
             </ion-col>
           </ion-row>
@@ -101,16 +99,16 @@
 
         <div *ngIf="!(pedido.status == 'cobrado') ">
 
-        <ion-card-content *ngIf="!(pedido.status == 'entregado') ">
-       
+          <ion-card-content *ngIf="!(pedido.status == 'entregado') ">
+
             <ion-row>
 
               <ion-col>
+                <h2 class="mt-1"> <b>Mesa: {{pedido.table}} </b> </h2>
                 <h4 class="mt-1" *ngFor="let plato of pedido.order">
-                  <b>Plato:</b> {{plato.name}}
+                  <b>Plato:</b> {{plato.name |titlecase}}
                 </h4>
                 <h4 class="mt-1">Cantidad total: {{pedido.total_quantity}}</h4>
-                <h4 class="mt-1">Mesa: {{pedido.table}}</h4>
                 <h4 class="mt-1">Estado: <b>{{pedido.status | titlecase  }}</b></h4>
               </ion-col>
 
@@ -120,8 +118,8 @@
 
             </ion-row>
 
-        </ion-card-content>
-      </div>
+          </ion-card-content>
+        </div>
       </ion-card>
     </div>
   </div>
@@ -137,11 +135,11 @@
           <ion-row>
 
             <ion-col>
+              <h2 class="mt-1"> <b>Mesa: {{pedido.table}} </b> </h2>
               <h4 class="mt-1" *ngFor="let plato of pedido.order">
-                <b>Plato:</b> {{plato.name}}
+                <b>Plato:</b> {{plato.name |titlecase}}
               </h4>
               <h4 class="mt-1">Cantidad total: {{pedido.total_quantity}}</h4>
-              <h4 class="mt-1">Mesa: {{pedido.table}}</h4>
               <h4 class="mt-1">Estado: <b>{{pedido.status |titlecase  }}</b></h4>
             </ion-col>
             <ion-col>
@@ -154,7 +152,7 @@
     </div>
   </div>
 
-  
+
   <div *ngIf="verCobrados">
     <div *ngFor="let pedido of pedidos; let i = index ">
 
@@ -164,11 +162,11 @@
           <ion-row>
 
             <ion-col>
+              <h2 class="mt-1"> <b>Mesa: {{pedido.table}} </b> </h2>
               <h4 class="mt-1" *ngFor="let plato of pedido.order">
-                <b>Plato:</b> {{plato.name}}
+                <b>Plato:</b> {{plato.name |titlecase}}
               </h4>
               <h4 class="mt-1">Cantidad total: {{pedido.total_quantity}}</h4>
-              <h4 class="mt-1">Mesa: {{pedido.table}}</h4>
               <h4 class="mt-1">TOTAL: {{pedido.total_amount}}</h4>
               <h4 class="mt-1">Estado: <b>{{pedido.status |titlecase  }}</b></h4>
             </ion-col>
@@ -183,9 +181,5 @@
     <br> <br>
     <ion-spinner name="circles" color="dark"></ion-spinner>
   </div>
-
-
-
-
 
 </ion-content>
