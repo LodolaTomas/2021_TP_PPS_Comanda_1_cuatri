@@ -6,7 +6,6 @@ import { CloudFirestoreService } from 'src/app/services/cloud-firestore.service'
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { ModalController } from '@ionic/angular';
-import { CartComponent } from 'src/app/component/cart/cart.component';
 import { MakeOrderComponent } from 'src/app/component/make-order/make-order.component';
 
 @Component({
