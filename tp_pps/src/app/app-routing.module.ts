@@ -103,6 +103,14 @@ const routes: Routes = [
   {
     path: 'adm-platos',
     loadChildren: () => import('./pages/cocinero/adm-platos/adm-platos.module').then(m => m.AdmPlatosPageModule)
+  },
+  {
+    path: 'bartender',
+    loadChildren: () => import('./pages/bartender/bartender.module').then( m => m.BartenderPageModule)
+  },
+  {
+    path: 'adm-bebidas',
+    loadChildren: () => import('./pages/bartender/adm-bebidas/adm-bebidas.module').then(m => m.AdmBebidasPageModule)
   }
 ];
 
