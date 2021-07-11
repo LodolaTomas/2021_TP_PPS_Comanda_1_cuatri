@@ -21,6 +21,8 @@ import { ShowfoodComponent } from './component/showfood/showfood.component';
 import { CartComponent } from './component/cart/cart.component';
 
 
+
+
 @NgModule({
   declarations: [AppComponent,ShowfoodComponent,CartComponent],
   entryComponents: [],

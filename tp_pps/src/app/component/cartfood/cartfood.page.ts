@@ -59,10 +59,12 @@ export class CartfoodPage implements OnInit {
     let order: any = { 'flag': true, 'order': this.carrito, 'total_amount': this.total_price, 'total_quantity': this.total_quantity, 'total_time': this.total_elaboration, 'status': 'pendiente', 'id': '1' }
     let id = this.fire.ReturnFirestore().createId();
     order.id = id;
+    
     const modal = await this.modalController.create({
       component: CartComponent,
       componentProps: { value: order }
     });
+
     await modal.present();
     const { data } = await modal.onWillDismiss();
     if (data != null) {

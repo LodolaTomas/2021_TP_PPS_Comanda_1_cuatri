@@ -30,7 +30,8 @@ export class LoginPage implements OnInit {
     { "email": "cliente@yopmail.com", "clave": "123456" },
     { "email": "cocinero@yopmail.com", "clave": "123456" },
     { "email": "supervisor@yopmail.com", "clave": "123456" },
-    { "email": "mozo@yopmail.com", "clave": "123456" }
+    { "email": "mozo@yopmail.com", "clave": "123456" },
+    { "email": "bartender@yopmail.com", "clave": "123456" }
   ];
 
   constructor(private formBuilder: FormBuilder, private router: Router, private authSvc: AuthService, private cloudSrv: CloudFirestoreService, private notificationsService:NotificationsService) {
@@ -98,6 +99,11 @@ export class LoginPage implements OnInit {
         else if (this.user.email == 'cocinero@yopmail.com') {
           this.cargando = false;
           this.router.navigateByUrl('/cocinero');
+          this.miFormulario.reset()
+        }
+        else if (this.user.email == 'bartender@yopmail.com') {
+          this.cargando = false;
+          this.router.navigateByUrl('/bartender');
           this.miFormulario.reset()
         }
         else {
