@@ -20,9 +20,10 @@ export class AdmPlatosPage implements OnInit {
   public buttonColor1: string = "light";
   public buttonColor2: string = "dark";
   public buttonColor3: string = "dark";
-  public usuarioLog: any = {}
-  public usuarios: any = []
-  public pedidos: any = []
+  public usuarioLog: any = {};
+  public usuarios: any = [];
+  public pedidos: any = [];
+  public alimentos: any = [];
 
 
   constructor(private authS: AuthService,
@@ -48,6 +49,7 @@ export class AdmPlatosPage implements OnInit {
         this.pedidos = data;
         console.log(data)
         this.notificarPendientes()
+        this.filtrarAlimentos()
 
       });
 
@@ -60,7 +62,6 @@ export class AdmPlatosPage implements OnInit {
 
         this.usuarioLog = JSON.parse(localStorage.getItem('token'));
         console.log(this.usuarioLog)
-
         this.notifSVC.notifyByProfile("Platos pendientes", this.usuarioLog, 'cocinero')//Mensaje, usuario logeado, y perfiles a notificar
       }
 
@@ -162,6 +163,36 @@ export class AdmPlatosPage implements OnInit {
     pedido.status = 'rechazado';
     //   this.emailSVC.sendEmail(user, "Su cuenta ha sido rechazada, si cree que es un error puede contactar al administrador")
     this.firestore.Update(pedido.id, "pedidos", auxPedido)
+  }
+
+
+  filtrarAlimentos() {
+
+    console.log(this.pedidos)
+
+
+    this.pedidos.forEach(pedido => {
+
+
+      pedido.order.forEach(plato =>{
+
+        if(this.alimentos[pedido.table] == undefined)
+        {
+          this.alimentos[pedido.table] = [];
+        }
+
+        if(plato.type == 'comida' )
+        {
+          this.alimentos[pedido.table].push(plato)
+        }
+
+      })
+ 
+    })
+
+
+    console.log(this.alimentos)
+
   }
 
 

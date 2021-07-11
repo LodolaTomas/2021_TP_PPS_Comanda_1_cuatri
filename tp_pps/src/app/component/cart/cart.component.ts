@@ -15,6 +15,9 @@ export class CartComponent implements OnInit {
   editOrder: string = 'Editar';
   pedir = 'Realizar Pedido';
   array1: Array<any> = [];
+  token: any;
+  client: any;
+
   constructor(
     private navPrarams: NavParams,
     private modalController: ModalController,
@@ -24,13 +27,29 @@ export class CartComponent implements OnInit {
     if (this.data.flag) {
       this.edit = true;
     }
+
+    this.token = JSON.parse(localStorage.getItem('token'))
+    this.searchActiveUser();
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
   back() {
     console.log(this.data);
     this.modalController.dismiss(this.data);
   }
+
+  async searchActiveUser() {
+
+    const client = await this.fire.GetByParameter("usuarios", "email", this.token).get().toPromise()
+    if (!client.empty) {
+      var user = client.docs[0].data();
+      this.client = user
+    }
+
+    console.log(client)
+
+  }
+
   edit_Order() {
     if (this.editOrder === 'Editar') {
       this.editOrder = 'Aceptar';
@@ -63,9 +82,12 @@ export class CartComponent implements OnInit {
       }
     }
     if (this.flag == false) {
-      this.fire.InsertCustomID('pedidos',this.data.id,this.data).then(()=>{
-        this.alert('success','Pedido realizado');
-        localStorage.setItem('pedido',JSON.stringify(this.data))
+
+      this.data.table = this.client.table;
+
+      this.fire.InsertCustomID('pedidos', this.data.id, Object.assign({}, this.data)).then(() => {
+        this.alert('success', 'Pedido realizado');
+        localStorage.setItem('pedido', JSON.stringify(this.data))
       })
     }
   }
