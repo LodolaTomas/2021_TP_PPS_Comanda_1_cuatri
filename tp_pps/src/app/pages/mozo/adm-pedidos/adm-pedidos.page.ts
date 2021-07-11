@@ -15,12 +15,16 @@ export class AdmPedidosPage implements OnInit {
 
 
   public verPendientes: boolean = true;
-  public verAceptados: boolean = false;
-  public verTodos: boolean = false;
+  public verEnPreparacion: boolean = false;
+  public verAentregar: boolean = false;
+  public verAcobrar: boolean = false;
+  public verCobrados: boolean = false;
 
   public buttonColor1: string = "light";
   public buttonColor2: string = "dark";
   public buttonColor3: string = "dark";
+  public buttonColor4: string = "dark";
+  public buttonColor5: string = "dark";
   public usuarioLog: any = {}
   public usuarios: any = []
   public pedidos: any = []
@@ -86,45 +90,40 @@ export class AdmPedidosPage implements OnInit {
         this.buttonColor1 = "light";
         this.buttonColor2 = "dark";
         this.buttonColor3 = "dark";
+        this.buttonColor4 = "dark";
+        this.buttonColor5 = "dark";
         break;
-      case 'aceptados':
+      case 'preparando':
         this.buttonColor1 = "dark";
         this.buttonColor2 = "light";
         this.buttonColor3 = "dark";
+        this.buttonColor4 = "dark";
+        this.buttonColor5 = "dark";
         break;
-      case 'todos':
+      case 'entregar':
         this.buttonColor1 = "dark";
         this.buttonColor2 = "dark";
         this.buttonColor3 = "light";
+        this.buttonColor4 = "dark";
+        this.buttonColor5 = "dark";
+        break;
+        case 'cobrar':
+          this.buttonColor1 = "dark";
+          this.buttonColor2 = "dark";
+          this.buttonColor3 = "dark";
+          this.buttonColor4 = "light";
+          this.buttonColor5 = "dark";
+        break;
+        case 'cobrados':
+          this.buttonColor1 = "dark";
+          this.buttonColor2 = "dark";
+          this.buttonColor3 = "dark";
+          this.buttonColor4 = "dark";
+          this.buttonColor5 = "light";
         break;
 
-    }
-  }
-
-  verAceptadosBTN() {
-    if (this.verAceptados) {
 
     }
-    else {
-      this.seleccionarFiltro('aceptados')
-      this.verAceptados = true;
-      this.verPendientes = false;
-      this.verTodos = false;
-    }
-
-  }
-
-  verTodosBTN() {
-    if (this.verTodos) {
-
-    }
-    else {
-      this.seleccionarFiltro('todos')
-      this.verAceptados = false;
-      this.verPendientes = false;
-      this.verTodos = true;
-    }
-
   }
 
   verPendientesBTN() {
@@ -133,12 +132,75 @@ export class AdmPedidosPage implements OnInit {
     }
     else {
       this.seleccionarFiltro('pendientes')
-      this.verAceptados = false;
+      this.verEnPreparacion = false;
       this.verPendientes = true;
-      this.verTodos = false;
+      this.verAentregar = false;
+      this.verAcobrar = false;
+      this.verCobrados = false;
     }
 
   }
+
+  verEnPreparacionBTN() {
+    if (this.verEnPreparacion) {
+
+    }
+    else {
+      this.seleccionarFiltro('preparando')
+      this.verEnPreparacion = true;
+      this.verPendientes = false;
+      this.verAentregar = false;
+      this.verAcobrar = false;
+      this.verCobrados = false;
+    }
+
+  }
+
+  verAentregarBTN() {
+    if (this.verAentregar) {
+
+    }
+    else {
+      this.seleccionarFiltro('entregar')
+      this.verEnPreparacion = false;
+      this.verPendientes = false;
+      this.verAentregar = true;
+      this.verAcobrar = false;
+      this.verCobrados = false;
+    }
+
+  }
+
+  verAcobrarBTN() {
+    if (this.verAcobrar) {
+
+    }
+    else {
+      this.seleccionarFiltro('cobrar')
+      this.verEnPreparacion = false;
+      this.verPendientes = false;
+      this.verAentregar = false;
+      this.verAcobrar = true;
+      this.verCobrados = false;
+    }
+
+  }
+  
+  verCobradosBTN() {
+    if (this.verCobrados) {
+
+    }
+    else {
+      this.seleccionarFiltro('cobrados')
+      this.verEnPreparacion = false;
+      this.verPendientes = false;
+      this.verAentregar = false;
+      this.verAcobrar = false;
+      this.verCobrados = true;
+    }
+
+  }
+ 
 
   ngOnInit() {
 
@@ -153,7 +215,7 @@ export class AdmPedidosPage implements OnInit {
   Aceptar(pedido) {
     let auxPedido = pedido;
     pedido.status = 'preparando';
-    //this.emailSVC.sendEmail(user, "Su cuenta ha sido aceptada, ya puede ingresar a la app")
+
     this.firestore.Update(pedido.id, "pedidos", auxPedido)
 
   }
@@ -161,7 +223,15 @@ export class AdmPedidosPage implements OnInit {
   Entregar(pedido) {
     let auxPedido = pedido;
     pedido.status = 'entregado';
-    //this.emailSVC.sendEmail(user, "Su cuenta ha sido aceptada, ya puede ingresar a la app")
+    
+    this.firestore.Update(pedido.id, "pedidos", auxPedido)
+
+  }
+
+  Cobrar(pedido) {
+    let auxPedido = pedido;
+    pedido.status = 'cobrado';
+
     this.firestore.Update(pedido.id, "pedidos", auxPedido)
 
   }
@@ -169,7 +239,7 @@ export class AdmPedidosPage implements OnInit {
   Rechazar(pedido) {
     let auxPedido = pedido;
     pedido.status = 'rechazado';
-    //   this.emailSVC.sendEmail(user, "Su cuenta ha sido rechazada, si cree que es un error puede contactar al administrador")
+
     this.firestore.Update(pedido.id, "pedidos", auxPedido)
   }
 
