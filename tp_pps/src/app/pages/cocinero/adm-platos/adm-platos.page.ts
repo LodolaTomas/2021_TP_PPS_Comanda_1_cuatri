@@ -96,10 +96,7 @@ export class AdmPlatosPage implements OnInit {
 
   }
 
-  Rechazar(pedido) {
 
-    this.firestore.Update(pedido.id, "pedidos", { statusCheff: false })
-  }
 
 
   filtrarAlimentos() {
@@ -107,25 +104,25 @@ export class AdmPlatosPage implements OnInit {
     this.alimentos.splice(0, this.alimentos.length)
 
     this.pedidos.forEach(pedido => {
+      if (pedido.status === 'preparando') {
 
-      pedido.order.forEach(plato => {
+        pedido.order.forEach(plato => {
 
-        if(pedido.statusCheff)
-        {
-          return
-        }
+          if (pedido.statusCheff) {
+            return
+          }
 
-        if (this.alimentos[pedido.table] == undefined) {
-          this.alimentos[pedido.table] = [];
-        }
+          if (this.alimentos[pedido.table] == undefined) {
+            this.alimentos[pedido.table] = [];
+          }
 
-        if (plato.type == 'comida') {
-          plato.idTable = pedido.id
-     
-          this.alimentos[pedido.table].push(plato)
-        }
-      })
+          if (plato.type == 'comida' || plato.type == 'postre') {
+            plato.idTable = pedido.id
 
+            this.alimentos[pedido.table].push(plato)
+          }
+        })
+      }
     })
 
 
