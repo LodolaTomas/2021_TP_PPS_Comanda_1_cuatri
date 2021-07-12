@@ -31,8 +31,8 @@ export class HomeClientesPage implements OnInit {
   public usuarios: any = [];
   public usuarioLog: any = {};
   public tokenUser: any = [];
-  public statusPedidoLabel:string;
-  public pedido:any = {};
+  public statusPedidoLabel: string;
+  public pedido: any = {};
   //barcodeScannerOptions: BarcodeScannerOptions;
 
   constructor(
@@ -54,19 +54,19 @@ export class HomeClientesPage implements OnInit {
       }
     })
   }
-  getPedidoPorMesa(table){
+  getPedidoPorMesa(table) {
     this.fbService.GetByParameter('pedidos', 'table', table).valueChanges().subscribe(async pedidos => {
-      if(pedidos.length>0){
-        pedidos.forEach(pedidoItem=>{
-          if(pedidoItem.status !== 'cobrado'){
-            this.pedido= pedidoItem;
-            if     (pedidoItem.status == 'preparando')
-                this.statusPedidoLabel = "Su pedido está en preparación, en breve lo estará recibiendo";
-            else if(pedidoItem.status == 'entregando')
-                this.statusPedidoLabel = "¡Su pedido está listo para ser entregado!";
-                else if(pedidoItem.status == 'entregado')
-                this.statusPedidoLabel = "Pedido entregado. ¡Buen provecho!";
-            }
+      if (pedidos.length > 0) {
+        pedidos.forEach(pedidoItem => {
+          if (pedidoItem.status !== 'cobrado') {
+            this.pedido = pedidoItem;
+            if (pedidoItem.status == 'preparando')
+              this.statusPedidoLabel = "Su pedido está en preparación, en breve lo estará recibiendo";
+            else if (pedidoItem.status == 'entregando')
+              this.statusPedidoLabel = "¡Su pedido está listo para ser entregado!";
+            else if (pedidoItem.status == 'entregado')
+              this.statusPedidoLabel = "Pedido entregado. ¡Buen provecho!";
+          }
         });
       }
     })
@@ -75,9 +75,8 @@ export class HomeClientesPage implements OnInit {
 
   }
 
-  confirm()
-  {
-    this.fbService.Update( this.pedido.id, "pedidos", {status:'entregado'})
+  confirm() {
+    this.fbService.Update(this.pedido.id, "pedidos", { status: 'entregado' })
   }
 
   logout() {
