@@ -19,8 +19,14 @@ export class HomeClientesPage implements OnInit {
   scannedBarCode: {};
   input: any;
   idMesa: any;
-  displayQREspera: boolean = true;
   numeroMesa: number;
+  
+  public usuarios: any = [];
+  public usuarioLog: any = {};
+  public tokenUser: any = [];
+  public statusPedidoLabel: string;
+  public pedido: any = {};
+
   actionsMesa: boolean = false;
   carga: boolean = false;
   existeUserEnListaEspera: boolean = false;
@@ -28,12 +34,7 @@ export class HomeClientesPage implements OnInit {
   realizopedido: boolean = false;
   recibido: boolean = false;
   entregando:boolean=false;
-  public usuarios: any = [];
-  public usuarioLog: any = {};
-  public tokenUser: any = [];
-  public statusPedidoLabel: string;
-  public pedido: any = {};
-
+  displayQREspera: boolean = true;
 
   constructor(
     private authS: AuthService,
