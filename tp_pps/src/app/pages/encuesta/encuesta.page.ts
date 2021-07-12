@@ -89,7 +89,7 @@ export class EncuestaPage implements OnInit {
 
 
     console.log(this.encuesta)
-
+    
     this.firestore.InsertCustomID('encuestas', this.encuesta.id, Object.assign({}, this.encuesta))
 
     this.firestore.Update(this.usuarioLog.id, 'usuarios', {encuestado:true})
