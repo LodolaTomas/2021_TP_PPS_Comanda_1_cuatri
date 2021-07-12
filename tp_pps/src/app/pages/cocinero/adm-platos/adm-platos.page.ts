@@ -47,7 +47,6 @@ export class AdmPlatosPage implements OnInit {
     firestore.GetAll("pedidos")
       .subscribe((data) => {
         this.pedidos = data;
-        console.log(data)
         this.notificarPendientes()
         this.filtrarAlimentos()
 
@@ -79,66 +78,6 @@ export class AdmPlatosPage implements OnInit {
     });
   }
 
-  seleccionarFiltro(tipo: string) {
-
-    switch (tipo) {
-      case 'pendientes':
-        this.buttonColor1 = "light";
-        this.buttonColor2 = "dark";
-        this.buttonColor3 = "dark";
-        break;
-      case 'aceptados':
-        this.buttonColor1 = "dark";
-        this.buttonColor2 = "light";
-        this.buttonColor3 = "dark";
-        break;
-      case 'todos':
-        this.buttonColor1 = "dark";
-        this.buttonColor2 = "dark";
-        this.buttonColor3 = "light";
-        break;
-
-    }
-  }
-
-  verListosBTN() {
-    if (this.verAceptados) {
-
-    }
-    else {
-      this.seleccionarFiltro('aceptados')
-      this.verAceptados = true;
-      this.verPendientes = false;
-      this.verTodos = false;
-    }
-
-  }
-
-  verTodosBTN() {
-    if (this.verTodos) {
-
-    }
-    else {
-      this.seleccionarFiltro('todos')
-      this.verAceptados = false;
-      this.verPendientes = false;
-      this.verTodos = true;
-    }
-
-  }
-
-  verEnPreparacionBTN() {
-    if (this.verPendientes) {
-
-    }
-    else {
-      this.seleccionarFiltro('pendientes')
-      this.verAceptados = false;
-      this.verPendientes = true;
-      this.verTodos = false;
-    }
-
-  }
 
   ngOnInit() {
 
@@ -151,43 +90,39 @@ export class AdmPlatosPage implements OnInit {
   }
 
   Aceptar(pedido) {
-    let auxPedido = pedido;
-    pedido.status = 'entregar';
-    //this.emailSVC.sendEmail(user, "Su cuenta ha sido aceptada, ya puede ingresar a la app")
-    this.firestore.Update(pedido.id, "pedidos", auxPedido)
+
+    console.log(pedido)
+    this.firestore.Update(pedido.value[0].idTable, "pedidos", { statusCheff: true })
 
   }
 
-  Rechazar(pedido) {
-    let auxPedido = pedido;
-    pedido.status = 'rechazado';
-    //   this.emailSVC.sendEmail(user, "Su cuenta ha sido rechazada, si cree que es un error puede contactar al administrador")
-    this.firestore.Update(pedido.id, "pedidos", auxPedido)
-  }
+
 
 
   filtrarAlimentos() {
 
-    console.log(this.pedidos)
-
+    this.alimentos.splice(0, this.alimentos.length)
 
     this.pedidos.forEach(pedido => {
+      if (pedido.status === 'preparando') {
 
+        pedido.order.forEach(plato => {
 
-      pedido.order.forEach(plato =>{
+          if (pedido.statusCheff) {
+            return
+          }
 
-        if(this.alimentos[pedido.table] == undefined)
-        {
-          this.alimentos[pedido.table] = [];
-        }
+          if (this.alimentos[pedido.table] == undefined) {
+            this.alimentos[pedido.table] = [];
+          }
 
-        if(plato.type == 'comida' )
-        {
-          this.alimentos[pedido.table].push(plato)
-        }
+          if (plato.type == 'comida' || plato.type == 'postre') {
+            plato.idTable = pedido.id
 
-      })
- 
+            this.alimentos[pedido.table].push(plato)
+          }
+        })
+      }
     })
 
 

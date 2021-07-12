@@ -18,7 +18,9 @@
       <ion-row>
         <ion-col size="3" class="ion-text-start">
           <h5 *ngIf="!flag">{{item.quantity}}x</h5>
-          <h5 *ngIf="flag"><ion-checkbox color="danger" (click)="isChecked($event,i)" ></ion-checkbox></h5>
+          <h5 *ngIf="flag">
+            <ion-checkbox color="danger" (click)="isChecked($event,i)"></ion-checkbox>
+          </h5>
         </ion-col>
         <ion-col class="ion-text-start">
           <h4>{{item.name}}</h4>
@@ -45,6 +47,13 @@
   </ion-item>
 </ion-content>
 <ion-footer>
-  <button expand="block" class="btn rounded-pill btn-block m-4" (click)="optionsOrder()"
+
+  <button *ngIf="!loading" expand="block" class="btn rounded-pill btn-block m-4" (click)="optionsOrder()"
     style="background-color: #F90050 !important; height: 3em; color: white; margin-left: 0 !important;">{{pedir}}</button>
+
+  <button *ngIf="loading" expand="block" class="btn rounded-pill btn-block m-4" disabled
+    style="background-color: #F90050 !important; height: 3em; color: white; margin-left: 0 !important;">
+    <ion-spinner></ion-spinner>
+  </button>
+
 </ion-footer>

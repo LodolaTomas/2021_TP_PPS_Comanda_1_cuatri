@@ -111,7 +111,11 @@ const routes: Routes = [
   {
     path: 'adm-bebidas',
     loadChildren: () => import('./pages/bartender/adm-bebidas/adm-bebidas.module').then(m => m.AdmBebidasPageModule)
+  },  {
+    path: 'resultados',
+    loadChildren: () => import('./encuesta/resultados/resultados.module').then( m => m.ResultadosPageModule)
   }
+
 ];
 
 @NgModule({

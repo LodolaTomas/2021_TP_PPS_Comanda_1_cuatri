@@ -23,47 +23,20 @@
       <ion-button [color]="buttonColor1" expand="block" (click)="verPendientesBTN()">Pendientes</ion-button>
     </ion-col>
     <ion-col>
-      <ion-button [color]="buttonColor2" expand="block" (click)="verAceptadosBTN()">En preparacion</ion-button>
+      <ion-button [color]="buttonColor2" expand="block" (click)="verEnPreparacionBTN()">En preparacion</ion-button>
     </ion-col>
     <ion-col>
-      <ion-button [color]="buttonColor3" expand="block" (click)="verTodosBTN()">A entregar</ion-button>
+      <ion-button [color]="buttonColor3" expand="block" (click)="verAentregarBTN()">A entregar</ion-button>
     </ion-col>
     <ion-col>
-      <ion-button [color]="buttonColor3" expand="block" (click)="verTodosBTN()">A cobrar</ion-button>
+      <ion-button [color]="buttonColor4" expand="block" (click)="verAcobrarBTN()">A cobrar</ion-button>
     </ion-col>
   </ion-row>
+  <ion-button [color]="buttonColor5" expand="block" (click)="verCobradosBTN()">Finalizados</ion-button>
 
-  <div *ngIf="verAceptados">
-    <div *ngFor="let pedido of pedidos; let i = index ">
-
-
-      <ion-card *ngIf="pedido.status == 'preparando'">
-        <ion-card-content>
-          <ion-row>
-            <ion-col>
-              <h4 class="mt-1">Tiempo: {{pedido.total_time}}</h4>
-              <h4 class="mt-1">Cantidad: {{pedido.total_quantity}}</h4>
-              <h4 class="mt-1">Total: {{pedido.total_amount}}</h4>
-              <h4 class="mt-1">Estado: {{pedido.status}}</h4>
-            </ion-col>
-            <ion-col>
-              <ion-button color="success" expand="block mt-3" *ngIf="pedido.status != 'aceptado'"
-                (click)="Aceptar(pedido)">Aceptar</ion-button>
-              <ion-button color="danger" expand="block mt-3" *ngIf="pedido.status != 'rechazado'"
-                (click)="Rechazar(pedido)">Rechazar</ion-button>
-            </ion-col>
-
-          </ion-row>
-
-        </ion-card-content>
-      </ion-card>
-    </div>
-  </div>
 
   <div *ngIf="verPendientes">
     <div *ngFor="let pedido of pedidos; let i = index ">
-
-
 
 
       <ion-card *ngIf="pedido.status == 'pendiente'">
@@ -71,10 +44,12 @@
           <ion-row>
 
             <ion-col>
-              <h4 class="mt-1">Tiempo: {{pedido.total_time}}</h4>
-              <h4 class="mt-1">Cantidad: {{pedido.total_quantity}}</h4>
-              <h4 class="mt-1">Total: {{pedido.total_amount}}</h4>
-              <h4 class="mt-1">Estado: {{pedido.status}}</h4>
+              <h2 class="mt-1"> <b>Mesa: {{pedido.table}} </b> </h2>
+              <h4 class="mt-1" *ngFor="let plato of pedido.order">
+                <b>Plato:</b> {{plato.name |titlecase}}
+              </h4>
+              <h4 class="mt-1">Cantidad total: {{pedido.total_quantity}}</h4>
+              <h4 class="mt-1">Estado: <b>{{pedido.status | titlecase }}</b></h4>
             </ion-col>
             <ion-col>
               <ion-button color="success" expand="block mt-3" *ngIf="pedido.status != 'aceptado'"
@@ -91,27 +66,22 @@
   </div>
 
 
-  <div *ngIf="verTodos">
+  <div *ngIf="verEnPreparacion">
     <div *ngFor="let pedido of pedidos; let i = index ">
 
-      <ion-card *ngIf="pedido.status == 'entregar'">
+
+      <ion-card *ngIf="pedido.status == 'preparando'">
         <ion-card-content>
           <ion-row>
+
             <ion-col>
-
-              <h4 class="mt-1">Tiempo: {{pedido.total_time}}</h4>
-              <h4 class="mt-1">Cantidad: {{pedido.total_quantity}}</h4>
-              <h4 class="mt-1">Total: {{pedido.total_amount}}</h4>
-              <h4 class="mt-1">Estado: {{pedido.status}}</h4>
+              <h2 class="mt-1"> <b>Mesa: {{pedido.table}} </b> </h2>
+              <h4 class="mt-1" *ngFor="let plato of pedido.order">
+                <b>Plato:</b> {{plato.name |titlecase}}
+              </h4>
+              <h4 class="mt-1">Cantidad total: {{pedido.total_quantity}}</h4>
+              <h4 class="mt-1">Estado: <b>{{pedido.status |titlecase  }}</b></h4>
             </ion-col>
-            <ion-col>
-              <ion-button color="success" expand="block mt-3" *ngIf="pedido.status != 'aceptado'"
-                (click)="Entregar(pedido)">Entregar</ion-button>
-
-            </ion-col>
-
-
-
           </ion-row>
 
         </ion-card-content>
@@ -119,13 +89,97 @@
     </div>
   </div>
 
-  <div *ngIf="!usuarios" align="center">
-    <br> <br>
-    <ion-spinner name="circles" color="dark"></ion-spinner>
+
+
+  <div *ngIf="verAentregar">
+    <div *ngFor="let pedido of pedidos; let i = index ">
+
+
+      <ion-card *ngIf="pedido.statusCheff && pedido.statusBartender">
+
+        <div *ngIf="!(pedido.status == 'cobrado') ">
+
+          <ion-card-content *ngIf="!(pedido.status == 'entregado') ">
+
+            <ion-row>
+
+              <ion-col>
+                <h2 class="mt-1"> <b>Mesa: {{pedido.table}} </b> </h2>
+                <h4 class="mt-1" *ngFor="let plato of pedido.order">
+                  <b>Plato:</b> {{plato.name |titlecase}}
+                </h4>
+                <h4 class="mt-1">Cantidad total: {{pedido.total_quantity}}</h4>
+                <h4 class="mt-1">Estado: <b>{{pedido.status | titlecase  }}</b></h4>
+              </ion-col>
+
+              <ion-col>
+                <ion-button color="success" expand="block mt-3" (click)="Entregar(pedido)">Entregar</ion-button>
+              </ion-col>
+
+            </ion-row>
+
+          </ion-card-content>
+        </div>
+      </ion-card>
+    </div>
   </div>
 
 
 
+  <div *ngIf="verAcobrar">
+    <div *ngFor="let pedido of pedidos; let i = index ">
 
+
+      <ion-card *ngIf="pedido.status == 'entregado'">
+        <ion-card-content>
+          <ion-row>
+
+            <ion-col>
+              <h2 class="mt-1"> <b>Mesa: {{pedido.table}} </b> </h2>
+              <h4 class="mt-1" *ngFor="let plato of pedido.order">
+                <b>Plato:</b> {{plato.name |titlecase}}
+              </h4>
+              <h4 class="mt-1">Cantidad total: {{pedido.total_quantity}}</h4>
+              <h4 class="mt-1">Estado: <b>{{pedido.status |titlecase  }}</b></h4>
+            </ion-col>
+            <ion-col>
+              <ion-button color="success" expand="block mt-3" (click)="Cobrar(pedido)">Cobrar</ion-button>
+            </ion-col>
+          </ion-row>
+
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+
+
+  <div *ngIf="verCobrados">
+    <div *ngFor="let pedido of pedidos; let i = index ">
+
+
+      <ion-card *ngIf="pedido.status == 'cobrado'">
+        <ion-card-content>
+          <ion-row>
+
+            <ion-col>
+              <h2 class="mt-1"> <b>Mesa: {{pedido.table}} </b> </h2>
+              <h4 class="mt-1" *ngFor="let plato of pedido.order">
+                <b>Plato:</b> {{plato.name |titlecase}}
+              </h4>
+              <h4 class="mt-1">Cantidad total: {{pedido.total_quantity}}</h4>
+              <h4 class="mt-1">TOTAL: {{pedido.total_amount}}</h4>
+              <h4 class="mt-1">Estado: <b>{{pedido.status |titlecase  }}</b></h4>
+            </ion-col>
+          </ion-row>
+
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+
+  <div *ngIf="!pedidos" align="center">
+    <br> <br>
+    <ion-spinner name="circles" color="dark"></ion-spinner>
+  </div>
 
 </ion-content>
