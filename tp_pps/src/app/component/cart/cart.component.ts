@@ -18,6 +18,8 @@ export class CartComponent implements OnInit {
   token: any;
   client: any;
 
+  loading: boolean = false;
+
   constructor(
     private navPrarams: NavParams,
     private modalController: ModalController,
@@ -70,6 +72,9 @@ export class CartComponent implements OnInit {
     }
   }
   optionsOrder() {
+
+    this.loading = true;
+
     if (this.flag) {
       if (this.array1.length === this.data.order.length) {
         this.modalController.dismiss({ borrados: true });
@@ -81,6 +86,7 @@ export class CartComponent implements OnInit {
         });
       }
     }
+
     if (this.flag == false) {
 
       this.data.table = this.client.table;
@@ -88,8 +94,12 @@ export class CartComponent implements OnInit {
       this.fire.InsertCustomID('pedidos', this.data.id, Object.assign({}, this.data)).then(() => {
         this.alert('success', 'Pedido realizado');
         localStorage.setItem('pedido', JSON.stringify(this.data))
+        
+    this.loading = false;
       })
     }
+
+
   }
 
   alert(icon: SweetAlertIcon, text: string) {
