@@ -26,7 +26,8 @@ export class HomeClientesPage implements OnInit {
   carga: boolean = false;
   existeUserEnListaEspera: boolean = false;
   userEsperandoAsignacionDeMesa: boolean = false;
-
+  realizopedido:boolean=false
+  recibido:boolean=false
   public usuarios: any = [];
   public usuarioLog: any = {};
   public tokenUser: any = [];
@@ -37,16 +38,9 @@ export class HomeClientesPage implements OnInit {
     private router: Router,
     private scanner: BarcodeScanner,
     private fbService: CloudFirestoreService,
-    private notifSVC: NotificationsService,
     private modalController: ModalController
   ) {
     this.getUser();
-
-    // fbService.GetAll("usuarios")
-    //   .subscribe((data) => {
-    //     this.usuarios = data;
-    //     this.traerUsuario();
-    //   });
   }
 
   async getUser() {
@@ -54,25 +48,11 @@ export class HomeClientesPage implements OnInit {
       this.tokenUser = user[0];
       if (this.tokenUser.table != null) {
         this.userEsperandoAsignacionDeMesa = true
+        this.actionsMesa = true;
       }
     })
-    /* this.fbService.GetByParameter("usuarios", "id", tokenUser.id).valueChanges()
-    .subscribe(async (usersList)=>{
-      if(usersList.length > 0){
-        this.usuarioLog = usersList[0];
-      }
-     await this.fbService.GetByParameter("lista_espera_local","id",this.usuarioLog.id).get().toPromise().then((userCollection)=>{
-       if(!userCollection.empty){
-         this.existeUserEnListaEspera=true;
-       }
-       if(this.existeUserEnListaEspera){
-         this.userEsperandoAsignacionDeMesa = this.usuarioLog.status =='esperando';
-       }
-   });
-    }); 
-    if (this.tokenUser.userWaitingList) {
-      this.existeUserEnListaEspera = true;
-    }*/
+
+    
   }
 
   ngOnInit() {
@@ -91,17 +71,6 @@ export class HomeClientesPage implements OnInit {
       .scan()
       .then((res) => {
         console.log(res.text);
-        /* const userWaitingList = { id: this.usuarioLog.id, status: "esperando", date: new Date() };
-      this.fbService.Insert("lista_espera_local", userWaitingList)
-        .then(() => {
-          this.alert('success', "Agregado a la lista de espera!");
-          this.existeUserEnListaEspera=true;
-          this.userEsperandoAsignacionDeMesa=true;
-        });
-      this.displayQREspera = false;
-      this.input = this.scannedBarCode["text"];
-      this.notifSVC.notifyByProfile("Cliente En la lista de espera: ", this.usuarioLog, "metre") */
-        //     this.notificar({ name: 'Pepe Anonimo' });
         if (res.text == 'listadeespera') {
           if (this.tokenUser.waitinglist == false) {
             const userWaitingList = {
@@ -121,10 +90,16 @@ export class HomeClientesPage implements OnInit {
         if (this.tokenUser.table != null) {
           console.log('mesa' + this.tokenUser.table)
           if (res.text == 'mesa' + this.tokenUser.table) {
-            this.actionsMesa = true
+            this.actionsMesa = true;
           } else {
             this.alert('error', 'No es la Mesa Asignada')
           }
+        }
+        if(this.tokenUser.estado=='pendiente'){
+          this.realizopedido=true;
+        }
+        if(this.tokenUser.estado='recibido'){
+          this.recibido=true;
         }
       })
       .catch((err) => {

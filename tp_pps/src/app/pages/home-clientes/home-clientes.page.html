@@ -16,6 +16,11 @@
 
 
 <ion-content [fullscreen]="true">
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button class="mb-2" (click)="openQR()" size="large">
+      <ion-icon name="qr-code-outline" size=large></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Blank</ion-title>
@@ -36,10 +41,6 @@
           <h3>Aguarde un momento, en breve le asignaremos una mesa</h3>
           <ion-button expand="block">Encuestas en Graficos</ion-button>
         </div>
-        
-        <ion-fab-button class="mb-2" (click)="openQR()">
-          <ion-icon name="qr-code-outline"></ion-icon>
-        </ion-fab-button>
         <!-- <ion-fab-button class="mb-2" (click)="openQRmesa()" *ngIf="existeUserEnListaEspera && !userEsperandoAsignacionDeMesa">
           <ion-icon name="qr-code-outline"></ion-icon>
         </ion-fab-button> -->
@@ -50,25 +51,13 @@
       <ion-card>
         <h1>Acciones</h1>
         <ion-button expand="block" (click)="cartfood()">Carta</ion-button>
-        <br>
         <ion-button expand="block" (click)="consultar()">Consultar</ion-button>
-        <br>
-        <br>
-      </ion-card>
-    </div>
-    <!-- cambiar el false por variable -->
-    <div id="juegosEncuesta" *ngIf="actionsMesa"> 
-      <ion-card>
-        <h1>Acciones</h1>
-        <ion-button expand="block" (click)="BTNjuegos()">Juegos</ion-button>
-        <br>
-        <ion-button expand="block" (click)="BTNencuesta()">Encuesta</ion-button>
-        <br>
-        <ion-button expand="block" (click)="theBill()">Pedir Cuenta</ion-button>
+        <ion-button expand="block" (click)="BTNjuegos()" *ngIf="realizopedido">Juegos</ion-button>
+        <ion-button expand="block" (click)="BTNencuesta()" *ngIf="realizopedido">Encuesta</ion-button>
+        <ion-button expand="block" (click)="theBill()" *ngIf="recibido">Pedir Cuenta</ion-button>
         <br>
       </ion-card>
     </div>
-
 
     <br>
     <img src="../../assets/icon.png" height="200px" alt="">
