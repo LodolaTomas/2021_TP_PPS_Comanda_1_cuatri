@@ -1,3 +1,4 @@
+import { EmailService } from './../../services/email.service';
 import { NotificationsService } from './../../services/notifications.service';
 import { User } from './../../shared/User.class';
 import { Component, Input, OnInit } from '@angular/core';
@@ -48,8 +49,7 @@ export class LoginPage implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private authSvc: AuthService,
-    private cloudSrv: CloudFirestoreService,
-    private notificationsService: NotificationsService
+    private cloudSrv: CloudFirestoreService
   ) {
     this.miFormulario = formBuilder.group({
       email: new FormControl(''),
@@ -60,67 +60,76 @@ export class LoginPage implements OnInit {
     this.ingresando = false;
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   async onLogin() {
+
     this.cargando = true;
     this.user.email = this.miFormulario.value.email;
     this.user.password = this.miFormulario.value.clave;
 
-    const fbCollection = await this.cloudSrv
-      .GetByParameter('usuarios', 'email', this.user.email)
-      .get()
-      .toPromise();
-    const element = fbCollection.docs[0].data();
 
-    localStorage.setItem('token', JSON.stringify(this.user.email));
+    const fbCollection = await this.cloudSrv.GetByParameter('usuarios', 'email', this.user.email).get().toPromise();
 
-    if (element.estado == 'pendiente') {
-      this.cargando = false;
-      this.alert('warning', 'Su cuenta esta pendiente');
-    } else if (element.estado == 'rechazado') {
-      this.cargando = false;
-      this.alert('error', 'Su cuenta ha sido rechazada');
-    } else {
-      let user = await this.authSvc.onLogin(this.user);
-      if (user) {
-        this.authSvc.currentUser = this.user;
-        if (this.user.email == 'supervisor@yopmail.com') {
-          this.cargando = false;
-          this.router.navigateByUrl('/supervisor');
-          this.miFormulario.reset();
-        } else if (this.user.email == 'admin@yopmail.com') {
-          this.cargando = false;
-          this.router.navigateByUrl('/home');
-          this.miFormulario.reset();
-        } else if (this.user.email == 'metre@yopmail.com') {
-          this.cargando = false;
-          this.router.navigateByUrl('/metre');
-          this.miFormulario.reset();
-        } else if (this.user.email == 'mozo@yopmail.com') {
-          this.cargando = false;
-          this.router.navigateByUrl('/mozo');
-          this.miFormulario.reset();
-        } else if (this.user.email == 'cocinero@yopmail.com') {
-          this.cargando = false;
-          this.router.navigateByUrl('/cocinero');
-          this.miFormulario.reset();
-        } else if (this.user.email == 'bartender@yopmail.com') {
-          this.cargando = false;
-          this.router.navigateByUrl('/bartender');
-          this.miFormulario.reset();
-        } else {
-          this.cargando = false;
-          this.router.navigateByUrl('/home-clientes');
-          this.miFormulario.reset();
+    if (fbCollection.docs[0]) {
+
+      const element = fbCollection.docs[0].data();
+
+      localStorage.setItem('token', JSON.stringify(this.user.email));
+
+      if (element.estado == 'pendiente') {
+        this.cargando = false;
+        this.alert('warning', 'Su cuenta esta pendiente');
+      } else if (element.estado == 'rechazado') {
+        this.cargando = false;
+        this.alert('error', 'Su cuenta ha sido rechazada');
+      } else {
+
+        let user = await this.authSvc.onLogin(this.user)
+
+        if (user) {
+          this.authSvc.currentUser = this.user;
+          if (this.user.email == 'supervisor@yopmail.com') {
+            this.cargando = false;
+            this.router.navigateByUrl('/supervisor');
+            this.miFormulario.reset();
+          } else if (this.user.email == 'admin@yopmail.com') {
+            this.cargando = false;
+            this.router.navigateByUrl('/home');
+            this.miFormulario.reset();
+          } else if (this.user.email == 'metre@yopmail.com') {
+            this.cargando = false;
+            this.router.navigateByUrl('/metre');
+            this.miFormulario.reset();
+          } else if (this.user.email == 'mozo@yopmail.com') {
+            this.cargando = false;
+            this.router.navigateByUrl('/mozo');
+            this.miFormulario.reset();
+          } else if (this.user.email == 'cocinero@yopmail.com') {
+            this.cargando = false;
+            this.router.navigateByUrl('/cocinero');
+            this.miFormulario.reset();
+          } else if (this.user.email == 'bartender@yopmail.com') {
+            this.cargando = false;
+            this.router.navigateByUrl('/bartender');
+            this.miFormulario.reset();
+          } else {
+            this.cargando = false;
+            this.router.navigateByUrl('/home-clientes');
+            this.miFormulario.reset();
+          }
         }
       }
     }
+    else{
+      this.alert('error', 'Usuario inexistente')
+      this.cargando =false;
+      this.miFormulario.reset();
+    }
+
   }
 
-  public submit() {
-    //console.log(this.registrationForm.value);
-  }
+
 
   public LoginFast(id: number) {
     this.miFormulario.controls['email'].setValue(this.users[id].email);
