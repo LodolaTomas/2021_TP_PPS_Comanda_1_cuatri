@@ -31,7 +31,15 @@ export class LoginPage implements OnInit {
     { "email": "cocinero@yopmail.com", "clave": "123456" },
     { "email": "supervisor@yopmail.com", "clave": "123456" },
     { "email": "mozo@yopmail.com", "clave": "123456" },
-    { "email": "bartender@yopmail.com", "clave": "123456" }
+    { "email": "bartender@yopmail.com", "clave": "123456" },
+    
+    { "email": "admin2@yopmail.com", "clave": "123456" },
+    { "email": "metre2@yopmail.com", "clave": "123456" },
+    { "email": "cliente2@yopmail.com", "clave": "123456" },
+    { "email": "cocinero2@yopmail.com", "clave": "123456" },
+    { "email": "supervisor2@yopmail.com", "clave": "123456" },
+    { "email": "mozo2@yopmail.com", "clave": "123456" },
+    { "email": "bartender2@yopmail.com", "clave": "123456" }
   ];
 
   constructor(private formBuilder: FormBuilder, private router: Router, private authSvc: AuthService, private cloudSrv: CloudFirestoreService, private notificationsService:NotificationsService) {
