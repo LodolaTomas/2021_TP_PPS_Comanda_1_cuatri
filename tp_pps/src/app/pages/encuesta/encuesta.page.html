@@ -44,9 +44,13 @@
 
       <ion-list>
         <ion-list-header>Que probaste:*</ion-list-header>
-          <ion-item *ngFor="let entry of probo">
-            <ion-label>{{entry.val}}</ion-label>
-            <ion-checkbox slot="end" [(ngModel)]="entry.isChecked"></ion-checkbox>
+          <ion-item >
+            <ion-label>Comidas</ion-label>
+            <ion-checkbox slot="end" [(ngModel)]="comidas"></ion-checkbox>
+            <ion-label>Bebidas</ion-label>
+            <ion-checkbox slot="end" [(ngModel)]="bebidas"></ion-checkbox>
+            <ion-label>Postres</ion-label>
+            <ion-checkbox slot="end" [(ngModel)]="postres"></ion-checkbox>
           </ion-item>
       </ion-list>
 

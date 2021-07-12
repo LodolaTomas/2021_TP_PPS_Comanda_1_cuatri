@@ -40,12 +40,6 @@ export class EncuestaPage implements OnInit {
   public bebidas: boolean=false;
   public postres: boolean=false;
 
-  public probo = [
-    { val: 'comidas', isChecked: false },
-    { val: 'bebidas', isChecked: false },
-    { val: 'postres', isChecked: false }
-  ];
-
 
   public encuesta: Encuesta
 
@@ -87,7 +81,6 @@ export class EncuestaPage implements OnInit {
     this.encuesta.recomienda = this.recomienda;
     this.encuesta.volveria = this.volverias;
     this.encuesta.comentarios = this.comentarios;
-    this.encuesta.probaste = this.probo;
     this.encuesta.foto = url;
     this.encuesta.cliente = this.usuarioLog;
     this.encuesta.bebidas=this.bebidas;

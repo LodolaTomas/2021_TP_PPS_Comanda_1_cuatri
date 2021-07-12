@@ -22,7 +22,7 @@ export class HomeClientesPage implements OnInit {
   displayQREspera: boolean = true;
   numeroMesa: number;
   displayQRmesa: boolean = true;
-  actionsMesa: boolean = false;
+  actionsMesa: boolean = true;
   carga: boolean = false;
   existeUserEnListaEspera: boolean = false;
   userEsperandoAsignacionDeMesa: boolean = false;

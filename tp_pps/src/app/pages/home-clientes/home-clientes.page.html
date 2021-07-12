@@ -40,9 +40,6 @@
           <h3>Aguarde un momento, en breve le asignaremos una mesa</h3>
           <ion-button expand="block">Encuestas en Graficos</ion-button>
         </div>
-        <!-- <ion-fab-button class="mb-2" (click)="openQRmesa()" *ngIf="existeUserEnListaEspera && !userEsperandoAsignacionDeMesa">
-          <ion-icon name="qr-code-outline"></ion-icon>
-        </ion-fab-button> -->
       </ion-card>
     </div>
 
@@ -51,12 +48,12 @@
         <h1>Acciones</h1>
         <ion-button expand="block" (click)="cartfood()">Carta</ion-button>
         <ion-button expand="block" (click)="consultar()">Consultar</ion-button>
-        <br>
-        <br>
+        <ion-button expand="block" (click)="BTNjuegos()" *ngIf="realizopedido">Juegos</ion-button>
+        <ion-button expand="block" (click)="BTNencuesta()" *ngIf="realizopedido">Encuesta</ion-button>
+        <ion-button expand="block" (click)="theBill()" *ngIf="recibido">Pedir Cuenta</ion-button>
       </ion-card>
     </div>
     <div *ngIf="actionsMesa">
-      
       <ion-card *ngIf="!(statusPedidoLabel == 'Su pedido está listo para ser entregado!')">
         <h1>Estado del Pedido</h1>
         <h3>{{statusPedidoLabel}}</h3>
@@ -66,17 +63,6 @@
         <h1>Estado del Pedido</h1>
         <h3>{{statusPedidoLabel}}</h3>
         <ion-button color="success" class="mb-2" (click)="confirm()">Confirmar recepción</ion-button>
-      </ion-card>
-
-    </div>
-    <div id="juegosEncuesta" *ngIf="actionsMesa"> 
-      <ion-card>
-        <!-- <h1>Estado del Pedido</h1>
-        <h3>{{statusPedidoLabel}}</h3> -->
-        <h1>Acciones</h1>
-        <ion-button expand="block" (click)="BTNjuegos()" *ngIf="realizopedido">Juegos</ion-button>
-        <ion-button expand="block" (click)="BTNencuesta()" *ngIf="realizopedido">Encuesta</ion-button>
-        <ion-button expand="block" (click)="theBill()" *ngIf="recibido">Pedir Cuenta</ion-button>
       </ion-card>
     </div>
 
