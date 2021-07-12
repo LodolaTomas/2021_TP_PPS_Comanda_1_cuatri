@@ -36,9 +36,9 @@ export class EncuestaPage implements OnInit {
   public probaste: any;
   public comentarios: any;
 
-  public comidas: any;
-  public bebidas: any;
-  public postres: any;
+  public comidas: boolean=false;
+  public bebidas: boolean=false;
+  public postres: boolean=false;
 
   public probo = [
     { val: 'comidas', isChecked: false },
@@ -50,12 +50,9 @@ export class EncuestaPage implements OnInit {
   public encuesta: Encuesta
 
   constructor(private imgSrv: ImagesService, private firestore: CloudFirestoreService, private router: Router, private file: File,) {
-
     this.encuesta = new Encuesta()
     this.usuarios = ''
   }
-
-
 
   async traerUsuario() {
     const fbCollection = await this.firestore.GetByParameter("usuarios", "email", this.usuarioLog).get().toPromise();
@@ -92,7 +89,10 @@ export class EncuestaPage implements OnInit {
     this.encuesta.comentarios = this.comentarios;
     this.encuesta.probaste = this.probo;
     this.encuesta.foto = url;
-    this.encuesta.cliente = this.usuarioLog
+    this.encuesta.cliente = this.usuarioLog;
+    this.encuesta.bebidas=this.bebidas;
+    this.encuesta.comidas=this.comidas;
+    this.encuesta.postres=this.postres;
 
 
     console.log(this.encuesta)
