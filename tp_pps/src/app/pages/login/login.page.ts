@@ -64,7 +64,6 @@ export class LoginPage implements OnInit {
     const element = fbCollection.docs[0].data();
 
     localStorage.setItem('token', JSON.stringify(this.user.email));
-    // console.log(fbCollection.docs[0].data());
 
     if (element.estado == 'pendiente') {
       this.cargando = false;

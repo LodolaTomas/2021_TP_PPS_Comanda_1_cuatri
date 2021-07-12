@@ -22,18 +22,17 @@ export class HomeClientesPage implements OnInit {
   displayQREspera: boolean = true;
   numeroMesa: number;
   displayQRmesa: boolean = true;
-  actionsMesa: boolean = true;
+  actionsMesa: boolean = false;
   carga: boolean = false;
   existeUserEnListaEspera: boolean = false;
   userEsperandoAsignacionDeMesa: boolean = false;
-  realizopedido: boolean = true
-  recibido: boolean = true
+  realizopedido: boolean = false
+  recibido: boolean = false
   public usuarios: any = [];
   public usuarioLog: any = {};
   public tokenUser: any = [];
   public statusPedidoLabel: string;
   public pedido: any = {};
-  //barcodeScannerOptions: BarcodeScannerOptions;
 
   constructor(
     private authS: AuthService,
@@ -46,19 +45,24 @@ export class HomeClientesPage implements OnInit {
   }
 
   async getUser() {
-    let table = -1;
-    this.fbService.GetByParameter('usuarios', 'email', JSON.parse(localStorage.getItem('token'))).valueChanges().subscribe(async user => {
+    if(JSON.parse(localStorage.getItem('token')).anonimus){
+      this.tokenUser=JSON.parse(localStorage.getItem('token'));
+    }else{
+      this.fbService.GetByParameter('usuarios', 'email', JSON.parse(localStorage.getItem('token'))).valueChanges().subscribe(async user => {
       this.tokenUser = user[0];
       if (this.tokenUser.table != null) {
         this.userEsperandoAsignacionDeMesa = true;
+        this.actionsMesa = true;
       }
     })
+    }
   }
   getPedidoPorMesa(table) {
     this.fbService.GetByParameter('pedidos', 'table', table).valueChanges().subscribe(async pedidos => {
       if (pedidos.length > 0) {
         pedidos.forEach(pedidoItem => {
           if (pedidoItem.status !== 'cobrado') {
+            console.log(pedidoItem.status)
             this.pedido = pedidoItem;
             if (pedidoItem.status == 'preparando')
               this.statusPedidoLabel = "Su pedido está en preparación, en breve lo estará recibiendo";
@@ -108,7 +112,6 @@ export class HomeClientesPage implements OnInit {
           }
         }
         if (this.tokenUser.table != null) {
-          console.log('mesa' + this.tokenUser.table)
           if (res.text == 'mesa' + this.tokenUser.table) {
             this.actionsMesa = true;
             this.getPedidoPorMesa(this.tokenUser.table);
@@ -129,25 +132,7 @@ export class HomeClientesPage implements OnInit {
   }
 
 
-  openQRmesa() {
-    this.displayQRmesa = false;
-    this.carga = true;
-    this.scanner
-      .scan()
-      .then((res) => {
-        this.scannedBarCode = res;
-        console.log(res);
-        this.idMesa = this.scannedBarCode['text'];
-        localStorage.setItem('idMesa', this.idMesa);
-        this.actionsMesa = true;
-      })
-      .catch((err) => {
-        alert(err);
-      });
-  }
-
   consultar() {
-    console.log(this.idMesa);
     this.router.navigateByUrl('consultas');
   }
 
@@ -177,7 +162,6 @@ export class HomeClientesPage implements OnInit {
     else {
       this.router.navigateByUrl('resultados')
     }
-
   }
 
   alert(icon: SweetAlertIcon, text: string) {
@@ -187,7 +171,6 @@ export class HomeClientesPage implements OnInit {
       showConfirmButton: false,
       timer: 2000,
       timerProgressBar: true,
-
       didOpen: (toast) => {
         toast.addEventListener('mouseenter', Swal.stopTimer);
         toast.addEventListener('mouseleave', Swal.resumeTimer);
