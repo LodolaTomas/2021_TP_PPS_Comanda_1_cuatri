@@ -21,18 +21,19 @@ export class HomeClientesPage implements OnInit {
   idMesa: any;
   displayQREspera: boolean = true;
   numeroMesa: number;
-  displayQRmesa: boolean = true;
   actionsMesa: boolean = false;
   carga: boolean = false;
   existeUserEnListaEspera: boolean = false;
   userEsperandoAsignacionDeMesa: boolean = false;
   realizopedido: boolean = false
-  recibido: boolean = false
+  recibido: boolean = false;
+  entregando:boolean=false;
   public usuarios: any = [];
   public usuarioLog: any = {};
   public tokenUser: any = [];
   public statusPedidoLabel: string;
   public pedido: any = {};
+
 
   constructor(
     private authS: AuthService,
@@ -50,9 +51,14 @@ export class HomeClientesPage implements OnInit {
     }else{
       this.fbService.GetByParameter('usuarios', 'email', JSON.parse(localStorage.getItem('token'))).valueChanges().subscribe(async user => {
       this.tokenUser = user[0];
-      if (this.tokenUser.table != null) {
-        this.userEsperandoAsignacionDeMesa = true;
-        this.actionsMesa = true;
+      console.log(this.tokenUser)
+      if(this.tokenUser.waitinglist==true){
+        if (this.tokenUser.table != null) {
+          this.userEsperandoAsignacionDeMesa = true;
+          this.existeUserEnListaEspera=false;
+        }else{
+          this.existeUserEnListaEspera=true;
+        }
       }
     })
     }
@@ -64,14 +70,23 @@ export class HomeClientesPage implements OnInit {
           if (pedidoItem.status !== 'cobrado') {
             console.log(pedidoItem.status)
             this.pedido = pedidoItem;
+            if(pedidoItem.status==='pendiente'){
+              this.realizopedido = true;
+            }
             if (pedidoItem.status == 'preparando')
               this.statusPedidoLabel = "Su pedido está en preparación, en breve lo estará recibiendo";
-            else if (pedidoItem.status == 'entregando')
+            else if (pedidoItem.status == 'entregando'){
+              this.recibido=false;
+              this.entregando=true;
               this.statusPedidoLabel = "¡Su pedido está listo para ser entregado!";
+            }
             else if (pedidoItem.status == 'entregado')
               this.statusPedidoLabel = "Pedido entregado. ¡Buen provecho!";
-          }
+              this.recibido=true;
+            }
         });
+      }else{
+        this.realizopedido=false
       }
     })
   }
@@ -94,8 +109,8 @@ export class HomeClientesPage implements OnInit {
     this.scanner
       .scan()
       .then((res) => {
-        console.log(res.text);
-        if (res.text == 'listadeespera') {
+        if (res.text === 'listadeespera') {
+          console.log(this.tokenUser)
           if (this.tokenUser.waitinglist == false) {
             const userWaitingList = {
               id: this.tokenUser.id,
@@ -119,12 +134,7 @@ export class HomeClientesPage implements OnInit {
             this.alert('error', 'No es la Mesa Asignada')
           }
         }
-        if (this.tokenUser.estado == 'pendiente') {
-          this.realizopedido = true;
-        }
-        if (this.tokenUser.estado = 'recibido') {
-          this.recibido = true;
-        }
+        
       })
       .catch((err) => {
         alert(err);

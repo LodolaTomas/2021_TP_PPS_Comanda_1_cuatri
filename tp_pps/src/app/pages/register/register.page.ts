@@ -42,7 +42,7 @@ export class RegisterPage implements OnInit {
       flag = false
       data = { 'name': form.value.name, 'image': url, 'id': '', waitinglist: false, assignedtable: false, table: null, juego1: false, juego2: false, juego3: false,anonimus:true };
     } else {
-      data = { 'name': form.value.name, 'lastname': form.value.lastname, 'DNI': form.value.dni, 'password': form.value.password, 'email': form.value.email, 'perfil': 'cliente', 'estado': 'pendiente', 'image': url, 'id': '', waitinglista: false, assignedtable: false, table: null, juego1: false, juego2: false, juego3: false };
+      data = { 'name': form.value.name, 'lastname': form.value.lastname, 'DNI': form.value.dni, 'password': form.value.password, 'email': form.value.email, 'perfil': 'cliente', 'estado': 'pendiente', 'image': url, 'id': '', waitinglist: false, assignedtable: false, table: null, juego1: false, juego2: false, juego3: false };
     }
 
     if (this.isAnonimous) {
