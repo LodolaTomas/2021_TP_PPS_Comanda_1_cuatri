@@ -56,6 +56,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/home-clientes/home-clientes.module').then(m => m.HomeClientesPageModule)
   },
   {
+    path: 'estado-pedido',
+    loadChildren: () => import('./pages/home-clientes/estado-pedido/estado-pedido.module').then(m => m.EstadoPedidoPageModule)
+  },
+  {
     path: 'lista-espera-mesas',
     loadChildren: () => import('./pages/lista-espera-mesas/lista-espera-mesas.module').then(m => m.ListaEsperaMesasPageModule)
   }
@@ -111,7 +115,8 @@ const routes: Routes = [
   {
     path: 'adm-bebidas',
     loadChildren: () => import('./pages/bartender/adm-bebidas/adm-bebidas.module').then(m => m.AdmBebidasPageModule)
-  },  {
+  },
+  {
     path: 'resultados',
     loadChildren: () => import('./encuesta/resultados/resultados.module').then( m => m.ResultadosPageModule)
   }
