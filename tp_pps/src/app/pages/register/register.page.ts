@@ -40,9 +40,9 @@ export class RegisterPage implements OnInit {
     let id = this.cloudSrv.ReturnFirestore().createId()
     if (form.value.dni == undefined) {
       flag = false
-      data = { 'name': form.value.name, 'image': url, 'id': '',waitinglist:false, assignedtable:false,table:null,juego1:false,juego2:false,juego3:false };
+      data = { 'name': form.value.name, 'image': url, 'id': '', waitinglist: false, assignedtable: false, table: null, juego1: false, juego2: false, juego3: false };
     } else {
-      data = { 'name': form.value.name, 'lastname': form.value.lastname, 'DNI': form.value.dni, 'password': form.value.password, 'email': form.value.email, 'perfil': 'cliente', 'estado': 'pendiente', 'image': url, 'id': '',waitinglista:false, assignedtable:false,table:null,juego1:false,juego2:false,juego3:false };
+      data = { 'name': form.value.name, 'lastname': form.value.lastname, 'DNI': form.value.dni, 'password': form.value.password, 'email': form.value.email, 'perfil': 'cliente', 'estado': 'pendiente', 'image': url, 'id': '', waitinglista: false, assignedtable: false, table: null, juego1: false, juego2: false, juego3: false };
     }
 
     if (this.isAnonimous) {
@@ -111,14 +111,15 @@ export class RegisterPage implements OnInit {
       let userQR = this.scannedBarCode["text"]
       let data = userQR.split("@");
       console.log(data)
-      if (Number(data[4]) != NaN) {
+
+      if (!(isNaN(Number(data[4])))) {
         document.getElementById('name').setAttribute('value', data[2])
         document.getElementById('lastname').setAttribute('value', data[1])
         document.getElementById('DNI').setAttribute('value', data[4])
       } else {
         document.getElementById('name').setAttribute('value', data[5])
         document.getElementById('lastname').setAttribute('value', data[4])
-        document.getElementById('DNI').setAttribute('value', data[1])
+        document.getElementById('DNI').setAttribute('value', data[1].trim())
       }
     }).catch(err => {
       alert(err);
