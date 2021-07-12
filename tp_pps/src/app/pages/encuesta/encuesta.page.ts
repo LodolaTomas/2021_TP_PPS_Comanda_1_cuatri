@@ -90,12 +90,12 @@ export class EncuestaPage implements OnInit {
     this.encuesta.recomienda = this.recomienda;
     this.encuesta.volveria = this.volverias;
     this.encuesta.comentarios = this.comentarios;
-    this.encuesta.probaste = this.probo
-    this.encuesta.foto = url
+    this.encuesta.probaste = this.probo;
+    this.encuesta.foto = url;
     this.encuesta.cliente = this.usuarioLog
-    this.encuesta.comidas=this.comidas;
-    this.encuesta.bebidas=this.bebidas;
-    this.encuesta.postres=this.postres;
+
+
+    console.log(this.encuesta)
 
     this.firestore.InsertCustomID('encuestas', this.encuesta.id, Object.assign({}, this.encuesta))
 

@@ -222,7 +222,7 @@ export class AdmPedidosPage implements OnInit {
 
   Entregar(pedido) {
     let auxPedido = pedido;
-    pedido.status = 'entregado';
+    pedido.status = 'entregando';
     
     this.firestore.Update(pedido.id, "pedidos", auxPedido)
 

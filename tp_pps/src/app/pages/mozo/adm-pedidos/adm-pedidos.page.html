@@ -113,7 +113,7 @@
               </ion-col>
 
               <ion-col>
-                <ion-button color="success" expand="block mt-3" (click)="Entregar(pedido)">Entregar</ion-button>
+                <ion-button *ngIf="!(pedido.status == 'entregando')" color="success" expand="block mt-3" (click)="Entregar(pedido)">Entregar</ion-button>
               </ion-col>
 
             </ion-row>
@@ -143,7 +143,7 @@
               <h4 class="mt-1">Estado: <b>{{pedido.status |titlecase  }}</b></h4>
             </ion-col>
             <ion-col>
-              <ion-button color="success" expand="block mt-3" (click)="Cobrar(pedido)">Cobrar</ion-button>
+              <ion-button *ngIf="(pedido.status == 'pagado')"  color="success" expand="block mt-3" (click)="Cobrar(pedido)">Cobrar</ion-button>
             </ion-col>
           </ion-row>
 

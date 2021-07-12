@@ -51,16 +51,19 @@ export class ConsultasPage implements OnInit {
       this.mensajes = data;
 
 
+      if (this.mensajes.length) {
+        if (this.mensajes[this.mensajes.length - 1].nombre !== this.usuarioLog.name) {
 
-      if (this.mensajes[this.mensajes.length - 1].nombre !== this.usuarioLog.name) {
+          this.usuarioLog = JSON.parse(localStorage.getItem('token'));
+          console.log(this.usuarioLog)
 
-        this.usuarioLog = JSON.parse(localStorage.getItem('token'));
-        console.log(this.usuarioLog)
-
-        this.notiSVC.notifyByProfile("Tiene un mensaje nuevo", this.usuarioLog, "cliente")
+          this.notiSVC.notifyByProfile("Tiene un mensaje nuevo", this.usuarioLog, "cliente")
+        }
       }
     });
+
   }
+
 
   async traerUsuario() {
     this.authS.GetCurrentUser().then((response) => {

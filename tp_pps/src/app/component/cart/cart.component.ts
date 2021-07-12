@@ -57,12 +57,16 @@ export class CartComponent implements OnInit {
       this.editOrder = 'Aceptar';
       this.flag = true;
       this.pedir = 'Eliminar seleccionados';
+      this.loading = false;
     } else {
       this.editOrder = 'Editar';
       this.flag = false;
       this.pedir = 'Realizar Pedido';
+      this.loading = false;
     }
+
   }
+
   isChecked(event, index) {
     if (!event.target.checked) {
       this.array1.push(index);
@@ -83,6 +87,7 @@ export class CartComponent implements OnInit {
           this.data.total_amount -= this.data.order[element].price;
           this.data.total_quantity -= this.data.order[element].quantity;
           this.data.order.splice(element, 1);
+          this.loading = false;
         });
       }
     }

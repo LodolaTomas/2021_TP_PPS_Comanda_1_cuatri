@@ -63,9 +63,9 @@ export class HomeClientesPage implements OnInit {
             if     (pedidoItem.status == 'preparando')
                 this.statusPedidoLabel = "Su pedido está en preparación, en breve lo estará recibiendo";
             else if(pedidoItem.status == 'entregando')
-                this.statusPedidoLabel = "Su pedido está listo para ser entregado!";
-            else
-                this.statusPedidoLabel = "No se encontró estado para su pedido";
+                this.statusPedidoLabel = "¡Su pedido está listo para ser entregado!";
+                else if(pedidoItem.status == 'entregado')
+                this.statusPedidoLabel = "Pedido entregado. ¡Buen provecho!";
             }
         });
       }
@@ -73,6 +73,11 @@ export class HomeClientesPage implements OnInit {
   }
   ngOnInit() {
 
+  }
+
+  confirm()
+  {
+    this.fbService.Update( this.pedido.id, "pedidos", {status:'entregado'})
   }
 
   logout() {
