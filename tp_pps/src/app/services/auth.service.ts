@@ -26,7 +26,7 @@ export class AuthService {
     try {
       return await this.afAuth.signInWithEmailAndPassword(user.email, user.password);
     } catch (error) {
-      /*** ALERTS ***/
+
       this.alert('error', 'Error, usuario invalido');
     }
   }
