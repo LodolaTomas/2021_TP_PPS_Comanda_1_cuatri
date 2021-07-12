@@ -26,7 +26,7 @@ export class HomeClientesPage implements OnInit {
   carga: boolean = false;
   existeUserEnListaEspera: boolean = false;
   userEsperandoAsignacionDeMesa: boolean = false;
-  realizopedido:boolean=false
+  realizopedido:boolean=true
   recibido:boolean=false
   public usuarios: any = [];
   public usuarioLog: any = {};

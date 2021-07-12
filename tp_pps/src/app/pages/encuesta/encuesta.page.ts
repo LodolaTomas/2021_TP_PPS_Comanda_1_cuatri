@@ -55,7 +55,6 @@ export class EncuestaPage implements OnInit {
     const fbCollection = await this.firestore.GetByParameter("usuarios", "email", this.usuarioLog).get().toPromise();
     const element = fbCollection.docs[0].data();
     this.usuarioLog = element
-    //localStorage.setItem('token', JSON.stringify(element));
   }
   ngOnInit() {
     this.usuarioLog = JSON.parse(localStorage.getItem('token'));
@@ -87,6 +86,9 @@ export class EncuestaPage implements OnInit {
     this.encuesta.comentarios = this.comentarios;
     this.encuesta.foto = url
     this.encuesta.cliente = this.usuarioLog
+    this.encuesta.comidas=this.comidas;
+    this.encuesta.bebidas=this.bebidas;
+    this.encuesta.postres=this.postres;
 
     this.firestore.InsertCustomID('encuestas', this.encuesta.id, Object.assign({}, this.encuesta))
 
