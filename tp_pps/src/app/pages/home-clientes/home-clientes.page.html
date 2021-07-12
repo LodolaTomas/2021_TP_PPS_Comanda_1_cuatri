@@ -54,12 +54,13 @@
       </ion-card>
     </div>
     <div *ngIf="actionsMesa">
-      <ion-card *ngIf="!(statusPedidoLabel == 'Su pedido está listo para ser entregado!')">
+      
+      <ion-card *ngIf="!(statusPedidoLabel == '¡Su pedido está listo para ser entregado!')">
         <h1>Estado del Pedido</h1>
         <h3>{{statusPedidoLabel}}</h3>
       </ion-card>
 
-      <ion-card *ngIf="statusPedidoLabel == 'Su pedido está listo para ser entregado!'">
+      <ion-card *ngIf="statusPedidoLabel == '¡Su pedido está listo para ser entregado!'">
         <h1>Estado del Pedido</h1>
         <h3>{{statusPedidoLabel}}</h3>
         <ion-button color="success" class="mb-2" (click)="confirm()">Confirmar recepción</ion-button>
