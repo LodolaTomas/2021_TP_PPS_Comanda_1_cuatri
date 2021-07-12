@@ -51,10 +51,10 @@ export class HomeClientesPage implements OnInit {
   }
 
   async getUser() {
-    this.fbService.GetByParameter('usuarios','email',JSON.parse(localStorage.getItem('token'))).valueChanges().subscribe(async user=>{
-      this.tokenUser=user[0];
-      if(this.tokenUser.table!=null){
-        this.userEsperandoAsignacionDeMesa=true
+    this.fbService.GetByParameter('usuarios', 'email', JSON.parse(localStorage.getItem('token'))).valueChanges().subscribe(async user => {
+      this.tokenUser = user[0];
+      if (this.tokenUser.table != null) {
+        this.userEsperandoAsignacionDeMesa = true
       }
     })
     /* this.fbService.GetByParameter("usuarios", "id", tokenUser.id).valueChanges()
@@ -115,16 +115,16 @@ export class HomeClientesPage implements OnInit {
               .then(() => {
                 this.alert('success', 'Agregado a la lista de espera!');
                 this.existeUserEnListaEspera = true;
-                this.fbService.Update(this.tokenUser.id,'usuarios',{waitinglist:true})
+                this.fbService.Update(this.tokenUser.id, 'usuarios', { waitinglist: true })
               });
           }
         }
-        if(this.tokenUser.table!=null){
-          console.log('mesa'+this.tokenUser.table )
-          if(res.text=='mesa'+this.tokenUser.table){
-            this.actionsMesa=true
-          }else{
-            this.alert('error','No es la Mesa Asignada')
+        if (this.tokenUser.table != null) {
+          console.log('mesa' + this.tokenUser.table)
+          if (res.text == 'mesa' + this.tokenUser.table) {
+            this.actionsMesa = true
+          } else {
+            this.alert('error', 'No es la Mesa Asignada')
           }
         }
       })
@@ -133,16 +133,6 @@ export class HomeClientesPage implements OnInit {
       });
   }
 
-  // async traerUsuario() {
-  //   this.authS.GetCurrentUser().then((response) => {
-  //     if (response != null) {
-  //       let user = this.usuarios.filter((u) => u.email == response.email);
-  //       this.usuarioLog = user[0];
-
-  //     }
-
-  //   });
-  // }
 
   openQRmesa() {
     this.displayQRmesa = false;
@@ -186,7 +176,13 @@ export class HomeClientesPage implements OnInit {
   }
 
   BTNencuesta() {
-    this.router.navigateByUrl('encuesta');
+    if (this.tokenUser.encuestado == false) {
+      this.router.navigateByUrl('encuesta');
+    }
+    else{
+      this.router.navigateByUrl('resultados')
+    }
+
   }
 
   alert(icon: SweetAlertIcon, text: string) {

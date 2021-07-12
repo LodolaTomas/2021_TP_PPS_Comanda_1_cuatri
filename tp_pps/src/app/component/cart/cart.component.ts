@@ -94,8 +94,8 @@ export class CartComponent implements OnInit {
       this.fire.InsertCustomID('pedidos', this.data.id, Object.assign({}, this.data)).then(() => {
         this.alert('success', 'Pedido realizado');
         localStorage.setItem('pedido', JSON.stringify(this.data))
-        
-    this.loading = false;
+
+        this.loading = false;
       })
     }
 
