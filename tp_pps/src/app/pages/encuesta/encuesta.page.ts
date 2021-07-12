@@ -40,6 +40,12 @@ export class EncuestaPage implements OnInit {
   public bebidas: any;
   public postres: any;
 
+  public probo = [
+    { val: 'comidas', isChecked: false },
+    { val: 'bebidas', isChecked: false },
+    { val: 'postres', isChecked: false }
+  ];
+
 
   public encuesta: Encuesta
 
@@ -55,7 +61,6 @@ export class EncuestaPage implements OnInit {
     const fbCollection = await this.firestore.GetByParameter("usuarios", "email", this.usuarioLog).get().toPromise();
     const element = fbCollection.docs[0].data();
     this.usuarioLog = element
-    //localStorage.setItem('token', JSON.stringify(element));
   }
   ngOnInit() {
     this.usuarioLog = JSON.parse(localStorage.getItem('token'));
@@ -85,8 +90,12 @@ export class EncuestaPage implements OnInit {
     this.encuesta.recomienda = this.recomienda;
     this.encuesta.volveria = this.volverias;
     this.encuesta.comentarios = this.comentarios;
+    this.encuesta.probaste = this.probo
     this.encuesta.foto = url
     this.encuesta.cliente = this.usuarioLog
+    this.encuesta.comidas=this.comidas;
+    this.encuesta.bebidas=this.bebidas;
+    this.encuesta.postres=this.postres;
 
     this.firestore.InsertCustomID('encuestas', this.encuesta.id, Object.assign({}, this.encuesta))
 

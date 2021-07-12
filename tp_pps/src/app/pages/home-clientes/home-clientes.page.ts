@@ -6,7 +6,6 @@ import { CloudFirestoreService } from 'src/app/services/cloud-firestore.service'
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { ModalController } from '@ionic/angular';
-import { CartComponent } from 'src/app/component/cart/cart.component';
 import { MakeOrderComponent } from 'src/app/component/make-order/make-order.component';
 
 @Component({
@@ -27,7 +26,8 @@ export class HomeClientesPage implements OnInit {
   carga: boolean = false;
   existeUserEnListaEspera: boolean = false;
   userEsperandoAsignacionDeMesa: boolean = false;
-
+  realizopedido: boolean = true
+  recibido: boolean = true
   public usuarios: any = [];
   public usuarioLog: any = {};
   public tokenUser: any = [];
@@ -40,7 +40,6 @@ export class HomeClientesPage implements OnInit {
     private router: Router,
     private scanner: BarcodeScanner,
     private fbService: CloudFirestoreService,
-    private notifSVC: NotificationsService,
     private modalController: ModalController
   ) {
     this.getUser();
@@ -88,17 +87,6 @@ export class HomeClientesPage implements OnInit {
       .scan()
       .then((res) => {
         console.log(res.text);
-        /* const userWaitingList = { id: this.usuarioLog.id, status: "esperando", date: new Date() };
-      this.fbService.Insert("lista_espera_local", userWaitingList)
-        .then(() => {
-          this.alert('success', "Agregado a la lista de espera!");
-          this.existeUserEnListaEspera=true;
-          this.userEsperandoAsignacionDeMesa=true;
-        });
-      this.displayQREspera = false;
-      this.input = this.scannedBarCode["text"];
-      this.notifSVC.notifyByProfile("Cliente En la lista de espera: ", this.usuarioLog, "metre") */
-        //     this.notificar({ name: 'Pepe Anonimo' });
         if (res.text == 'listadeespera') {
           if (this.tokenUser.waitinglist == false) {
             const userWaitingList = {
@@ -123,6 +111,12 @@ export class HomeClientesPage implements OnInit {
           } else {
             this.alert('error', 'No es la Mesa Asignada')
           }
+        }
+        if (this.tokenUser.estado == 'pendiente') {
+          this.realizopedido = true;
+        }
+        if (this.tokenUser.estado = 'recibido') {
+          this.recibido = true;
         }
       })
       .catch((err) => {
@@ -176,7 +170,7 @@ export class HomeClientesPage implements OnInit {
     if (this.tokenUser.encuestado == false) {
       this.router.navigateByUrl('encuesta');
     }
-    else{
+    else {
       this.router.navigateByUrl('resultados')
     }
 
