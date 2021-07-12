@@ -29,16 +29,17 @@
 
   <div class="container mt-3 ion-text-center">
 
-    <div id="escanearMesa" *ngIf="displayQRmesa" align="center">
+    <div id="escanearMesa" align="center">
       <ion-card>
         <!-- si existe el usuario en la lista de espera y NO esta con estado esperando muestro lo siguiente:-->
         <h1 *ngIf="userEsperandoAsignacionDeMesa">Ha sido asignado a Mesa {{tokenUser.table}}</h1>
+        <h3 *ngIf="actionsMesa==false">Escanee su Mesa</h3>
         <!-- si NO existe el usuario en la lista de espera (sea con status ingresado o esperando) muestro lo siguiente: -->
-        <h3 *ngIf="userEsperandoAsignacionDeMesa==false">Escanee el QR para ingresar a la Lista de Espera</h3>
+        <h3 *ngIf="tokenUser.waitinglist==false">Escanee el QR para ingresar a la Lista de Espera</h3>
         <!-- si existe el usuario en la lista de espera y SI esta con estado esperando muestro lo siguiente: -->
         <div *ngIf="existeUserEnListaEspera">
           <h3>Aguarde un momento, en breve le asignaremos una mesa</h3>
-          <ion-button expand="block">Encuestas en Graficos</ion-button>
+          <ion-button expand="block" (click)="router.navigateByUrl('resultados')">Encuestas en Graficos</ion-button>
         </div>
       </ion-card>
     </div>
@@ -55,12 +56,12 @@
     </div>
     <div *ngIf="actionsMesa">
       
-      <ion-card *ngIf="!(statusPedidoLabel == '¡Su pedido está listo para ser entregado!')">
+      <ion-card *ngIf="realizopedido">
         <h1>Estado del Pedido</h1>
         <h3>{{statusPedidoLabel}}</h3>
       </ion-card>
 
-      <ion-card *ngIf="statusPedidoLabel == '¡Su pedido está listo para ser entregado!'">
+      <ion-card *ngIf="entregando">
         <h1>Estado del Pedido</h1>
         <h3>{{statusPedidoLabel}}</h3>
         <ion-button color="success" class="mb-2" (click)="confirm()">Confirmar recepción</ion-button>

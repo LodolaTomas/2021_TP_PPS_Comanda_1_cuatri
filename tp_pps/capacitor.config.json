@@ -3,6 +3,10 @@
   "appName": "Coma y punto",
   "webDir": "www",
   "bundledWebRuntime": false,
+  "server": {
+    "url": "http://192.168.0.4:8100",
+    "cleartext": true
+  },
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 500,
@@ -16,7 +20,6 @@
       "spinnerColor": "#999999",
       "splashFullScreen": true,
       "splashImmersive": true,
-
       "LocalNotifications":{
         "sound": "sound.mp3"
       }

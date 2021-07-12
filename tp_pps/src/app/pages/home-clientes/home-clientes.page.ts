@@ -21,19 +21,19 @@ export class HomeClientesPage implements OnInit {
   idMesa: any;
   displayQREspera: boolean = true;
   numeroMesa: number;
-  displayQRmesa: boolean = true;
-  actionsMesa: boolean = true;
+  actionsMesa: boolean = false;
   carga: boolean = false;
   existeUserEnListaEspera: boolean = false;
   userEsperandoAsignacionDeMesa: boolean = false;
-  realizopedido: boolean = true
-  recibido: boolean = true
+  realizopedido: boolean = false
+  recibido: boolean = false;
+  entregando:boolean=false;
   public usuarios: any = [];
   public usuarioLog: any = {};
   public tokenUser: any = [];
   public statusPedidoLabel: string;
   public pedido: any = {};
-  //barcodeScannerOptions: BarcodeScannerOptions;
+
 
   constructor(
     private authS: AuthService,
@@ -46,28 +46,47 @@ export class HomeClientesPage implements OnInit {
   }
 
   async getUser() {
-    let table = -1;
-    this.fbService.GetByParameter('usuarios', 'email', JSON.parse(localStorage.getItem('token'))).valueChanges().subscribe(async user => {
+    if(JSON.parse(localStorage.getItem('token')).anonimus){
+      this.tokenUser=JSON.parse(localStorage.getItem('token'));
+    }else{
+      this.fbService.GetByParameter('usuarios', 'email', JSON.parse(localStorage.getItem('token'))).valueChanges().subscribe(async user => {
       this.tokenUser = user[0];
-      if (this.tokenUser.table != null) {
-        this.userEsperandoAsignacionDeMesa = true;
+      console.log(this.tokenUser)
+      if(this.tokenUser.waitinglist==true){
+        if (this.tokenUser.table != null) {
+          this.userEsperandoAsignacionDeMesa = true;
+          this.existeUserEnListaEspera=false;
+        }else{
+          this.existeUserEnListaEspera=true;
+        }
       }
     })
+    }
   }
   getPedidoPorMesa(table) {
     this.fbService.GetByParameter('pedidos', 'table', table).valueChanges().subscribe(async pedidos => {
       if (pedidos.length > 0) {
         pedidos.forEach(pedidoItem => {
           if (pedidoItem.status !== 'cobrado') {
+            console.log(pedidoItem.status)
             this.pedido = pedidoItem;
+            if(pedidoItem.status==='pendiente'){
+              this.realizopedido = true;
+            }
             if (pedidoItem.status == 'preparando')
               this.statusPedidoLabel = "Su pedido está en preparación, en breve lo estará recibiendo";
-            else if (pedidoItem.status == 'entregando')
+            else if (pedidoItem.status == 'entregando'){
+              this.recibido=false;
+              this.entregando=true;
               this.statusPedidoLabel = "¡Su pedido está listo para ser entregado!";
+            }
             else if (pedidoItem.status == 'entregado')
               this.statusPedidoLabel = "Pedido entregado. ¡Buen provecho!";
-          }
+              this.recibido=true;
+            }
         });
+      }else{
+        this.realizopedido=false
       }
     })
   }
@@ -90,8 +109,8 @@ export class HomeClientesPage implements OnInit {
     this.scanner
       .scan()
       .then((res) => {
-        console.log(res.text);
-        if (res.text == 'listadeespera') {
+        if (res.text === 'listadeespera') {
+          console.log(this.tokenUser)
           if (this.tokenUser.waitinglist == false) {
             const userWaitingList = {
               id: this.tokenUser.id,
@@ -108,7 +127,6 @@ export class HomeClientesPage implements OnInit {
           }
         }
         if (this.tokenUser.table != null) {
-          console.log('mesa' + this.tokenUser.table)
           if (res.text == 'mesa' + this.tokenUser.table) {
             this.actionsMesa = true;
             this.getPedidoPorMesa(this.tokenUser.table);
@@ -116,38 +134,15 @@ export class HomeClientesPage implements OnInit {
             this.alert('error', 'No es la Mesa Asignada')
           }
         }
-        if (this.tokenUser.estado == 'pendiente') {
-          this.realizopedido = true;
-        }
-        if (this.tokenUser.estado = 'recibido') {
-          this.recibido = true;
-        }
+        
       })
       .catch((err) => {
         alert(err);
       });
   }
 
-
-  openQRmesa() {
-    this.displayQRmesa = false;
-    this.carga = true;
-    this.scanner
-      .scan()
-      .then((res) => {
-        this.scannedBarCode = res;
-        console.log(res);
-        this.idMesa = this.scannedBarCode['text'];
-        localStorage.setItem('idMesa', this.idMesa);
-        this.actionsMesa = true;
-      })
-      .catch((err) => {
-        alert(err);
-      });
-  }
 
   consultar() {
-    console.log(this.idMesa);
     this.router.navigateByUrl('consultas');
   }
 
@@ -177,7 +172,6 @@ export class HomeClientesPage implements OnInit {
     else {
       this.router.navigateByUrl('resultados')
     }
-
   }
 
   alert(icon: SweetAlertIcon, text: string) {
@@ -187,7 +181,6 @@ export class HomeClientesPage implements OnInit {
       showConfirmButton: false,
       timer: 2000,
       timerProgressBar: true,
-
       didOpen: (toast) => {
         toast.addEventListener('mouseenter', Swal.stopTimer);
         toast.addEventListener('mouseleave', Swal.resumeTimer);
