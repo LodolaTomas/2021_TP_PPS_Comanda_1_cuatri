@@ -26,8 +26,13 @@ export class HomeClientesPage implements OnInit {
   carga: boolean = false;
   existeUserEnListaEspera: boolean = false;
   userEsperandoAsignacionDeMesa: boolean = false;
+<<<<<<< HEAD
   realizopedido:boolean=true
   recibido:boolean=false
+=======
+  realizopedido: boolean = true
+  recibido: boolean = true
+>>>>>>> e47e12923c746669f4f1d560b5070069161c0add
   public usuarios: any = [];
   public usuarioLog: any = {};
   public tokenUser: any = [];
@@ -52,7 +57,7 @@ export class HomeClientesPage implements OnInit {
       }
     })
 
-    
+
   }
 
   ngOnInit() {
@@ -95,11 +100,11 @@ export class HomeClientesPage implements OnInit {
             this.alert('error', 'No es la Mesa Asignada')
           }
         }
-        if(this.tokenUser.estado=='pendiente'){
-          this.realizopedido=true;
+        if (this.tokenUser.estado == 'pendiente') {
+          this.realizopedido = true;
         }
-        if(this.tokenUser.estado='recibido'){
-          this.recibido=true;
+        if (this.tokenUser.estado = 'recibido') {
+          this.recibido = true;
         }
       })
       .catch((err) => {
@@ -153,7 +158,7 @@ export class HomeClientesPage implements OnInit {
     if (this.tokenUser.encuestado == false) {
       this.router.navigateByUrl('encuesta');
     }
-    else{
+    else {
       this.router.navigateByUrl('resultados')
     }
 
