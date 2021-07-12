@@ -51,10 +51,24 @@
         <h1>Acciones</h1>
         <ion-button expand="block" (click)="cartfood()">Carta</ion-button>
         <ion-button expand="block" (click)="consultar()">Consultar</ion-button>
+        <br>
+        <br>
+      </ion-card>
+    </div>
+    <div *ngIf="actionsMesa">
+      <ion-card>
+        <h1>Estado del Pedido</h1>
+        <h3>{{statusPedidoLabel}}</h3>
+      </ion-card>
+    </div>
+    <div id="juegosEncuesta" *ngIf="actionsMesa"> 
+      <ion-card>
+        <!-- <h1>Estado del Pedido</h1>
+        <h3>{{statusPedidoLabel}}</h3> -->
+        <h1>Acciones</h1>
         <ion-button expand="block" (click)="BTNjuegos()" *ngIf="realizopedido">Juegos</ion-button>
         <ion-button expand="block" (click)="BTNencuesta()" *ngIf="realizopedido">Encuesta</ion-button>
         <ion-button expand="block" (click)="theBill()" *ngIf="recibido">Pedir Cuenta</ion-button>
-        <br>
       </ion-card>
     </div>
 

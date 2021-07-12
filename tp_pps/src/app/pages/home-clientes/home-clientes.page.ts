@@ -26,16 +26,13 @@ export class HomeClientesPage implements OnInit {
   carga: boolean = false;
   existeUserEnListaEspera: boolean = false;
   userEsperandoAsignacionDeMesa: boolean = false;
-<<<<<<< HEAD
-  realizopedido:boolean=true
-  recibido:boolean=false
-=======
   realizopedido: boolean = true
   recibido: boolean = true
->>>>>>> e47e12923c746669f4f1d560b5070069161c0add
   public usuarios: any = [];
   public usuarioLog: any = {};
   public tokenUser: any = [];
+  public statusPedidoLabel:string;
+  public pedido:any = {};
   //barcodeScannerOptions: BarcodeScannerOptions;
 
   constructor(
@@ -49,17 +46,31 @@ export class HomeClientesPage implements OnInit {
   }
 
   async getUser() {
+    let table = -1;
     this.fbService.GetByParameter('usuarios', 'email', JSON.parse(localStorage.getItem('token'))).valueChanges().subscribe(async user => {
       this.tokenUser = user[0];
       if (this.tokenUser.table != null) {
-        this.userEsperandoAsignacionDeMesa = true
-        this.actionsMesa = true;
+        this.userEsperandoAsignacionDeMesa = true;
       }
     })
-
-
   }
-
+  getPedidoPorMesa(table){
+    this.fbService.GetByParameter('pedidos', 'table', table).valueChanges().subscribe(async pedidos => {
+      if(pedidos.length>0){
+        pedidos.forEach(pedidoItem=>{
+          if(pedidoItem.status !== 'cobrado'){
+            this.pedido= pedidoItem;
+            if     (pedidoItem.status == 'preparando')
+                this.statusPedidoLabel = "Su pedido está en preparación, en breve lo estará recibiendo";
+            else if(pedidoItem.status == 'entregando')
+                this.statusPedidoLabel = "Su pedido está listo para ser entregado!";
+            else
+                this.statusPedidoLabel = "No se encontró estado para su pedido";
+            }
+        });
+      }
+    })
+  }
   ngOnInit() {
 
   }
@@ -96,6 +107,7 @@ export class HomeClientesPage implements OnInit {
           console.log('mesa' + this.tokenUser.table)
           if (res.text == 'mesa' + this.tokenUser.table) {
             this.actionsMesa = true;
+            this.getPedidoPorMesa(this.tokenUser.table);
           } else {
             this.alert('error', 'No es la Mesa Asignada')
           }
@@ -140,7 +152,7 @@ export class HomeClientesPage implements OnInit {
   }
 
   BTNjuegos() {
-    this.router.navigateByUrl('juegos');
+    this.router.navigateByUrl('home-juegos');
   }
 
   async theBill() {

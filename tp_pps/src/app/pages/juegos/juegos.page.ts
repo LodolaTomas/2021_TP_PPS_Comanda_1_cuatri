@@ -136,8 +136,9 @@ export class JuegosPage implements OnInit {
                 this.obtieneDescuento = true;
                 this.obtieneDescuentoLabel=true;
                 this.usuarioLog.participoDelDescuento=true;
+                this.usuarioLog.juego1=true;
                 this.fbService.Update(this.usuarioLog.id,"usuarios",this.usuarioLog);
-                this.resultado="Felicitaciones por obtener 3 puntos seguidos, tenes un 20% de descuento en nuestra Carta!";
+                this.resultado="Felicitaciones por obtener 3 puntos seguidos, tenes un 10% de descuento en nuestra Carta!";
               }
             }
 
