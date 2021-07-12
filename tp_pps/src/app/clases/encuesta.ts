@@ -7,4 +7,7 @@ export class Encuesta {
     comentarios:string;
     foto:any;
     cliente:any;
+    comidas:boolean;
+    bebidas:boolean;
+    postres:boolean;
 }
