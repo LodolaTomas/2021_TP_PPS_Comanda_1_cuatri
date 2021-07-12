@@ -130,6 +130,10 @@ const routes: Routes = [
   {
     path: 'juego3',
     loadChildren: () => import('./pages/juego3/juego3.module').then( m => m.Juego3PageModule)
+  },
+  {
+    path: 'pedir-cuenta',
+    loadChildren: () => import('./pages/pedir-cuenta/pedir-cuenta.module').then( m => m.PedirCuentaPageModule)
   }
 
 
