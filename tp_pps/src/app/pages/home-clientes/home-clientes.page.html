@@ -56,9 +56,16 @@
         <br>
       </ion-card>
     </div>
-    <!-- cambiar el false por variable -->
+    <div *ngIf="actionsMesa">
+      <ion-card>
+        <h1>Estado del Pedido</h1>
+        <h3>{{statusPedidoLabel}}</h3>
+      </ion-card>
+    </div>
     <div id="juegosEncuesta" *ngIf="actionsMesa"> 
       <ion-card>
+        <!-- <h1>Estado del Pedido</h1>
+        <h3>{{statusPedidoLabel}}</h3> -->
         <h1>Acciones</h1>
         <ion-button expand="block" (click)="BTNjuegos()">Juegos</ion-button>
         <br>

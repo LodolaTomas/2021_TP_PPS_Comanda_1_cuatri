@@ -31,6 +31,8 @@ export class HomeClientesPage implements OnInit {
   public usuarios: any = [];
   public usuarioLog: any = {};
   public tokenUser: any = [];
+  public statusPedidoLabel:string;
+  public pedido:any = {};
   //barcodeScannerOptions: BarcodeScannerOptions;
 
   constructor(
@@ -42,40 +44,34 @@ export class HomeClientesPage implements OnInit {
     private modalController: ModalController
   ) {
     this.getUser();
-
-    // fbService.GetAll("usuarios")
-    //   .subscribe((data) => {
-    //     this.usuarios = data;
-    //     this.traerUsuario();
-    //   });
   }
 
   async getUser() {
+    let table = -1;
     this.fbService.GetByParameter('usuarios', 'email', JSON.parse(localStorage.getItem('token'))).valueChanges().subscribe(async user => {
       this.tokenUser = user[0];
       if (this.tokenUser.table != null) {
-        this.userEsperandoAsignacionDeMesa = true
+        this.userEsperandoAsignacionDeMesa = true;
       }
     })
-    /* this.fbService.GetByParameter("usuarios", "id", tokenUser.id).valueChanges()
-    .subscribe(async (usersList)=>{
-      if(usersList.length > 0){
-        this.usuarioLog = usersList[0];
-      }
-     await this.fbService.GetByParameter("lista_espera_local","id",this.usuarioLog.id).get().toPromise().then((userCollection)=>{
-       if(!userCollection.empty){
-         this.existeUserEnListaEspera=true;
-       }
-       if(this.existeUserEnListaEspera){
-         this.userEsperandoAsignacionDeMesa = this.usuarioLog.status =='esperando';
-       }
-   });
-    }); 
-    if (this.tokenUser.userWaitingList) {
-      this.existeUserEnListaEspera = true;
-    }*/
   }
-
+  getPedidoPorMesa(table){
+    this.fbService.GetByParameter('pedidos', 'table', table).valueChanges().subscribe(async pedidos => {
+      if(pedidos.length>0){
+        pedidos.forEach(pedidoItem=>{
+          if(pedidoItem.status !== 'cobrado'){
+            this.pedido= pedidoItem;
+            if     (pedidoItem.status == 'preparando')
+                this.statusPedidoLabel = "Su pedido está en preparación, en breve lo estará recibiendo";
+            else if(pedidoItem.status == 'entregando')
+                this.statusPedidoLabel = "Su pedido está listo para ser entregado!";
+            else
+                this.statusPedidoLabel = "No se encontró estado para su pedido";
+            }
+        });
+      }
+    })
+  }
   ngOnInit() {
 
   }
@@ -122,7 +118,8 @@ export class HomeClientesPage implements OnInit {
         if (this.tokenUser.table != null) {
           console.log('mesa' + this.tokenUser.table)
           if (res.text == 'mesa' + this.tokenUser.table) {
-            this.actionsMesa = true
+            this.actionsMesa = true;
+            this.getPedidoPorMesa(this.tokenUser.table);
           } else {
             this.alert('error', 'No es la Mesa Asignada')
           }
@@ -161,7 +158,7 @@ export class HomeClientesPage implements OnInit {
   }
 
   BTNjuegos() {
-    this.router.navigateByUrl('juegos');
+    this.router.navigateByUrl('home-juegos');
   }
 
   async theBill() {

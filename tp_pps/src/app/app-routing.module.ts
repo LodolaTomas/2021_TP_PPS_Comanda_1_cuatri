@@ -119,7 +119,19 @@ const routes: Routes = [
   {
     path: 'resultados',
     loadChildren: () => import('./encuesta/resultados/resultados.module').then( m => m.ResultadosPageModule)
+  },  {
+    path: 'home-juegos',
+    loadChildren: () => import('./pages/home-juegos/home-juegos.module').then( m => m.HomeJuegosPageModule)
+  },
+  {
+    path: 'juego2',
+    loadChildren: () => import('./pages/juego2/juego2.module').then( m => m.Juego2PageModule)
+  },
+  {
+    path: 'juego3',
+    loadChildren: () => import('./pages/juego3/juego3.module').then( m => m.Juego3PageModule)
   }
+
 
 ];
 
