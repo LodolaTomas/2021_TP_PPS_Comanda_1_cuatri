@@ -55,6 +55,7 @@ export class HomeClientesPage implements OnInit {
       .subscribe(async (user) => {
         console.log(user)
         this.tokenUser = user[0];
+        console.log( this.tokenUser )
         if (this.tokenUser.waitinglist == true) {
           if (this.tokenUser.table != null) {
             this.userEsperandoAsignacionDeMesa = true;
