@@ -29,7 +29,6 @@ export class ResultadosPage implements OnInit {
   ngOnInit() {
     this.firestore.GetAll("encuestas")
       .subscribe(async (data) => {
-        console.log(data)
         this.filtrarSatisfaccion(data);
         this.filtrarRecomienda(data)
         this.filtrarProbo(data)

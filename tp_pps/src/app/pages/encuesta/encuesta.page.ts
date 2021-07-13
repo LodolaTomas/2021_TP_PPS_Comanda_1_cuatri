@@ -13,10 +13,9 @@ import Swal, { SweetAlertIcon } from 'sweetalert2';
   styleUrls: ['./encuesta.page.scss'],
 })
 export class EncuestaPage implements OnInit {
-
-  public usuarioLog: any = {}
-  public usuarios: any = []
-  range = 2
+  public usuarioLog: any = {};
+  public usuarios: any = [];
+  range = 2;
   emojis = ['😠', '😦', '😑', '😀', '😍'];
   listaFotos: any;
   usuario: any;
@@ -36,31 +35,37 @@ export class EncuestaPage implements OnInit {
   public probaste: any;
   public comentarios: any;
 
-  public comidas: boolean=false;
-  public bebidas: boolean=false;
-  public postres: boolean=false;
+  public comidas: boolean = false;
+  public bebidas: boolean = false;
+  public postres: boolean = false;
 
+  public encuesta: Encuesta;
 
-  public encuesta: Encuesta
-
-  constructor(private imgSrv: ImagesService, private firestore: CloudFirestoreService, private router: Router, private file: File,) {
-    this.encuesta = new Encuesta()
-    this.usuarios = ''
+  constructor(
+    private imgSrv: ImagesService,
+    private firestore: CloudFirestoreService,
+    private router: Router,
+    private file: File
+  ) {
+    this.encuesta = new Encuesta();
+    this.usuarios = '';
   }
 
   async traerUsuario() {
-    const fbCollection = await this.firestore.GetByParameter("usuarios", "email", this.usuarioLog).get().toPromise();
+    const fbCollection = await this.firestore
+      .GetByParameter('usuarios', 'email', this.usuarioLog)
+      .get()
+      .toPromise();
     const element = fbCollection.docs[0].data();
-    this.usuarioLog = element
+    this.usuarioLog = element;
   }
   ngOnInit() {
-    this.usuarioLog = JSON.parse(localStorage.getItem('token'));
-    this.traerUsuario()
-    console.log(this.usuarioLog)
+    this.usuarioLog = localStorage.getItem('token');
+    this.traerUsuario();
   }
 
   back() {
-    this.router.navigateByUrl('home-clientes')
+    this.router.navigateByUrl('home-clientes');
   }
 
   setRam(value) {
@@ -68,48 +73,41 @@ export class EncuestaPage implements OnInit {
   }
 
   async enviar() {
-
-
-    if(this.imageElement  &&  this.range && this.volverias && this.recomienda && this.comentarios)
-    {
-    this.cargando = true
-    let url = await this.imgSrv.uploadPhoto('/encuestas/', this.imageElement);
-    let id = this.firestore.ReturnFirestore().createId()
-
-    this.encuesta.id = id
-    this.encuesta.satifaccion = this.range;
-    this.encuesta.recomienda = this.recomienda;
-    this.encuesta.volveria = this.volverias;
-    this.encuesta.comentarios = this.comentarios;
-    this.encuesta.foto = url;
-    this.encuesta.cliente = this.usuarioLog;
-    this.encuesta.bebidas=this.bebidas;
-    this.encuesta.comidas=this.comidas;
-    this.encuesta.postres=this.postres;
-
-
-    console.log(this.encuesta)
-    
-    this.firestore.InsertCustomID('encuestas', this.encuesta.id, Object.assign({}, this.encuesta))
-
-    this.firestore.Update(this.usuarioLog.id, 'usuarios', {encuestado:true})
-
-    console.log(this.encuesta)
-    this.cargando = false
-
-    
-
-    this.alert('success','Garcias por responder');
-
-    setTimeout(() => {
-      this.router.navigateByUrl('home-clientes')
-    }, 2000);
-
-
-
-    }
-    else{
-    this.alert('error','campos vacios');
+    if (
+      this.imageElement &&
+      this.range &&
+      this.volverias &&
+      this.recomienda &&
+      this.comentarios
+    ) {
+      this.cargando = true;
+      let url = await this.imgSrv.uploadPhoto('/encuestas/', this.imageElement);
+      let id = this.firestore.ReturnFirestore().createId();
+      this.encuesta.id = id;
+      this.encuesta.satifaccion = this.range;
+      this.encuesta.recomienda = this.recomienda;
+      this.encuesta.volveria = this.volverias;
+      this.encuesta.comentarios = this.comentarios;
+      this.encuesta.foto = url;
+      this.encuesta.cliente = this.usuarioLog;
+      this.encuesta.bebidas = this.bebidas;
+      this.encuesta.comidas = this.comidas;
+      this.encuesta.postres = this.postres;
+      this.firestore.InsertCustomID(
+        'encuestas',
+        this.encuesta.id,
+        Object.assign({}, this.encuesta)
+      );
+      this.firestore.Update(this.usuarioLog, 'usuarios', {
+        encuestado: true,
+      });
+      this.cargando = false;
+      this.alert('success', 'Garcias por responder');
+      setTimeout(() => {
+        this.router.navigateByUrl('home-clientes');
+      }, 2000);
+    } else {
+      this.alert('error', 'campos vacios');
     }
   }
 
@@ -123,18 +121,14 @@ export class EncuestaPage implements OnInit {
       promptLabelPicture: 'Tomar una Foto',
       promptLabelCancel: 'Cancelar',
       saveToGallery: true,
-
     });
     this.takePhoto = true;
-    this.imageElement = image.dataUrl;//muestro la foto para que previsualize el cliente
+    this.imageElement = image.dataUrl; //muestro la foto para que previsualize el cliente
   }
 
-  enviarEncuesta()
-  {
-    this.alert('success','¡Gracias por responder!')
-
+  enviarEncuesta() {
+    this.alert('success', '¡Gracias por responder!');
   }
-
 
   alert(icon: SweetAlertIcon, text: string) {
     const Toast = Swal.mixin({
@@ -145,17 +139,14 @@ export class EncuestaPage implements OnInit {
       timerProgressBar: false,
 
       didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-      }
-    })
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+      },
+    });
 
     Toast.fire({
       icon: icon,
-      title: text
-    })
+      title: text,
+    });
   }
-
-
 }
-  

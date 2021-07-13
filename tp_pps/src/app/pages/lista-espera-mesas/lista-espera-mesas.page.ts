@@ -32,7 +32,6 @@ export class ListaEsperaMesasPage implements OnInit {
     this.ingresando=true;
       const usersWaitingFb = await this.fbService.GetByParameter("lista_espera_local","status","esperando").get().toPromise();
       usersWaitingFb.docs.forEach(item=> this.clientWaitingList.push(item.data()));
-      // console.log(this.clientWaitingList);
       for (const clientEnEspera of this.clientWaitingList) {
         if(clientEnEspera.id != null){
           const usersFb = await this.fbService.GetByParameter("usuarios","id",clientEnEspera.id).get().toPromise();

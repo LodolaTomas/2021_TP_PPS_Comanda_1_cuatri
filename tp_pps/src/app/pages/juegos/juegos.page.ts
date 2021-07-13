@@ -68,7 +68,6 @@ export class JuegosPage implements OnInit {
   }
 
   game(t: HTMLElement[]) {
-    console.log(t);
     this.table = t;
   }
 
@@ -107,16 +106,13 @@ export class JuegosPage implements OnInit {
     this.resultado = "Empezo el juego";
     let p: number = 3 * (x - 1) + (y - 1);
     if (!this.gameRunning) {
-      console.log("Game over");
       this.resultado = "Juego Perdido";
     } else {
       if (this.board[p] == this.symbol) {
-        console.log("Invalid!!");
         this.resultado = "No se pude seleccionar esa casilla!";
       }
       else {
         if (this.board[p] == -this.symbol) {
-          console.log("Invalid!!");
           this.resultado = "No se pude seleccionar esa casilla!";
         }
         else {
@@ -125,7 +121,6 @@ export class JuegosPage implements OnInit {
           this.board[p] = 1;
           if (this.win(this.board) == 1) {
             this.gameRunning = false;
-            console.log("You have won!"); 
             this.resultado = "Ha ganado!";
             this.alert('success','Ganaste! +1');
 
@@ -187,8 +182,6 @@ export class JuegosPage implements OnInit {
 
   win(board: number[]): number {
     var b = board[1];
-    console.log("win " + board);
-    console.log("b? " + b);
     if (board[0] == b && b == board[2] && b != 0) return b;
     b = board[4];
     if (board[3] == b && b == board[5] && b != 0) return b;
@@ -240,15 +233,14 @@ export class JuegosPage implements OnInit {
       }
     }
     if (root) {
-      console.log("root", which);
       return (which)
     }
     else
       return (v)
   }
   async getUser() {
-    const tokenUser = JSON.parse(localStorage.getItem('token'));
-    this.fbService.GetByParameter("usuarios", "id", tokenUser.id).valueChanges()
+    const tokenUser = localStorage.getItem('token');
+    this.fbService.GetByParameter("usuarios", "id", tokenUser).valueChanges()
     .subscribe(async (usersList)=>{
       if(usersList.length > 0){
         this.usuarioLog = usersList[0];

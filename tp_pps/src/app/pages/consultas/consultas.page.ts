@@ -46,22 +46,15 @@ export class ConsultasPage implements OnInit {
       });
 
     this.item$ = chatSVC.ObtenerTodos().valueChanges();
-
     chatSVC.ObtenerTodos().valueChanges().subscribe((data) => {
       this.mensajes = data;
-
-
       if (this.mensajes.length) {
         if (this.mensajes[this.mensajes.length - 1].nombre !== this.usuarioLog.name) {
-
-          this.usuarioLog = JSON.parse(localStorage.getItem('token'));
-          console.log(this.usuarioLog)
-
+          this.usuarioLog = localStorage.getItem('token');
           this.notiSVC.notifyByProfile("Tiene un mensaje nuevo", this.usuarioLog, "cliente")
         }
       }
     });
-
   }
 
 
@@ -69,13 +62,12 @@ export class ConsultasPage implements OnInit {
     this.authS.GetCurrentUser().then((response) => {
       if (response != null) {
         let user = this.usuarios.filter((u) => u.email == response.email);
-
         localStorage.setItem('token', JSON.stringify(user[0]))
       }
     });
   }
   ngOnInit() {
-    this.usuarioLog = JSON.parse(localStorage.getItem('token'));
+    this.usuarioLog = localStorage.getItem('token');
   }
 
   back() {
@@ -83,24 +75,12 @@ export class ConsultasPage implements OnInit {
   }
 
   enviar() {
-    console.log('enviar');
-
     this.mensajeEnviado.nombre = this.usuarioLog.name;
     this.mensajeEnviado.text = this.msg;
     this.mensajeEnviado.mesa = this.idMesa;
-
     this.chatSVC.Crear(this.mensajeEnviado).then(() => {
-
-
       this.notiSVC.notifyByProfile("Tiene un mensaje nuevo", this.usuarioLog, "mozo")
-
       this.msg = '';
-
     });
-
   }
-
-
-
-
 }

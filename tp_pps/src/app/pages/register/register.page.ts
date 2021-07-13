@@ -46,16 +46,16 @@ export class RegisterPage implements OnInit {
     let id = this.cloudSrv.ReturnFirestore().createId()
     if (form.value.dni == undefined) {
       flag = false
-      data = { 'name': form.value.name, 'image': url, 'id': '', waitinglist: false, assignedtable: false, table: null, juego1: false, juego2: false, juego3: false,anonimus:true };
+      data = { 'name': form.value.name, 'image': url, 'id': '', waitinglist: false, assignedtable: false, table: null, juego1: false, juego2: false, juego3: false,anonimus:true,encuestado:false };
     } else {
-      data = { 'name': form.value.name, 'lastname': form.value.lastname, 'DNI': form.value.dni, 'password': form.value.password, 'email': form.value.email, 'perfil': 'cliente', 'estado': 'pendiente', 'image': url, 'id': '', waitinglist: false, assignedtable: false, table: null, juego1: false, juego2: false, juego3: false };
+      data = { 'name': form.value.name, 'lastname': form.value.lastname, 'DNI': form.value.dni, 'password': form.value.password, 'email': form.value.email, 'perfil': 'cliente', 'estado': 'pendiente', 'image': url, 'id': '', waitinglist: false, assignedtable: false, table: null, juego1: false, juego2: false, juego3: false,encuestado:false };
     }
     if (this.isAnonimous) {
       flag = false;
       data.id = id;
       this.cloudSrv.InsertCustomID('usuarios', id, data).then(() => {
         this.cargando = false;
-        localStorage.setItem('token', JSON.stringify(data));
+        localStorage.setItem('token', JSON.stringify(data.id));
         this.router.navigateByUrl('/home-clientes');
       });
 
@@ -124,11 +124,8 @@ export class RegisterPage implements OnInit {
   openQR() {
     this.barcodeScanner.scan({ formats: "PDF_417" }).then(res => {
       this.scannedBarCode = res;
-      console.log(res)
       let userQR = this.scannedBarCode["text"]
       let data = userQR.split("@");
-      console.log(data)
-
       if (!(isNaN(Number(data[4])))) {
         document.getElementById('name').setAttribute('value', data[2])
         document.getElementById('lastname').setAttribute('value', data[1])

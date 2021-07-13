@@ -49,16 +49,10 @@ export class AdmUsuariosPage implements OnInit {
 
   notificarPendientes() {
     this.usuarios.forEach(uno => {
-
       if (uno.estado == 'pendiente') {
-
-        this.usuarioLog = JSON.parse(localStorage.getItem('token'));
-        console.log(this.usuarioLog)
-
-        //this.notifSVC.notify("usuarios pendiente")
+        this.usuarioLog = localStorage.getItem('token');
         this.notifSVC.notifyByProfile("Usuarios pendientes de verificacion", this.usuarioLog, "supervisor")//Mensaje, usuario logeado, y perfiles a notificar
       }
-
     });
   }
 

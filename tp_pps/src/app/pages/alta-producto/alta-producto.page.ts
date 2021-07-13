@@ -50,7 +50,6 @@ export class AltaProductoPage implements OnInit {
     if(flag==true){
       let customId=this.cloudSrv.ReturnFirestore().createId()
       data.id=customId;
-      console.log(data)
       this.cloudSrv.InsertCustomID('productos',customId ,data).then(()=>{
         this.imageElement.splice(0,this.imageElement.length)
         form.reset();
@@ -156,7 +155,6 @@ class PictureNameModal {
 
   constructor(params: NavParams,
     private modalController: ModalController) {
-    //  console.log('UserId', params.get('userId'));
   }
   confirm() {
     // using the injected ModalController this page

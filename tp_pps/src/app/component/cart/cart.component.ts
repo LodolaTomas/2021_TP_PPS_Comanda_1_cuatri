@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
 import { CloudFirestoreService } from 'src/app/services/cloud-firestore.service';
@@ -23,33 +24,31 @@ export class CartComponent implements OnInit {
   constructor(
     private navPrarams: NavParams,
     private modalController: ModalController,
-    private fire: CloudFirestoreService
+    private fire: CloudFirestoreService,
+    private router:Router
   ) {
     this.data = this.navPrarams.get('value');
     if (this.data.flag) {
       this.edit = true;
     }
-
-    this.token = JSON.parse(localStorage.getItem('token'))
+    this.token = localStorage.getItem('token');
     this.searchActiveUser();
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
   back() {
-    console.log(this.data);
     this.modalController.dismiss(this.data);
   }
 
   async searchActiveUser() {
-
-    const client = await this.fire.GetByParameter("usuarios", "email", this.token).get().toPromise()
+    const client = await this.fire
+      .GetByParameter('usuarios', 'id', this.token)
+      .get()
+      .toPromise();
     if (!client.empty) {
       var user = client.docs[0].data();
-      this.client = user
+      this.client = user;
     }
-
-    console.log(client)
-
   }
 
   edit_Order() {
@@ -64,7 +63,6 @@ export class CartComponent implements OnInit {
       this.pedir = 'Realizar Pedido';
       this.loading = false;
     }
-
   }
 
   isChecked(event, index) {
@@ -76,7 +74,6 @@ export class CartComponent implements OnInit {
     }
   }
   optionsOrder() {
-
     this.loading = true;
 
     if (this.flag) {
@@ -88,23 +85,25 @@ export class CartComponent implements OnInit {
           this.data.total_quantity -= this.data.order[element].quantity;
           this.data.order.splice(element, 1);
           this.loading = false;
+
         });
       }
     }
 
     if (this.flag == false) {
-
       this.data.table = this.client.table;
 
-      this.fire.InsertCustomID('pedidos', this.data.id, Object.assign({}, this.data)).then(() => {
-        this.alert('success', 'Pedido realizado');
-        localStorage.setItem('pedido', JSON.stringify(this.data))
-
-        this.loading = false;
-      })
+      this.fire
+        .InsertCustomID('pedidos', this.data.id, Object.assign({}, this.data))
+        .then(() => {
+          this.alert('success', 'Pedido realizado');
+          localStorage.setItem('pedido', JSON.stringify(this.data));
+          this.loading = false;
+          this.modalController.dismiss(this.data);
+          this.router.navigateByUrl('home-clientes')
+          console.log('pedi')
+        });
     }
-
-
   }
 
   alert(icon: SweetAlertIcon, text: string) {
@@ -115,13 +114,13 @@ export class CartComponent implements OnInit {
       timer: 2000,
       timerProgressBar: true,
       didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-      }
-    })
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+      },
+    });
     Toast.fire({
       icon: icon,
-      title: text
-    })
+      title: text,
+    });
   }
 }

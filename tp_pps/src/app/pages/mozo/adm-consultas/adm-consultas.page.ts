@@ -60,8 +60,7 @@ export class AdmConsultasPage implements OnInit {
         if (this.mensajes[this.mensajes.length - 1].nombre !== this.usuarioLog.name) //true?
         {
 
-          this.usuarioLog = JSON.parse(localStorage.getItem('token'));
-          console.log(this.usuarioLog)
+          this.usuarioLog = localStorage.getItem('token');
 
           this.notiSVC.notifyByProfile("Tiene un mensaje nuevo", this.usuarioLog, "mozo")
 
@@ -88,14 +87,10 @@ export class AdmConsultasPage implements OnInit {
 
   orderChats() {
     this.msjs.forEach(uno => {
-
-      console.log(uno)
       if (uno.mesa == 'mesa1') {
         this.mesa1.push(uno)
       }
     });
-
-    console.log(this.mesa1)
   }
 
 
@@ -104,21 +99,16 @@ export class AdmConsultasPage implements OnInit {
   }
 
   ngOnInit() {
-    this.usuarioLog = JSON.parse(localStorage.getItem('token'));
+    this.usuarioLog = localStorage.getItem('token');
   }
 
 
   enviar() {
-    console.log('enviar');
-
     this.mensajeEnviado.nombre = this.usuarioLog.name;
     this.mensajeEnviado.text = this.msg;
     this.mensajeEnviado.mesa = this.idMesa;
-
     this.chatSVC.Crear(this.mensajeEnviado).then(() => {
-
       this.msg = '';
-
     });
   }
 
