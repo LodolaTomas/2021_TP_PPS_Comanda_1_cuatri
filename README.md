@@ -59,3 +59,14 @@ Link al video Sprint 1 (Solo UI) -> https://drive.google.com/file/d/1Y48HUTCOh9M
 
 <img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/screenAltaMesa.jpg?raw=true" height="350px"> 
 
+![Screenshot_20210713-030002_Coma y punto](https://user-images.githubusercontent.com/44885834/125400020-ba436080-e387-11eb-84fc-4a8034c0ac77.jpg)
+![Screenshot_20210713-030315_Coma y punto](https://user-images.githubusercontent.com/44885834/125400023-bb748d80-e387-11eb-87d7-55d4fa42e492.jpg)
+![Screenshot_20210713-030345_Coma y punto](https://user-images.githubusercontent.com/44885834/125400024-bb748d80-e387-11eb-8618-c41bcb5c73d8.jpg)
+![Screenshot_20210713-030348_Coma y punto](https://user-images.githubusercontent.com/44885834/125400025-bc0d2400-e387-11eb-83c5-4e27ea53ebf3.jpg)
+![Screenshot_20210713-025731_Coma y punto](https://user-images.githubusercontent.com/44885834/125400026-bc0d2400-e387-11eb-833c-1a41ad4dfe8f.jpg)
+![Screenshot_20210713-025934_Coma y punto](https://user-images.githubusercontent.com/44885834/125400027-bca5ba80-e387-11eb-8b32-70c76e1617b1.jpg)
+![Screenshot_20210713-025943_Coma y punto](https://user-images.githubusercontent.com/44885834/125400028-bca5ba80-e387-11eb-8682-9bdcb019e545.jpg)
+![Screenshot_20210713-025949_Coma y punto](https://user-images.githubusercontent.com/44885834/125400029-bd3e5100-e387-11eb-8294-7a7816f4f0e8.jpg)
+![Screenshot_20210713-025958_Coma y punto](https://user-images.githubusercontent.com/44885834/125400030-bd3e5100-e387-11eb-8e05-3e3bb884cde9.jpg)
+
+
