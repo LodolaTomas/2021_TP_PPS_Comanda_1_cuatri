@@ -109,6 +109,7 @@ export class HomeClientesPage implements OnInit {
     this.router.navigateByUrl('login');
   }
 
+
   openQR() {
     this.scanner
       .scan()
@@ -156,6 +157,10 @@ export class HomeClientesPage implements OnInit {
 
   BTNjuegos() {
     this.router.navigateByUrl('home-juegos');
+  }
+
+  BTNcuenta() {
+    this.router.navigateByUrl('pedir-cuenta');
   }
 
   async theBill() {
