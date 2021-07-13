@@ -46,7 +46,7 @@
         </ion-card>
       </div>
       <ion-card>
-        <!-- <h3 *ngIf="userEsperandoAsignacionDeMesa">Escanee su Mesa</h3> -->
+        <h3 *ngIf="userEsperandoAsignacionDeMesa && escaneeMesa==false">Escanee su Mesa</h3>
         <!-- si NO existe el usuario en la lista de espera (sea con status ingresado o esperando) muestro lo siguiente: -->
         <h3 *ngIf="tokenUser.waitinglist==false">
           Escanee el QR para ingresar a la Lista de Espera
@@ -68,33 +68,11 @@
         <h1>Acciones</h1>
         <ion-button expand="block" (click)="cartfood()">Carta</ion-button>
         <ion-button expand="block" (click)="consultar()">Consultar</ion-button>
-<<<<<<< HEAD
-        <ion-button expand="block" (click)="BTNjuegos()" *ngIf="realizopedido"
-          >Juegos</ion-button
-        >
-        <ion-button expand="block" (click)="BTNencuesta()" *ngIf="realizopedido"
-          >Encuesta</ion-button
-        >
-        <ion-button expand="block" (click)="theBill()" *ngIf="recibido"
-          >Pedir Cuenta</ion-button
-        >
-=======
         <ion-button expand="block" (click)="BTNjuegos()" *ngIf="realizopedido">Juegos</ion-button>
         <ion-button expand="block" (click)="BTNencuesta()" *ngIf="realizopedido">Encuesta</ion-button>
         <ion-button expand="block" (click)="BTNcuenta()" *ngIf="recibido" >Pedir Cuenta</ion-button>
       </ion-card>
     </div>
-    <div *ngIf="actionsMesa">
-      
-      <ion-card *ngIf="realizopedido">
-        <h1>Estado del Pedido</h1>
-        <h3>{{statusPedidoLabel}}</h3>
-        <ion-button *ngIf="entregando" color="success" class="mb-2" (click)="confirm()">Confirmar recepción</ion-button>
->>>>>>> 7aaf6c9ee4e133775cb5291d228251769dec1ea6
-      </ion-card>
-    </div>
-
-    <br />
     <img src="../../assets/icon.png" height="200px" alt="" />
     <h4>Coma y punto</h4>
   </div>

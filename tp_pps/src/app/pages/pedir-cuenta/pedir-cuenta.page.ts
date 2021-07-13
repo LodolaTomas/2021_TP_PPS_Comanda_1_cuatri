@@ -34,12 +34,6 @@ export class PedirCuentaPage implements OnInit {
   ngOnInit() {
   }
 
-
-  test() {
-    console.log(this.tokenUser)
-    console.log(this.pedido)
-  }
-
   back() {
     this.router.navigateByUrl("home-clientes")
   }
@@ -51,7 +45,6 @@ export class PedirCuentaPage implements OnInit {
         pedidos.forEach(pedidoItem => {
           if (pedidoItem.status !== 'cobrado') {
             this.pedido = pedidoItem;
-            console.log(this.pedido)
             this.discountValidator()
           }
           else if(pedidoItem.status == 'cobrado')
@@ -127,8 +120,6 @@ export class PedirCuentaPage implements OnInit {
   async getUser() {
     this.fbService.GetByParameter('usuarios', 'email', JSON.parse(localStorage.getItem('token'))).valueChanges().subscribe(async user => {
       this.tokenUser = user[0];
-<<<<<<< HEAD
-=======
       this.getPedidoPorMesa(this.tokenUser.table);
     })
   }
@@ -150,7 +141,6 @@ export class PedirCuentaPage implements OnInit {
     Toast.fire({
       icon: icon,
       title: text
->>>>>>> 7aaf6c9ee4e133775cb5291d228251769dec1ea6
     })
   }
 

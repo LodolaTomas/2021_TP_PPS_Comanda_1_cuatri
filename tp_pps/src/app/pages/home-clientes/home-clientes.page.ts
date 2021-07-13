@@ -26,7 +26,7 @@ export class HomeClientesPage implements OnInit {
   public tokenUser: any = [];
   public statusPedidoLabel: string;
   public pedido: any = {};
-
+  escaneeMesa:boolean=false;
   actionsMesa: boolean = false;
   carga: boolean = false;
   existeUserEnListaEspera: boolean = false;
@@ -141,6 +141,7 @@ export class HomeClientesPage implements OnInit {
           }
         }
         if (this.tokenUser.table != null) {
+          this.escaneeMesa=true
           if (res.text == 'mesa' + this.tokenUser.table) {
             this.actionsMesa = true;
             this.getPedidoPorMesa(this.tokenUser.table);
