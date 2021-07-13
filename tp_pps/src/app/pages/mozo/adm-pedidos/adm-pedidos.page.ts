@@ -51,7 +51,6 @@ export class AdmPedidosPage implements OnInit {
     firestore.GetAll("pedidos")
       .subscribe((data) => {
         this.pedidos = data;
-        console.log(data)
         this.notificarPendientes()
 
       });
@@ -60,12 +59,8 @@ export class AdmPedidosPage implements OnInit {
 
   notificarPendientes() {
     this.pedidos.forEach(uno => {
-
       if (uno.status == 'pendiente') {
-
         this.usuarioLog = JSON.parse(localStorage.getItem('token'));
-        console.log(this.usuarioLog)
-
         this.notifSVC.notifyByProfile("Pedidos pendientes", this.usuarioLog, 'mozo')//Mensaje, usuario logeado, y perfiles a notificar
       }
 

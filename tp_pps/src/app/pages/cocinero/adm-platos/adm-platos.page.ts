@@ -56,14 +56,10 @@ export class AdmPlatosPage implements OnInit {
 
   notificarPendientes() {
     this.pedidos.forEach(uno => {
-
       if (uno.status == 'preparando') {
-
         this.usuarioLog = JSON.parse(localStorage.getItem('token'));
-        console.log(this.usuarioLog)
         this.notifSVC.notifyByProfile("Platos pendientes", this.usuarioLog, 'cocinero')//Mensaje, usuario logeado, y perfiles a notificar
       }
-
     });
   }
 
@@ -90,8 +86,6 @@ export class AdmPlatosPage implements OnInit {
   }
 
   Aceptar(pedido) {
-
-    console.log(pedido)
     this.firestore.Update(pedido.value[0].idTable, "pedidos", { statusCheff: true })
 
   }
@@ -124,11 +118,5 @@ export class AdmPlatosPage implements OnInit {
         })
       }
     })
-
-
-    console.log(this.alimentos)
-
   }
-
-
 }

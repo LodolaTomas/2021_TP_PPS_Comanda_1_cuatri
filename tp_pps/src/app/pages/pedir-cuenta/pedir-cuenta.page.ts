@@ -44,7 +44,6 @@ export class PedirCuentaPage implements OnInit {
   async getUser() {
     this.fbService.GetByParameter('usuarios', 'email', JSON.parse(localStorage.getItem('token'))).valueChanges().subscribe(async user => {
       this.tokenUser = user[0];
-      console.log( this.tokenUser)
     })
   }
 

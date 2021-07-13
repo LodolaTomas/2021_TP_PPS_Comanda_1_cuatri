@@ -3,8 +3,10 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>
-      Bienvenido
+    <ion-title *ngIf="!userEsperandoAsignacionDeMesa"> Bienvenido </ion-title>
+    <!-- si existe el usuario en la lista de espera y NO esta con estado esperando muestro lo siguiente:-->
+    <ion-title *ngIf="userEsperandoAsignacionDeMesa">
+      Ha sido asignado a Mesa {{tokenUser.table}}
     </ion-title>
     <ion-buttons slot="end">
       <ion-button color="danger" (click)="logout()">
@@ -14,11 +16,10 @@
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content [fullscreen]="true">
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">
     <ion-fab-button class="mb-2" (click)="openQR()" size="large">
-      <ion-icon name="qr-code-outline" size=large></ion-icon>
+      <ion-icon name="qr-code-outline" size="large"></ion-icon>
     </ion-fab-button>
   </ion-fab>
   <ion-header collapse="condense">
@@ -28,18 +29,34 @@
   </ion-header>
 
   <div class="container mt-3 ion-text-center">
-
     <div id="escanearMesa" align="center">
+      <div *ngIf="actionsMesa">
+        <ion-card *ngIf="realizopedido">
+          <h1>Estado del Pedido</h1>
+          <h3>{{statusPedidoLabel}}</h3>
+          <ion-button
+            *ngIf="entregando"
+            color="success"
+            class="mb-2"
+            (click)="confirm()"
+            >Confirmar recepción</ion-button
+          >
+        </ion-card>
+      </div>
       <ion-card>
-        <!-- si existe el usuario en la lista de espera y NO esta con estado esperando muestro lo siguiente:-->
-        <h1 *ngIf="userEsperandoAsignacionDeMesa">Ha sido asignado a Mesa {{tokenUser.table}}</h1>
-        <h3 *ngIf="actionsMesa==false && this.tokenUser.waitinglist == true">Escanee su Mesa</h3>
+        <!-- <h3 *ngIf="userEsperandoAsignacionDeMesa">Escanee su Mesa</h3> -->
         <!-- si NO existe el usuario en la lista de espera (sea con status ingresado o esperando) muestro lo siguiente: -->
-        <h3 *ngIf="tokenUser.waitinglist==false">Escanee el QR para ingresar a la Lista de Espera</h3>
+        <h3 *ngIf="tokenUser.waitinglist==false">
+          Escanee el QR para ingresar a la Lista de Espera
+        </h3>
         <!-- si existe el usuario en la lista de espera y SI esta con estado esperando muestro lo siguiente: -->
         <div *ngIf="existeUserEnListaEspera">
           <h3>Aguarde un momento, en breve le asignaremos una mesa</h3>
-          <ion-button expand="block" (click)="router.navigateByUrl('resultados')">Encuestas en Graficos</ion-button>
+          <ion-button
+            expand="block"
+            (click)="router.navigateByUrl('resultados')"
+            >Encuestas en Graficos</ion-button
+          >
         </div>
       </ion-card>
     </div>
@@ -49,26 +66,20 @@
         <h1>Acciones</h1>
         <ion-button expand="block" (click)="cartfood()">Carta</ion-button>
         <ion-button expand="block" (click)="consultar()">Consultar</ion-button>
-        <ion-button expand="block" (click)="BTNjuegos()" *ngIf="realizopedido">Juegos</ion-button>
-        <ion-button expand="block" (click)="BTNencuesta()" *ngIf="realizopedido">Encuesta</ion-button>
-        <ion-button expand="block" (click)="theBill()" *ngIf="!recibido" >Pedir Cuenta</ion-button>
+        <ion-button expand="block" (click)="BTNjuegos()" *ngIf="realizopedido"
+          >Juegos</ion-button
+        >
+        <ion-button expand="block" (click)="BTNencuesta()" *ngIf="realizopedido"
+          >Encuesta</ion-button
+        >
+        <ion-button expand="block" (click)="theBill()" *ngIf="recibido"
+          >Pedir Cuenta</ion-button
+        >
       </ion-card>
     </div>
-    <div *ngIf="actionsMesa">
-      
-      <ion-card *ngIf="realizopedido">
-        <h1>Estado del Pedido</h1>
-        <h3>{{statusPedidoLabel}}</h3>
-        <ion-button *ngIf="entregando" color="success" class="mb-2" (click)="confirm()">Confirmar recepción</ion-button>
-      </ion-card>
 
-    </div>
-
-    <br>
-    <img src="../../assets/icon.png" height="200px" alt="">
-    <h4>Coma y punto </h4>
+    <br />
+    <img src="../../assets/icon.png" height="200px" alt="" />
+    <h4>Coma y punto</h4>
   </div>
-
-
-
 </ion-content>

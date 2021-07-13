@@ -45,7 +45,6 @@ export class AuthService {
 
       await alert.present();
       let result = await alert.onDidDismiss();
-      console.log(result);
     }
   }
 
@@ -81,13 +80,10 @@ export class AuthService {
   registerAnonymously(){
     this.afAuth.signInAnonymously()
     .then((a) => {
-      console.log("registerAnonymously",a);
-      // Signed in..
     })
     .catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
-      console.log(error);
     });
   }
   getCurrentUser2(func){

@@ -23,13 +23,11 @@ export class SupervisorPage implements OnInit {
 
   BTNAltaMesa()
   {
-    console.log("apreto")
     this.router.navigateByUrl('alta-mesa')
   }
 
   BTNAdmUsuarios()
   {
-    console.log("apreto")
     this.router.navigateByUrl('adm-usuarios')
   }
 

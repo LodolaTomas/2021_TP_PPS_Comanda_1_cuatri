@@ -29,27 +29,24 @@ export class CartComponent implements OnInit {
     if (this.data.flag) {
       this.edit = true;
     }
-
-    this.token = JSON.parse(localStorage.getItem('token'))
+    this.token = JSON.parse(localStorage.getItem('token'));
     this.searchActiveUser();
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
   back() {
-    console.log(this.data);
     this.modalController.dismiss(this.data);
   }
 
   async searchActiveUser() {
-
-    const client = await this.fire.GetByParameter("usuarios", "email", this.token).get().toPromise()
+    const client = await this.fire
+      .GetByParameter('usuarios', 'email', this.token)
+      .get()
+      .toPromise();
     if (!client.empty) {
       var user = client.docs[0].data();
-      this.client = user
+      this.client = user;
     }
-
-    console.log(client)
-
   }
 
   edit_Order() {
@@ -64,7 +61,6 @@ export class CartComponent implements OnInit {
       this.pedir = 'Realizar Pedido';
       this.loading = false;
     }
-
   }
 
   isChecked(event, index) {
@@ -76,7 +72,6 @@ export class CartComponent implements OnInit {
     }
   }
   optionsOrder() {
-
     this.loading = true;
 
     if (this.flag) {
@@ -93,18 +88,17 @@ export class CartComponent implements OnInit {
     }
 
     if (this.flag == false) {
-
       this.data.table = this.client.table;
 
-      this.fire.InsertCustomID('pedidos', this.data.id, Object.assign({}, this.data)).then(() => {
-        this.alert('success', 'Pedido realizado');
-        localStorage.setItem('pedido', JSON.stringify(this.data))
+      this.fire
+        .InsertCustomID('pedidos', this.data.id, Object.assign({}, this.data))
+        .then(() => {
+          this.alert('success', 'Pedido realizado');
+          localStorage.setItem('pedido', JSON.stringify(this.data));
 
-        this.loading = false;
-      })
+          this.loading = false;
+        });
     }
-
-
   }
 
   alert(icon: SweetAlertIcon, text: string) {
@@ -115,13 +109,13 @@ export class CartComponent implements OnInit {
       timer: 2000,
       timerProgressBar: true,
       didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-      }
-    })
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+      },
+    });
     Toast.fire({
       icon: icon,
-      title: text
-    })
+      title: text,
+    });
   }
 }

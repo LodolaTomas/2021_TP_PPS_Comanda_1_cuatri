@@ -11,19 +11,23 @@ import { ShowfoodComponent } from '../showfood/showfood.component';
   styleUrls: ['./cartfood.page.scss'],
 })
 export class CartfoodPage implements OnInit {
-  listFood = []
-  listDrinks = []
-  listDessert = []
-  carrito = []
+  listFood = [];
+  listDrinks = [];
+  listDessert = [];
+  carrito = [];
   comida = true;
   bebida = false;
   postre = false;
   total_price = 0;
   total_quantity = 0;
-  total_elaboration = 0
-  constructor(private router: Router, private fire: CloudFirestoreService, private modalController: ModalController) {
-    fire.GetAll('productos').subscribe(data => {
-      data.forEach(element => {
+  total_elaboration = 0;
+  constructor(
+    private router: Router,
+    private fire: CloudFirestoreService,
+    private modalController: ModalController
+  ) {
+    fire.GetAll('productos').subscribe((data) => {
+      data.forEach((element) => {
         if (element.type == 'postre') {
           this.listDessert.push(element);
         }
@@ -33,36 +37,42 @@ export class CartfoodPage implements OnInit {
         if (element.type == 'bebida') {
           this.listDrinks.push(element);
         }
-      })
-    })
+      });
+    });
   }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
   async openModal(item) {
     let copiaItem = { ...item };
     const modal = await this.modalController.create({
       component: ShowfoodComponent,
-      componentProps: { value: item }
+      componentProps: { value: item },
     });
     await modal.present();
     const { data } = await modal.onWillDismiss();
     if (data != null) {
-      this.total_quantity += data.total_quantity
+      this.total_quantity += data.total_quantity;
       this.total_price += data.total_price;
-      this.carrito.push(data.food_obj)
+      this.carrito.push(data.food_obj);
     }
   }
 
   async ShowOrder() {
-    let order: any = { 'flag': true, 'order': this.carrito, 'total_amount': this.total_price, 'total_quantity': this.total_quantity, 'total_time': this.total_elaboration, 'status': 'pendiente', 'id': '1' }
+    let order: any = {
+      flag: true,
+      order: this.carrito,
+      total_amount: this.total_price,
+      total_quantity: this.total_quantity,
+      total_time: this.total_elaboration,
+      status: 'pendiente',
+      id: '1',
+    };
     let id = this.fire.ReturnFirestore().createId();
     order.id = id;
-    
+
     const modal = await this.modalController.create({
       component: CartComponent,
-      componentProps: { value: order }
+      componentProps: { value: order },
     });
 
     await modal.present();
@@ -71,16 +81,13 @@ export class CartfoodPage implements OnInit {
       if (data.borrados == true) {
         this.total_quantity = 0;
         this.total_price = 0;
-        this.carrito.splice(0, this.carrito.length)
+        this.carrito.splice(0, this.carrito.length);
       } else {
-        console.log(data)
         this.total_price = data.total_amount;
         this.total_quantity = data.total_quantity;
       }
-
     }
   }
-
 
   alert(icon: SweetAlertIcon, text: string) {
     const Toast = Swal.mixin({
@@ -91,15 +98,15 @@ export class CartfoodPage implements OnInit {
       timerProgressBar: true,
 
       didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-      }
-    })
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+      },
+    });
 
     Toast.fire({
       icon: icon,
-      title: text
-    })
+      title: text,
+    });
   }
 
   selectFood() {
@@ -120,7 +127,6 @@ export class CartfoodPage implements OnInit {
   }
 
   back() {
-    this.router.navigateByUrl('home-clientes')
+    this.router.navigateByUrl('home-clientes');
   }
-
 }
