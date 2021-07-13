@@ -36,6 +36,12 @@ export class RegisterPage implements OnInit {
     let flag = true;
     let data: any;
     this.cargando = true;
+    if(form.invalid){
+      flag=false;
+      this.alert('error', 'Todos los campos son requeridos');
+      this.cargando = false;
+      return;
+    }
     let url = await this.imgSrv.uploadPhoto('/usuarios/', this.imageElement);
     let id = this.cloudSrv.ReturnFirestore().createId()
     if (form.value.dni == undefined) {
@@ -44,7 +50,6 @@ export class RegisterPage implements OnInit {
     } else {
       data = { 'name': form.value.name, 'lastname': form.value.lastname, 'DNI': form.value.dni, 'password': form.value.password, 'email': form.value.email, 'perfil': 'cliente', 'estado': 'pendiente', 'image': url, 'id': '', waitinglist: false, assignedtable: false, table: null, juego1: false, juego2: false, juego3: false,encuestado:false };
     }
-
     if (this.isAnonimous) {
       flag = false;
       data.id = id;
@@ -62,11 +67,17 @@ export class RegisterPage implements OnInit {
       this.cargando = false;
     } else if (this.imageElement == undefined) {
       this.alert('error', 'Deber tomar o subir una foto');
-      flag = false
+      flag = false;
       this.cargando = false;
     }
+    if(!this.isValidEmail(form)){
+      flag=false;
+      this.alert('error', 'Ingrese un email válido');
+    }
 
+    // console.log(form.invalid);
     if (flag == true) {
+      // form.invalid=true;
       this.cloudSrv.Insert('usuarios', data).then((docRef) => {
         this.auth.onRegister(data).then(() => this.alert('success', 'Registro exitoso')).catch(e => console.log(e));
 
@@ -82,9 +93,17 @@ export class RegisterPage implements OnInit {
         this.router.navigateByUrl('login')
       }).catch(e => console.log(e))
     }
-
+    this.cargando = false;
   }
 
+  isValidEmail(form){
+    var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+    if (!pattern.test(form.value.email)) {
+      return false;
+     }
+     else
+      return true;
+  }
   async takePicture() {
     const image = await Camera.getPhoto({
       quality: 50,
@@ -120,9 +139,6 @@ export class RegisterPage implements OnInit {
       alert(err);
     });
   }
-
-
-
 
   alert(icon: SweetAlertIcon, text: string) {
     const Toast = Swal.mixin({
