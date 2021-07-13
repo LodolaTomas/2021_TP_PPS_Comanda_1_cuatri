@@ -16,11 +16,13 @@
 
 
 <ion-content [fullscreen]="true">
+
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">
     <ion-fab-button class="mb-2" (click)="openQR()" size="large">
       <ion-icon name="qr-code-outline" size=large></ion-icon>
     </ion-fab-button>
   </ion-fab>
+  
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Blank</ion-title>
@@ -51,7 +53,7 @@
         <ion-button expand="block" (click)="consultar()">Consultar</ion-button>
         <ion-button expand="block" (click)="BTNjuegos()" *ngIf="realizopedido">Juegos</ion-button>
         <ion-button expand="block" (click)="BTNencuesta()" *ngIf="realizopedido">Encuesta</ion-button>
-        <ion-button expand="block" (click)="theBill()" *ngIf="!recibido" >Pedir Cuenta</ion-button>
+        <ion-button expand="block" (click)="BTNcuenta()" *ngIf="recibido" >Pedir Cuenta</ion-button>
       </ion-card>
     </div>
     <div *ngIf="actionsMesa">

@@ -68,7 +68,6 @@ export class LoginPage implements OnInit {
     this.user.email = this.miFormulario.value.email;
     this.user.password = this.miFormulario.value.clave;
 
-
     const fbCollection = await this.cloudSrv.GetByParameter('usuarios', 'email', this.user.email).get().toPromise();
 
     if (fbCollection.docs[0]) {
@@ -121,9 +120,9 @@ export class LoginPage implements OnInit {
         }
       }
     }
-    else{
+    else {
       this.alert('error', 'Usuario inexistente')
-      this.cargando =false;
+      this.cargando = false;
       this.miFormulario.reset();
     }
 
