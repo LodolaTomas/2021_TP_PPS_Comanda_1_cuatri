@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
 import { CloudFirestoreService } from 'src/app/services/cloud-firestore.service';
@@ -23,13 +24,14 @@ export class CartComponent implements OnInit {
   constructor(
     private navPrarams: NavParams,
     private modalController: ModalController,
-    private fire: CloudFirestoreService
+    private fire: CloudFirestoreService,
+    private router:Router
   ) {
     this.data = this.navPrarams.get('value');
     if (this.data.flag) {
       this.edit = true;
     }
-    this.token = JSON.parse(localStorage.getItem('token'));
+    this.token = localStorage.getItem('token');
     this.searchActiveUser();
   }
 
@@ -40,7 +42,7 @@ export class CartComponent implements OnInit {
 
   async searchActiveUser() {
     const client = await this.fire
-      .GetByParameter('usuarios', 'id', JSON.stringify(this.token))
+      .GetByParameter('usuarios', 'id', this.token)
       .get()
       .toPromise();
     if (!client.empty) {
@@ -83,6 +85,7 @@ export class CartComponent implements OnInit {
           this.data.total_quantity -= this.data.order[element].quantity;
           this.data.order.splice(element, 1);
           this.loading = false;
+
         });
       }
     }
@@ -95,8 +98,10 @@ export class CartComponent implements OnInit {
         .then(() => {
           this.alert('success', 'Pedido realizado');
           localStorage.setItem('pedido', JSON.stringify(this.data));
-
           this.loading = false;
+          this.modalController.dismiss(this.data);
+          this.router.navigateByUrl('home-clientes')
+          console.log('pedi')
         });
     }
   }

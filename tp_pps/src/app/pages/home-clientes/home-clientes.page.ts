@@ -1,3 +1,4 @@
+import { EmailService } from './../../services/email.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
@@ -47,53 +48,31 @@ export class HomeClientesPage implements OnInit {
   }
 
   async getUser() {
-    if (JSON.parse(localStorage.getItem('token')).anonimus) {
-      this.fbService
-        .GetByParameter(
-          'usuarios',
-          'id',
-          JSON.parse(localStorage.getItem('token')).id
-        )
-        .valueChanges()
-        .subscribe(async (user) => {
-          this.tokenUser = user[0];
-          this.testing = JSON.stringify(this.tokenUser);
-          if (this.tokenUser.waitinglist == true) {
-            if (this.tokenUser.table != null) {
-              this.userEsperandoAsignacionDeMesa = true;
-              this.existeUserEnListaEspera = false;
-            } else {
-              this.existeUserEnListaEspera = true;
-            }
+
+    this.fbService
+      .GetByParameter('usuarios', 'id', localStorage.getItem('token'))
+      .valueChanges()
+      .subscribe(async (user) => {
+        console.log(user)
+        this.tokenUser = user[0];
+        if (this.tokenUser.waitinglist == true) {
+          if (this.tokenUser.table != null) {
+            this.userEsperandoAsignacionDeMesa = true;
+            this.existeUserEnListaEspera = false;
+          } else {
+            this.existeUserEnListaEspera = true;
           }
-        });
-    } else {
-      this.fbService
-        .GetByParameter(
-          'usuarios',
-          'id',
-          JSON.parse(localStorage.getItem('token'))
-        )
-        .valueChanges()
-        .subscribe(async (user) => {
-          this.tokenUser = user[0];
-          if (this.tokenUser.waitinglist == true) {
-            if (this.tokenUser.table != null) {
-              this.userEsperandoAsignacionDeMesa = true;
-              this.existeUserEnListaEspera = false;
-            } else {
-              this.existeUserEnListaEspera = true;
-            }
-          }
-        });
-    }
+        }
+      });
   }
+
   getPedidoPorMesa(table) {
     this.fbService
       .GetByParameter('pedidos', 'table', table)
       .valueChanges()
       .subscribe(async (pedidos) => {
-        if (pedidos.length > 0) {
+        console.log(pedidos)
+        if (pedidos.length >= 0) {
           pedidos.forEach((pedidoItem) => {
             if (pedidoItem.status !== 'cobrado') {
               this.pedido = pedidoItem;
@@ -115,22 +94,26 @@ export class HomeClientesPage implements OnInit {
                 this.realizopedido = true;
                 this.entregando = false;
               }
+              
             }
+            if (pedidoItem.status == 'cobrado') { this.logout() }
+
           });
         } else {
           this.realizopedido = false;
         }
       });
   }
-  ngOnInit() {}
+  ngOnInit() { }
 
   confirm() {
     this.fbService.Update(this.pedido.id, 'pedidos', { status: 'entregado' });
   }
 
   logout() {
-    this.idMesa = localStorage.removeItem('idMesa');
+    localStorage.removeItem('idMesa');
     localStorage.removeItem('token');
+    localStorage.removeItem('pedido');
     this.authS.LogOutCurrentUser();
     this.router.navigateByUrl('login');
   }

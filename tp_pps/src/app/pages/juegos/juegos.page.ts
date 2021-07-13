@@ -239,7 +239,7 @@ export class JuegosPage implements OnInit {
       return (v)
   }
   async getUser() {
-    const tokenUser = JSON.parse(localStorage.getItem('token'));
+    const tokenUser = localStorage.getItem('token');
     this.fbService.GetByParameter("usuarios", "id", tokenUser).valueChanges()
     .subscribe(async (usersList)=>{
       if(usersList.length > 0){
