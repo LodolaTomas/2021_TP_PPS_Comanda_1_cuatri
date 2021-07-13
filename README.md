@@ -23,6 +23,8 @@ PPS - 1 cuat. - grupo Utn Devs
 
 <img src="https://user-images.githubusercontent.com/52363833/124345919-3b456f80-dbb2-11eb-84ce-4d818e11d1bf.png">
 
+![Captura de pantalla 2021-07-13 025222](https://user-images.githubusercontent.com/44885834/125398213-646db900-e385-11eb-85fd-cb588d6e8ebf.png)
+
 
 ## Sprint 1
 
