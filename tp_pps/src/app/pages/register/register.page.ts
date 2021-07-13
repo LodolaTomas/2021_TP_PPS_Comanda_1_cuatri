@@ -19,6 +19,7 @@ export class RegisterPage implements OnInit {
   imageElement: any = undefined;
   flag = false;
   takePhoto = false;
+  url
   public cargando: boolean;
   constructor(private router: Router, private barcodeScanner: BarcodeScanner, private imgSrv: ImagesService, private cloudSrv: CloudFirestoreService, private auth: AuthService) {
     this.cargando = false
@@ -42,13 +43,19 @@ export class RegisterPage implements OnInit {
       this.cargando = false;
       return;
     }
-    let url = await this.imgSrv.uploadPhoto('/usuarios/', this.imageElement);
+    if (this.imageElement == undefined) {
+      this.alert('error', 'Deber tomar o subir una foto');
+      flag = false;
+      this.cargando = false;
+    }else if(this.imageElement!=undefined){
+      this.url = await this.imgSrv.uploadPhoto('/usuarios/', this.imageElement);
+    } 
     let id = this.cloudSrv.ReturnFirestore().createId()
     if (form.value.dni == undefined) {
       flag = false
-      data = { 'name': form.value.name, 'image': url, 'id': '', waitinglist: false, assignedtable: false, table: null, juego1: false, juego2: false, juego3: false,anonimus:true,encuestado:false };
+      data = { 'name': form.value.name, 'image': this.url, 'id': '', waitinglist: false, assignedtable: false, table: null, juego1: false, juego2: false, juego3: false,anonimus:true,encuestado:false };
     } else {
-      data = { 'name': form.value.name, 'lastname': form.value.lastname, 'DNI': form.value.dni, 'password': form.value.password, 'email': form.value.email, 'perfil': 'cliente', 'estado': 'pendiente', 'image': url, 'id': '', waitinglist: false, assignedtable: false, table: null, juego1: false, juego2: false, juego3: false,encuestado:false };
+      data = { 'name': form.value.name, 'lastname': form.value.lastname, 'DNI': form.value.dni, 'password': form.value.password, 'email': form.value.email, 'perfil': 'cliente', 'estado': 'pendiente', 'image': this.url, 'id': '', waitinglist: false, assignedtable: false, table: null, juego1: false, juego2: false, juego3: false,encuestado:false };
     }
     if (this.isAnonimous) {
       flag = false;
@@ -64,10 +71,6 @@ export class RegisterPage implements OnInit {
       document.getElementById('confirm').setAttribute('value', '')
       this.alert('error', 'La contraseña no coinciden')
       flag = false
-      this.cargando = false;
-    } else if (this.imageElement == undefined) {
-      this.alert('error', 'Deber tomar o subir una foto');
-      flag = false;
       this.cargando = false;
     }
     if(!this.isValidEmail(form)){
