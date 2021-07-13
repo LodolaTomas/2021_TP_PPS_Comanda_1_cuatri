@@ -6,17 +6,13 @@
     <ion-title>
    Cuenta
     </ion-title>
-    <ion-buttons slot="start">
-      <ion-button color="dark" (click)="back()">
-        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
 
-
+<div *ngIf="!pagado">
   <ion-card *ngFor="let item of pedido.order; let i = index">
     <ion-grid>
       <ion-row>
@@ -72,9 +68,20 @@
 
     </ion-grid>
   </ion-item>
+</div>
+
+<ion-card *ngIf="pagado && !cobrado">
+  <h2>Pago enviado.</h2>
+  <h2>Espere confirmacion</h2>
+</ion-card>
+
+  <ion-card *ngIf="cobrado">
+    <h2>Pago recibido.</h2>
+    <h2>¡Gracias por su visita!</h2>
+  </ion-card>
 
 
-  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed" *ngIf="!pagado">
     <ion-fab-button class="mb-2" (click)="openQR()" size="large">
       <ion-icon name="qr-code-outline" size=large></ion-icon>
     </ion-fab-button>
@@ -85,13 +92,16 @@
 
 <ion-footer>
 
-  <button *ngIf="!loading" expand="block" class="btn btn-success rounded-pill btn-block m-4" (click)="pay()"
+  <button *ngIf="!loading && !pagado " expand="block" class="btn btn-success rounded-pill btn-block m-4" (click)="pay()"
     style=" height: 3em; color: white; margin-left: 0 !important;">Pagar</button>
 
-  <button *ngIf="loading" expand="block" class="btn btn-success rounded-pill btn-block m-4" disabled
+  <button *ngIf="loading " expand="block" class="btn btn-success rounded-pill btn-block m-4" disabled
     style=" height: 3em; color: white; margin-left: 0 !important;">
     <ion-spinner></ion-spinner>
   </button>
+
+  
+
 
 </ion-footer>
 
