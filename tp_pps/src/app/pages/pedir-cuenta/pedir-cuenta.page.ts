@@ -37,7 +37,6 @@ export class PedirCuentaPage implements OnInit {
     console.log(this.pedido)
   }
 
-
   back() {
     this.router.navigateByUrl("home-clientes")
   }
@@ -51,6 +50,9 @@ export class PedirCuentaPage implements OnInit {
             this.pedido = pedidoItem;
             console.log(this.pedido)
             this.discountValidator()
+
+            this.totalDiscount = this.pedido.total_amount;
+
           }
         });
       }
@@ -77,6 +79,7 @@ export class PedirCuentaPage implements OnInit {
 
   discountValidator() {
     if (this.tokenUser.juego1) {
+
       this.discount = 10 / 100;
       var auxTotal = this.pedido.total_amount;
       this.totalDiscount = auxTotal - auxTotal * this.discount;
@@ -92,7 +95,7 @@ export class PedirCuentaPage implements OnInit {
   }
 
   tipCalculator() {
-    var auxTotal = this.pedido.total_amount;
+    var auxTotal = this.totalDiscount;
 
     this.totalTip = auxTotal + auxTotal * this.propina / 100
   }
