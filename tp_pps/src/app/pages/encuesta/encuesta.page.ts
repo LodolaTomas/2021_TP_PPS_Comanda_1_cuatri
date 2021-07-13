@@ -60,7 +60,7 @@ export class EncuestaPage implements OnInit {
     this.usuarioLog = element;
   }
   ngOnInit() {
-    this.usuarioLog = JSON.parse(localStorage.getItem('token'));
+    this.usuarioLog = localStorage.getItem('token');
     this.traerUsuario();
   }
 

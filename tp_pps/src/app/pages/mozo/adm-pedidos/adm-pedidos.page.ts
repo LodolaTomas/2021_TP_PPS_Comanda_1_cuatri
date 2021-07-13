@@ -60,7 +60,7 @@ export class AdmPedidosPage implements OnInit {
   notificarPendientes() {
     this.pedidos.forEach(uno => {
       if (uno.status == 'pendiente') {
-        this.usuarioLog = JSON.parse(localStorage.getItem('token'));
+        this.usuarioLog = localStorage.getItem('token');
         this.notifSVC.notifyByProfile("Pedidos pendientes", this.usuarioLog, 'mozo')//Mensaje, usuario logeado, y perfiles a notificar
       }
 

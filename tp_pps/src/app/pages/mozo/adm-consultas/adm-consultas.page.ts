@@ -60,7 +60,7 @@ export class AdmConsultasPage implements OnInit {
         if (this.mensajes[this.mensajes.length - 1].nombre !== this.usuarioLog.name) //true?
         {
 
-          this.usuarioLog = JSON.parse(localStorage.getItem('token'));
+          this.usuarioLog = localStorage.getItem('token');
 
           this.notiSVC.notifyByProfile("Tiene un mensaje nuevo", this.usuarioLog, "mozo")
 
@@ -99,7 +99,7 @@ export class AdmConsultasPage implements OnInit {
   }
 
   ngOnInit() {
-    this.usuarioLog = JSON.parse(localStorage.getItem('token'));
+    this.usuarioLog = localStorage.getItem('token');
   }
 
 

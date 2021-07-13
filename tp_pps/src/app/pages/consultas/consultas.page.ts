@@ -50,7 +50,7 @@ export class ConsultasPage implements OnInit {
       this.mensajes = data;
       if (this.mensajes.length) {
         if (this.mensajes[this.mensajes.length - 1].nombre !== this.usuarioLog.name) {
-          this.usuarioLog = JSON.parse(localStorage.getItem('token'));
+          this.usuarioLog = localStorage.getItem('token');
           this.notiSVC.notifyByProfile("Tiene un mensaje nuevo", this.usuarioLog, "cliente")
         }
       }
@@ -67,7 +67,7 @@ export class ConsultasPage implements OnInit {
     });
   }
   ngOnInit() {
-    this.usuarioLog = JSON.parse(localStorage.getItem('token'));
+    this.usuarioLog = localStorage.getItem('token');
   }
 
   back() {

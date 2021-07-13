@@ -57,7 +57,7 @@ export class AdmPlatosPage implements OnInit {
   notificarPendientes() {
     this.pedidos.forEach(uno => {
       if (uno.status == 'preparando') {
-        this.usuarioLog = JSON.parse(localStorage.getItem('token'));
+        this.usuarioLog = localStorage.getItem('token');
         this.notifSVC.notifyByProfile("Platos pendientes", this.usuarioLog, 'cocinero')//Mensaje, usuario logeado, y perfiles a notificar
       }
     });
