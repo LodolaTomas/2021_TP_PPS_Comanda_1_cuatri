@@ -98,7 +98,7 @@ export class EncuestaPage implements OnInit {
         this.encuesta.id,
         Object.assign({}, this.encuesta)
       );
-      this.firestore.Update(this.usuarioLog.id, 'usuarios', {
+      this.firestore.Update(this.usuarioLog, 'usuarios', {
         encuestado: true,
       });
       this.cargando = false;

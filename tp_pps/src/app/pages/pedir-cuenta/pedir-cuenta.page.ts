@@ -118,7 +118,7 @@ export class PedirCuentaPage implements OnInit {
 
 
   async getUser() {
-    this.fbService.GetByParameter('usuarios', 'email', JSON.parse(localStorage.getItem('token'))).valueChanges().subscribe(async user => {
+    this.fbService.GetByParameter('usuarios', 'id', JSON.parse(localStorage.getItem('token'))).valueChanges().subscribe(async user => {
       this.tokenUser = user[0];
       this.getPedidoPorMesa(this.tokenUser.table);
     })

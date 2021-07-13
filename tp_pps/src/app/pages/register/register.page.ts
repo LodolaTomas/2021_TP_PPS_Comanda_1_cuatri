@@ -50,7 +50,7 @@ export class RegisterPage implements OnInit {
       data.id = id;
       this.cloudSrv.InsertCustomID('usuarios', id, data).then(() => {
         this.cargando = false;
-        localStorage.setItem('token', JSON.stringify(data));
+        localStorage.setItem('token', JSON.stringify(data.id));
         this.router.navigateByUrl('/home-clientes');
       });
 

@@ -4,7 +4,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { CloudFirestoreService } from 'src/app/services/cloud-firestore.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
-import { NotificationsService } from 'src/app/services/notifications.service';
 import { ModalController } from '@ionic/angular';
 import { MakeOrderComponent } from 'src/app/component/make-order/make-order.component';
 
@@ -20,21 +19,22 @@ export class HomeClientesPage implements OnInit {
   input: any;
   idMesa: any;
   numeroMesa: number;
-  
+
   public usuarios: any = [];
   public usuarioLog: any = {};
   public tokenUser: any = [];
   public statusPedidoLabel: string;
   public pedido: any = {};
-  escaneeMesa:boolean=false;
+  escaneeMesa: boolean = false;
   actionsMesa: boolean = false;
   carga: boolean = false;
   existeUserEnListaEspera: boolean = false;
   userEsperandoAsignacionDeMesa: boolean = false;
   realizopedido: boolean = false;
   recibido: boolean = false;
-  entregando:boolean=false;
+  entregando: boolean = false;
   displayQREspera: boolean = true;
+  testing;
 
   constructor(
     private authS: AuthService,
@@ -47,69 +47,85 @@ export class HomeClientesPage implements OnInit {
   }
 
   async getUser() {
-    if(JSON.parse(localStorage.getItem('token')).anonimus){
-      this.tokenUser=JSON.parse(localStorage.getItem('token'));
-      if(this.tokenUser.waitinglist==true){
-        if (this.tokenUser.table != null) {
-          this.userEsperandoAsignacionDeMesa = true;
-          this.existeUserEnListaEspera=false;
-        }else{
-          this.existeUserEnListaEspera=true;
-        }
-      }
-    }else{
-      this.fbService.GetByParameter('usuarios', 'email', JSON.parse(localStorage.getItem('token'))).valueChanges().subscribe(async user => {
-      this.tokenUser = user[0];
-      if(this.tokenUser.waitinglist==true){
-        if (this.tokenUser.table != null) {
-          this.userEsperandoAsignacionDeMesa = true;
-          this.existeUserEnListaEspera=false;
-        }else{
-          this.existeUserEnListaEspera=true;
-        }
-      }
-    })
+    if (JSON.parse(localStorage.getItem('token')).anonimus) {
+      this.fbService
+        .GetByParameter(
+          'usuarios',
+          'id',
+          JSON.parse(localStorage.getItem('token')).id
+        )
+        .valueChanges()
+        .subscribe(async (user) => {
+          this.tokenUser = user[0];
+          this.testing = JSON.stringify(this.tokenUser);
+          if (this.tokenUser.waitinglist == true) {
+            if (this.tokenUser.table != null) {
+              this.userEsperandoAsignacionDeMesa = true;
+              this.existeUserEnListaEspera = false;
+            } else {
+              this.existeUserEnListaEspera = true;
+            }
+          }
+        });
+    } else {
+      this.fbService
+        .GetByParameter(
+          'usuarios',
+          'id',
+          JSON.parse(localStorage.getItem('token'))
+        )
+        .valueChanges()
+        .subscribe(async (user) => {
+          this.tokenUser = user[0];
+          if (this.tokenUser.waitinglist == true) {
+            if (this.tokenUser.table != null) {
+              this.userEsperandoAsignacionDeMesa = true;
+              this.existeUserEnListaEspera = false;
+            } else {
+              this.existeUserEnListaEspera = true;
+            }
+          }
+        });
     }
   }
   getPedidoPorMesa(table) {
-    this.fbService.GetByParameter('pedidos', 'table', table).valueChanges().subscribe(async pedidos => {
-      if (pedidos.length > 0) {
-        pedidos.forEach(pedidoItem => {
-          if (pedidoItem.status !== 'cobrado') {
-            this.pedido = pedidoItem;
-            if(pedidoItem.status==='pendiente'){
-              this.statusPedidoLabel = "Espere a la confirmacion del pedido.";
+    this.fbService
+      .GetByParameter('pedidos', 'table', table)
+      .valueChanges()
+      .subscribe(async (pedidos) => {
+        if (pedidos.length > 0) {
+          pedidos.forEach((pedidoItem) => {
+            if (pedidoItem.status !== 'cobrado') {
+              this.pedido = pedidoItem;
+              if (pedidoItem.status === 'pendiente') {
+                this.statusPedidoLabel = 'Espere a la confirmacion del pedido.';
+              }
+              if (pedidoItem.status === 'preparando') {
+                this.realizopedido = true;
+                this.statusPedidoLabel =
+                  'Su pedido está en preparación, en breve lo estará recibiendo';
+              } else if (pedidoItem.status == 'entregando') {
+                this.entregando = true;
+                this.realizopedido = true;
+                this.statusPedidoLabel =
+                  '¡Su pedido está listo para ser entregado!';
+              } else if (pedidoItem.status == 'entregado') {
+                this.statusPedidoLabel = 'Pedido entregado. ¡Buen provecho!';
+                this.recibido = true;
+                this.realizopedido = true;
+                this.entregando = false;
+              }
             }
-            if(pedidoItem.status==='preparando'){
-              this.realizopedido = true;
-              this.statusPedidoLabel = "Su pedido está en preparación, en breve lo estará recibiendo";
-            }
-            else if (pedidoItem.status == 'entregando'){
-              this.entregando=true;
-              this.realizopedido = true;
-              this.statusPedidoLabel = "¡Su pedido está listo para ser entregado!";
-            }
-            else if (pedidoItem.status == 'entregado'){
-              this.statusPedidoLabel = "Pedido entregado. ¡Buen provecho!";
-              this.recibido=true;
-              this.realizopedido = true;
-              this.entregando=false;
-            }
-              
-
-            }
-        });
-      }else{
-        this.realizopedido=false
-      }
-    })
+          });
+        } else {
+          this.realizopedido = false;
+        }
+      });
   }
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   confirm() {
-    this.fbService.Update(this.pedido.id, "pedidos", { status: 'entregado' })
+    this.fbService.Update(this.pedido.id, 'pedidos', { status: 'entregado' });
   }
 
   logout() {
@@ -118,7 +134,6 @@ export class HomeClientesPage implements OnInit {
     this.authS.LogOutCurrentUser();
     this.router.navigateByUrl('login');
   }
-
 
   openQR() {
     this.scanner
@@ -136,26 +151,26 @@ export class HomeClientesPage implements OnInit {
               .then(() => {
                 this.alert('success', 'Agregado a la lista de espera!');
                 this.existeUserEnListaEspera = true;
-                this.fbService.Update(this.tokenUser.id, 'usuarios', { waitinglist: true })
+                this.fbService.Update(this.tokenUser.id, 'usuarios', {
+                  waitinglist: true,
+                });
               });
           }
         }
         if (this.tokenUser.table != null) {
-          this.escaneeMesa=true
+          this.escaneeMesa = true;
           if (res.text == 'mesa' + this.tokenUser.table) {
             this.actionsMesa = true;
             this.getPedidoPorMesa(this.tokenUser.table);
           } else {
-            this.alert('error', 'No es la Mesa Asignada')
+            this.alert('error', 'No es la Mesa Asignada');
           }
         }
-        
       })
       .catch((err) => {
         alert(err);
       });
   }
-
 
   consultar() {
     this.router.navigateByUrl('consultas');
@@ -186,9 +201,8 @@ export class HomeClientesPage implements OnInit {
   BTNencuesta() {
     if (this.tokenUser.encuestado == false) {
       this.router.navigateByUrl('encuesta');
-    }
-    else {
-      this.router.navigateByUrl('resultados')
+    } else {
+      this.router.navigateByUrl('resultados');
     }
   }
 

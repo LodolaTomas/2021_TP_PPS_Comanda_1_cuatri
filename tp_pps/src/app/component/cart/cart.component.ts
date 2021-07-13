@@ -40,7 +40,7 @@ export class CartComponent implements OnInit {
 
   async searchActiveUser() {
     const client = await this.fire
-      .GetByParameter('usuarios', 'email', this.token)
+      .GetByParameter('usuarios', 'id', JSON.stringify(this.token))
       .get()
       .toPromise();
     if (!client.empty) {
