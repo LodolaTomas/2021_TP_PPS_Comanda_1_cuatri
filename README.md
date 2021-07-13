@@ -35,6 +35,18 @@ Link al video Sprint 1 (Solo UI) -> https://drive.google.com/file/d/1Y48HUTCOh9M
 
 
  <img src="https://github.com/LodolaTomas/2021_TP_PPS_Comanda_1_cuatri/blob/main/assetsReadme/sprint1/iconScreen.jpg?raw=true" height="150px"> 
+ 
+ 
+ 
+## Diagramas
+![clienteDaigrama](https://user-images.githubusercontent.com/44885834/125398550-d940f300-e385-11eb-9b95-c70fa9ac27f1.png)
+
+![pedido](https://user-images.githubusercontent.com/44885834/125398659-fb3a7580-e385-11eb-9990-3504d2910a09.png)
+
+![preparacion](https://user-images.githubusercontent.com/44885834/125398667-fd9ccf80-e385-11eb-99aa-9411aec0f28a.png)
+
+
+
 
 
 1  	         | 2 
