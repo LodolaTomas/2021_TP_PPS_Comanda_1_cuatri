@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { CloudFirestoreService } from 'src/app/services/cloud-firestore.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import Swal, { SweetAlertIcon } from 'sweetalert2';
+
 
 @Component({
   selector: 'app-pedir-cuenta',
@@ -21,7 +23,8 @@ export class PedirCuentaPage implements OnInit {
   public totalTip: number = 0;
   public discount: number = 0;
   public totalDiscount: number;
-
+  public pagado:boolean = false;
+  public cobrado:boolean = false;
 
   constructor(private router: Router,
     private authS: AuthService,
@@ -50,9 +53,14 @@ export class PedirCuentaPage implements OnInit {
             this.pedido = pedidoItem;
             console.log(this.pedido)
             this.discountValidator()
-
-            this.totalDiscount = this.pedido.total_amount;
-
+          }
+          else if(pedidoItem.status == 'cobrado')
+          {
+            this.alert('success','¡Pago recibido!')
+            this.cobrado = true
+            setTimeout(() => {
+              this.router.navigateByUrl('home-clientes')
+            }, 800);
           }
         });
       }
@@ -83,14 +91,15 @@ export class PedirCuentaPage implements OnInit {
       this.discount = 10 / 100;
       var auxTotal = this.pedido.total_amount;
       this.totalDiscount = auxTotal - auxTotal * this.discount;
-
+    }
+    else if (this.tokenUser.juego2) {
 
     }
-    if (this.tokenUser.juego2) {
+    else if (this.tokenUser.juego3) {
 
     }
-    if (this.tokenUser.juego3) {
-
+    else{
+      this.totalDiscount = this.pedido.total_amount;
     }
   }
 
@@ -103,10 +112,15 @@ export class PedirCuentaPage implements OnInit {
 
   pay() {
     this.loading = true;
+    this.fbService.Update(this.pedido.id, 'pedidos', {status:'pagado'});
 
 
-    this.loading = false;
-
+    setTimeout(() => {
+      this.pagado = true;
+      this.loading = false;
+      this.alert('info', 'Pago exitoso, espere a que sea aceptado')
+    }, 1500);
+   
   }
 
 
@@ -116,6 +130,29 @@ export class PedirCuentaPage implements OnInit {
       this.getPedidoPorMesa(this.tokenUser.table);
     })
   }
+
+  alert(icon: SweetAlertIcon, text: string) {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'center',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: false,
+
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+
+    Toast.fire({
+      icon: icon,
+      title: text
+    })
+  }
+
+
+  
 
 
 }
