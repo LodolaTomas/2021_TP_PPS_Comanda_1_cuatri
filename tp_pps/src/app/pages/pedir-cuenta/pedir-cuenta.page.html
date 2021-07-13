@@ -6,22 +6,104 @@
     <ion-title>
    Cuenta
     </ion-title>
-    <ion-buttons slot="start">
-      <ion-button color="dark" (click)="back()">
-        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
 
+<div *ngIf="!pagado">
+  <ion-card *ngFor="let item of pedido.order; let i = index">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="3" class="ion-text-start">
+          <h5 *ngIf="!flag">{{item.quantity}}x</h5>
+          <h5 *ngIf="flag">
+            <ion-checkbox color="danger" (click)="isChecked($event,i)"></ion-checkbox>
+          </h5>
+        </ion-col>
+        <ion-col class="ion-text-start">
+          <h4>{{item.name | titlecase}}</h4>
+        </ion-col>
+        <ion-col class="ion-text-end">
+          <h3>${{item.price}}</h3>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+  <ion-item>
+    <ion-grid>
+      <ion-row>
+        <ion-col size='6'>
+          <ion-label>SubTotal</ion-label>
+        </ion-col>
+        <ion-col size='6'>
+          <ion-label class="ion-text-end">
+            <h1>${{pedido.total_amount}}</h1>
+          </ion-label>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size='6'>
+          <ion-label>Total con descuentos</ion-label>
+        </ion-col>
+        <ion-col size='6'>
+          <ion-label class="ion-text-end">
+            <h1>${{totalDiscount}}</h1>
+          </ion-label>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="escaneo">
+        <ion-col size='6'>
+          <ion-label>Total + Propina {{propina}}%</ion-label>
+        </ion-col>
+        <ion-col size='6'>
+          <ion-label class="ion-text-end">
+            <h1>${{totalTip}}</h1>
+          </ion-label>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </ion-item>
+</div>
+
+<ion-card *ngIf="pagado && !cobrado">
+  <h2>Pago enviado.</h2>
+  <h2>Espere confirmacion</h2>
+</ion-card>
+
+  <ion-card *ngIf="cobrado">
+    <h2>Pago recibido.</h2>
+    <h2>¡Gracias por su visita!</h2>
+  </ion-card>
 
 
-
-
-
-
-
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed" *ngIf="!pagado">
+    <ion-fab-button class="mb-2" (click)="openQR()" size="large">
+      <ion-icon name="qr-code-outline" size=large></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  
 
 </ion-content>
+
+<ion-footer>
+
+  <button *ngIf="!loading && !pagado " expand="block" class="btn btn-success rounded-pill btn-block m-4" (click)="pay()"
+    style=" height: 3em; color: white; margin-left: 0 !important;">Pagar</button>
+
+  <button *ngIf="loading " expand="block" class="btn btn-success rounded-pill btn-block m-4" disabled
+    style=" height: 3em; color: white; margin-left: 0 !important;">
+    <ion-spinner></ion-spinner>
+  </button>
+
+  
+
+
+</ion-footer>
+
+
+
